@@ -627,8 +627,9 @@ body {
 .card-stack > .campaign-mockup {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
+  left: 50%;
+  margin-left: -155px;
+  width: 310px;
 }
 .card-stack:hover > .campaign-mockup {
   animation-play-state: paused;
