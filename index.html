@@ -165,22 +165,22 @@
     <div class="card-01-visual">
       <div class="growth-pyramid">
         <div class="pyr-body">
-          <div class="pyr-level pyr-level--6">
+          <div class="pyr-level pyr-level--6" role="button" tabindex="0" data-topic="New Business Models">
             <span class="pyr-text">New Business Models</span>
           </div>
-          <div class="pyr-level pyr-level--5">
+          <div class="pyr-level pyr-level--5" role="button" tabindex="0" data-topic="Strategic Alliances">
             <span class="pyr-text">Strategic Alliances</span>
           </div>
-          <div class="pyr-level pyr-level--4">
+          <div class="pyr-level pyr-level--4" role="button" tabindex="0" data-topic="Diversification">
             <span class="pyr-text">Diversification</span>
           </div>
-          <div class="pyr-level pyr-level--3">
+          <div class="pyr-level pyr-level--3" role="button" tabindex="0" data-topic="Product Development">
             <span class="pyr-text">Product Development</span>
           </div>
-          <div class="pyr-level pyr-level--2">
+          <div class="pyr-level pyr-level--2" role="button" tabindex="0" data-topic="Market Development">
             <span class="pyr-text">Market Development</span>
           </div>
-          <div class="pyr-level pyr-level--1">
+          <div class="pyr-level pyr-level--1" role="button" tabindex="0" data-topic="Market Penetration">
             <span class="pyr-text">Market Penetration</span>
           </div>
         </div>
@@ -415,6 +415,16 @@
   <div class="watermark-text">eatcrayons</div>
 </div>
 
+<!-- Pyramid Modal -->
+<div id="pyr-modal" class="pyr-modal-overlay" aria-modal="true" role="dialog" aria-hidden="true">
+  <div class="pyr-modal-card">
+    <button class="pyr-modal-close" aria-label="Close">&#x2715;</button>
+    <p class="pyr-modal-label"></p>
+    <h3 class="pyr-modal-title"></h3>
+    <p class="pyr-modal-body"></p>
+  </div>
+</div>
+
 <!-- Scripts -->
 <script src="js/main.js"></script>
 <script>
@@ -427,6 +437,65 @@
     });
   }, { threshold: 0.2 });
   document.querySelectorAll('.growth-pyramid').forEach(el => pyramidObserver.observe(el));
+
+  // Pyramid modal
+  const pyrTopics = {
+    'Market Penetration': {
+      label: 'Foundation',
+      body: 'The lowest-risk growth strategy. We help you capture more of the market you\'re already in — sharpening your positioning, improving conversion, optimizing pricing, and turning your existing customer base into a referral engine. Most businesses leave significant revenue on the table here before ever needing to expand.'
+    },
+    'Market Development': {
+      label: 'Expansion',
+      body: 'Your product works. Now we take it somewhere new. Whether that\'s a new geography, a new customer segment, or a new channel, market development extends the value of what you\'ve already built. We identify where your offer resonates beyond its current home and build the go-to-market strategy to get you there.'
+    },
+    'Product Development': {
+      label: 'Innovation',
+      body: 'New offerings for your existing audience. You\'ve earned their trust — now deepen the relationship. We work with you to identify adjacencies, service extensions, and product gaps your current customers are already asking for. Lower acquisition cost, higher lifetime value.'
+    },
+    'Diversification': {
+      label: 'Transformation',
+      body: 'The highest-risk, highest-reward strategy. Entering new markets with new offerings requires bold conviction and airtight execution. We help you validate the opportunity before committing resources, build the playbook, and structure the team to give it the best possible shot at success.'
+    },
+    'Strategic Alliances': {
+      label: 'Partnerships',
+      body: 'The right partnership can compress years of growth into months. We help you identify, structure, and activate strategic alliances — co-selling agreements, technology integrations, distribution partnerships, or joint ventures — so you\'re growing on someone else\'s momentum as much as your own.'
+    },
+    'New Business Models': {
+      label: 'Reinvention',
+      body: 'Sometimes the ceiling isn\'t your product or your market — it\'s your model. We help you rethink how value is created, packaged, and monetized. From subscription transitions to platform plays, new business model design is the highest-leverage move for businesses ready to operate at a fundamentally different scale.'
+    }
+  };
+
+  const modal = document.getElementById('pyr-modal');
+  const modalLabel = modal.querySelector('.pyr-modal-label');
+  const modalTitle = modal.querySelector('.pyr-modal-title');
+  const modalBody = modal.querySelector('.pyr-modal-body');
+
+  function openPyrModal(topic) {
+    const data = pyrTopics[topic];
+    if (!data) return;
+    modalLabel.textContent = data.label;
+    modalTitle.textContent = topic;
+    modalBody.textContent = data.body;
+    modal.setAttribute('aria-hidden', 'false');
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePyrModal() {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.pyr-level[data-topic]').forEach(el => {
+    el.addEventListener('click', () => openPyrModal(el.dataset.topic));
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openPyrModal(el.dataset.topic); });
+  });
+
+  modal.querySelector('.pyr-modal-close').addEventListener('click', closePyrModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closePyrModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePyrModal(); });
 </script>
 </body>
 </html>
