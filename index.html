@@ -92,10 +92,6 @@
       align-items: center;
       justify-content: space-between;
       padding: 22px 52px;
-      transition: top 250ms ease;
-    }
-    #site-header.scrolled {
-      top: 0;
     }
 
     .logo-mark {
@@ -1462,6 +1458,7 @@
 <script>
   // ── Scroll-driven header ──
   const header = document.getElementById('site-header');
+  const announceBar = document.querySelector('.announce-bar');
   const logoPath = document.querySelector('.logo-mark svg path');
   const navLinks = document.querySelectorAll('.site-nav a');
 
@@ -1492,17 +1489,23 @@
     });
   }
 
+  function updateHeaderPosition() {
+    const announceBottom = Math.max(0, announceBar.getBoundingClientRect().bottom);
+    header.style.top = announceBottom + 'px';
+  }
+
   let ticking = false;
   window.addEventListener('scroll', () => {
     if (!ticking) {
       requestAnimationFrame(() => {
-        header.classList.toggle('scrolled', window.scrollY > 60);
+        updateHeaderPosition();
         updateHeaderTheme();
         ticking = false;
       });
       ticking = true;
     }
-  });
+  }, { passive: true });
+  updateHeaderPosition();
   updateHeaderTheme();
 
   // ── Cycling word animation ──
