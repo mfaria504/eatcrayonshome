@@ -111,6 +111,20 @@ document.addEventListener('DOMContentLoaded', () => {
     toolObserver.observe(toolStack);
   }
 
+  // ── Circle diagram pop-out ──
+  const circleDiagram = document.querySelector('.circle-diagram');
+  if (circleDiagram) {
+    const circleObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('popped');
+          circleObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.35 });
+    circleObserver.observe(circleDiagram);
+  }
+
   // ── Card stack fold-out ──
   const cardStack = document.querySelector('.card-stack');
   if (cardStack) {
