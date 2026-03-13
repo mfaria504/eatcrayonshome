@@ -97,6 +97,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   fadeEls.forEach(el => observer.observe(el));
 
+  // ── Tool stack row slide-in ──
+  const toolStack = document.querySelector('.tool-stack');
+  if (toolStack) {
+    const toolObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          toolObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    toolObserver.observe(toolStack);
+  }
+
   // ── Card stack fold-out ──
   const cardStack = document.querySelector('.card-stack');
   if (cardStack) {
