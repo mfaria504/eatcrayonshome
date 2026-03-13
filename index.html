@@ -148,12 +148,14 @@
 
 <!-- ── SERVICES ── -->
 <section class="services" id="services" aria-labelledby="services-heading">
+  <div class="services-sticky">
   <div class="services-header">
     <h2 id="services-heading" class="fade-up">How we can help you</h2>
   </div>
+  <div class="services-track">
 
   <!-- Card 01 – Strategy -->
-  <article class="service-card fade-up">
+  <article class="service-card">
     <div class="card-01-content">
       <div class="card-number">01</div>
       <div>
@@ -188,7 +190,7 @@
   </article>
 
   <!-- Card 02 – Infrastructure -->
-  <article class="service-card fade-up">
+  <article class="service-card">
     <div class="card-02-visual">
       <div class="tool-stack">
         <div class="tool-row"><span class="tool-cat">CRM</span><span class="tool-vals"><span class="tool-vals-track"><span>HubSpot</span><span>✦</span><span>Salesforce</span><span>✦</span><span>Zoho</span><span>✦</span><span>Pipedrive</span><span>✦</span><span>Monday</span><span>✦</span><span>SugarCRM</span><span aria-hidden="true">✦</span><span aria-hidden="true">HubSpot</span><span aria-hidden="true">✦</span><span aria-hidden="true">Salesforce</span><span aria-hidden="true">✦</span><span aria-hidden="true">Zoho</span><span aria-hidden="true">✦</span><span aria-hidden="true">Pipedrive</span><span aria-hidden="true">✦</span><span aria-hidden="true">Monday</span><span aria-hidden="true">✦</span><span aria-hidden="true">SugarCRM</span></span></span></div>
@@ -211,7 +213,7 @@
   </article>
 
   <!-- Card 03 – Delivery -->
-  <article class="service-card fade-up">
+  <article class="service-card">
     <div class="card-03-visual">
       <div class="card-03-visual-bg-num" aria-hidden="true">03</div>
       <div class="circle-diagram">
@@ -231,6 +233,9 @@
       </div>
     </div>
   </article>
+
+  </div><!-- /.services-track -->
+  </div><!-- /.services-sticky -->
 </section>
 
 <!-- ── TRUST ── -->
@@ -425,6 +430,25 @@
     });
   }, { threshold: 0.2 });
   document.querySelectorAll('.growth-pyramid').forEach(el => pyramidObserver.observe(el));
+</script>
+<script>
+  (function () {
+    const section = document.querySelector('#services');
+    const track = document.querySelector('.services-track');
+    if (!section || !track) return;
+
+    function onScroll() {
+      if (window.innerWidth < 768) return;
+      const scrolled = window.scrollY - section.offsetTop;
+      const maxScroll = section.offsetHeight - window.innerHeight;
+      const progress = Math.max(0, Math.min(1, scrolled / maxScroll));
+      const maxTranslate = track.scrollWidth - track.parentElement.clientWidth;
+      track.style.transform = `translateX(${-progress * maxTranslate}px)`;
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
 </script>
 </body>
 </html>

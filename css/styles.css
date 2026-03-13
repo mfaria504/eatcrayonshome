@@ -471,26 +471,43 @@ body {
 
 /* ── SERVICES ── */
 .services {
-  padding: 0 40px 120px;
+  height: 400vh;
+}
+.services-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 48px 40px 32px;
 }
 .services-header {
-  max-width: 1360px;
-  margin: 0 auto;
-  padding-bottom: 48px;
+  padding-bottom: 28px;
+  flex-shrink: 0;
 }
 .services-header h2 {
   font-size: clamp(1.7rem, 2.8vw, 2.4rem);
   font-weight: 800;
   letter-spacing: -0.035em;
 }
+.services-track {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
+  will-change: transform;
+}
 .service-card {
-  max-width: 1360px;
-  margin: 0 auto 20px;
+  width: calc(100vw - 80px);
+  min-width: calc(100vw - 80px);
+  flex-shrink: 0;
   border-radius: 20px;
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 480px;
+  height: 100%;
 }
 /* Card 01 – Strategy */
 .card-01-content {
@@ -1345,8 +1362,10 @@ footer {
   .orb-sat-label { font-size: 9px; max-width: 60px; }
   .about { padding: 80px 24px; }
   .about-inner { grid-template-columns: 1fr; gap: 40px; }
-  .services { padding: 0 24px 80px; }
-  .service-card { grid-template-columns: 1fr; min-height: auto; }
+  .services { height: auto; }
+  .services-sticky { position: static; height: auto; overflow: visible; padding: 48px 24px 80px; }
+  .services-track { flex-direction: column; transform: none !important; }
+  .service-card { width: 100%; min-width: 0; height: auto; grid-template-columns: 1fr; min-height: auto; }
   .trust { padding: 80px 24px; }
   .stats-grid { grid-template-columns: 1fr; gap: 36px; }
   .testimonials { padding: 80px 24px; }
