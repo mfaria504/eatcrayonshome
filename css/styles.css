@@ -1408,17 +1408,28 @@ footer {
 
 /* ── WATERMARK ── */
 .watermark-section {
-  background:
-    radial-gradient(ellipse 90% 220% at 50% 60%,
-      rgba(var(--blue-rgb), 0.72) 0%,
-      rgba(var(--blue-rgb), 0.38) 35%,
-      rgba(var(--blue-rgb), 0.10) 60%,
-      transparent 80%),
-    white;
+  background: white;
   overflow: hidden;
   padding-top: 16px;
   line-height: 0.88;
   text-align: center;
+  position: relative;
+}
+.watermark-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg,
+    rgba(68, 140, 247, 0.72) 0%,
+    rgba(139, 92, 246, 0.65) 30%,
+    rgba(242, 179, 123, 0.55) 55%,
+    rgba(139, 92, 246, 0.65) 75%,
+    rgba(68, 140, 247, 0.72) 100%
+  );
+  background-size: 300% 300%;
+  animation: sky-drift 30s ease infinite;
+  mask-image: radial-gradient(ellipse 90% 220% at 50% 60%, black 0%, black 35%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 220% at 50% 60%, black 0%, black 35%, transparent 80%);
 }
 .watermark-text {
   font-size: clamp(80px, 14vw, 200px);
@@ -1429,6 +1440,12 @@ footer {
   line-height: 0.88;
   user-select: none;
   transform: translateY(10%);
+  position: relative;
+}
+@keyframes sky-drift {
+  0%   { background-position: 0% 40%; }
+  50%  { background-position: 100% 60%; }
+  100% { background-position: 0% 40%; }
 }
 
 /* ── ANIMATIONS ── */
