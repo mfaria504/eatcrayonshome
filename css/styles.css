@@ -691,6 +691,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: 40px;
+  overflow: hidden;
 }
 .card-02-content {
   background: linear-gradient(145deg, #7C3AED 0%, #6D28D9 100%);
@@ -982,7 +983,7 @@ body {
 }
 
 /* Tool stack table */
-.tool-stack { max-width: 480px; }
+.tool-stack { max-width: 480px; width: 100%; }
 .tool-row {
   display: flex;
   align-items: center;
@@ -1473,6 +1474,12 @@ footer {
   .card-number { font-size: 72px; }
   .trust-quote { font-size: 1.8rem; }
   .cta-headline { font-size: 1.8rem; }
+  .pyr-text { white-space: normal; text-align: center; font-size: 11px; }
+  .pyr-level { height: auto; min-height: 40px; padding: 8px 12px; }
+  .card-02-visual { padding: 24px 20px; }
+  .tool-cat { width: 72px; font-size: 11px; padding: 10px 10px; }
+  .tool-vals { font-size: 12px; }
+  .tool-vals-track > span { margin-right: 28px; }
   .orb-system { width: 320px; height: 320px; }
   .orb-ring { width: 250px; height: 250px; }
   .orb-center { width: 104px; height: 104px; }
