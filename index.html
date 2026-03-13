@@ -221,8 +221,8 @@
     /* ── ORB SYSTEM ── */
     .orb-system {
       position: relative;
-      width: 400px;
-      height: 400px;
+      width: 500px;
+      height: 500px;
       flex-shrink: 0;
       margin: 0 auto;
       display: flex;
@@ -234,10 +234,10 @@
     .orb-ring {
       position: absolute;
       top: 50%; left: 50%;
-      width: 312px;
-      height: 312px;
+      width: 390px;
+      height: 390px;
       border-radius: 50%;
-      border: 1px solid rgba(68,140,247,0.14);
+      border: 1px solid rgba(68,140,247,0.13);
       transform: translate(-50%, -50%);
       pointer-events: none;
       animation: ring-spin 60s linear infinite;
@@ -245,7 +245,7 @@
     .orb-ring::before {
       content: '';
       position: absolute;
-      top: -3px; left: -3px; right: -3px; bottom: -3px;
+      top: -4px; left: -4px; right: -4px; bottom: -4px;
       border-radius: 50%;
       border: 1px solid rgba(68,140,247,0.05);
     }
@@ -258,8 +258,8 @@
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 154px;
-      height: 154px;
+      width: 162px;
+      height: 162px;
       border-radius: 50%;
       background: radial-gradient(circle at 33% 30%,
         #1e3566 0%,
@@ -325,7 +325,7 @@
     .orb-arm {
       position: absolute;
       top: 50%; left: 50%;
-      width: 156px;
+      width: 195px;
       height: 0;
       transform-origin: 0 0;
     }
@@ -340,10 +340,10 @@
     /* Satellite balls */
     .orb-satellite {
       position: absolute;
-      right: -34px;
-      top: -34px;
-      width: 68px;
-      height: 68px;
+      right: -53px;
+      top: -53px;
+      width: 106px;
+      height: 106px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -361,11 +361,12 @@
     .orb-satellite::before {
       content: '';
       position: absolute;
-      top: 16%; left: 20%;
-      width: 38%; height: 28%;
-      background: radial-gradient(ellipse, rgba(255,255,255,0.38) 0%, transparent 70%);
+      top: 15%; left: 18%;
+      width: 40%; height: 28%;
+      background: radial-gradient(ellipse, rgba(255,255,255,0.40) 0%, transparent 70%);
       border-radius: 50%;
       pointer-events: none;
+      z-index: 1;
     }
 
     /* Satellite color variants */
@@ -374,8 +375,8 @@
         rgba(130,190,255,0.98) 0%, rgba(50,110,230,0.98) 55%, rgba(20,55,160,1) 100%);
       box-shadow:
         0 0 0 1px rgba(68,140,247,0.45),
-        0 0 18px rgba(68,140,247,0.65),
-        0 0 44px rgba(68,140,247,0.28),
+        0 0 22px rgba(68,140,247,0.65),
+        0 0 54px rgba(68,140,247,0.28),
         inset 0 1px 0 rgba(255,255,255,0.22);
     }
     .orb-sat--2 {
@@ -383,8 +384,8 @@
         rgba(195,155,255,0.98) 0%, rgba(130,65,245,0.98) 55%, rgba(70,20,160,1) 100%);
       box-shadow:
         0 0 0 1px rgba(139,92,246,0.45),
-        0 0 18px rgba(139,92,246,0.65),
-        0 0 44px rgba(139,92,246,0.28),
+        0 0 22px rgba(139,92,246,0.65),
+        0 0 54px rgba(139,92,246,0.28),
         inset 0 1px 0 rgba(255,255,255,0.22);
     }
     .orb-sat--3 {
@@ -392,24 +393,29 @@
         rgba(255,225,175,0.98) 0%, rgba(235,155,75,0.98) 55%, rgba(160,75,15,1) 100%);
       box-shadow:
         0 0 0 1px rgba(242,179,123,0.45),
-        0 0 16px rgba(242,179,123,0.58),
-        0 0 40px rgba(242,179,123,0.20),
+        0 0 20px rgba(242,179,123,0.58),
+        0 0 50px rgba(242,179,123,0.20),
         inset 0 1px 0 rgba(255,255,255,0.28);
     }
 
-    /* Satellite labels */
+    /* Labels — centered inside the satellite sphere */
     .orb-sat-label {
       position: absolute;
-      bottom: calc(-100% + 2px);
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
-      font-family: var(--font-body);
-      font-size: 9.5px;
-      font-weight: 500;
-      letter-spacing: 0.11em;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.50);
-      white-space: nowrap;
+      color: rgba(255,255,255,0.95);
+      text-align: center;
+      white-space: normal;
+      max-width: 74px;
+      line-height: 1.25;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.35);
     }
 
     /* ── ABOUT ── */
@@ -1034,13 +1040,13 @@
       #site-header { padding: 18px 24px; }
       .hero { padding: 130px 24px 80px; }
       .hero-inner { grid-template-columns: 1fr; gap: 52px; }
-      .orb-system { width: 320px; height: 320px; }
-      .orb-ring { width: 250px; height: 250px; }
-      .orb-center { width: 124px; height: 124px; }
+      .orb-system { width: 400px; height: 400px; }
+      .orb-ring { width: 312px; height: 312px; }
+      .orb-center { width: 130px; height: 130px; }
       .orb-center-logo { width: 42px; height: 43px; }
-      .orb-arm { width: 125px; }
-      .orb-satellite { width: 56px; height: 56px; right: -28px; top: -28px; }
-      .orb-sat-label { font-size: 8.5px; }
+      .orb-arm { width: 156px; }
+      .orb-satellite { width: 86px; height: 86px; right: -43px; top: -43px; }
+      .orb-sat-label { font-size: 9px; max-width: 60px; }
       .about { padding: 80px 24px; }
       .about-inner { grid-template-columns: 1fr; gap: 40px; }
       .services { padding: 0 24px 80px; }
@@ -1062,12 +1068,13 @@
       .card-number { font-size: 72px; }
       .trust-quote { font-size: 1.8rem; }
       .cta-headline { font-size: 1.8rem; }
-      .orb-system { width: 280px; height: 280px; }
-      .orb-ring { width: 218px; height: 218px; }
-      .orb-center { width: 108px; height: 108px; }
-      .orb-center-logo { width: 36px; height: 37px; }
-      .orb-arm { width: 109px; }
-      .orb-satellite { width: 48px; height: 48px; right: -24px; top: -24px; }
+      .orb-system { width: 320px; height: 320px; }
+      .orb-ring { width: 250px; height: 250px; }
+      .orb-center { width: 104px; height: 104px; }
+      .orb-center-logo { width: 34px; height: 35px; }
+      .orb-arm { width: 125px; }
+      .orb-satellite { width: 68px; height: 68px; right: -34px; top: -34px; }
+      .orb-sat-label { font-size: 7.5px; max-width: 48px; letter-spacing: 0.02em; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1176,7 +1183,7 @@
       <!-- Satellite 2: Infrastructure (purple) -->
       <div class="orb-arm orb-arm--2">
         <div class="orb-satellite orb-sat--2">
-          <span class="orb-sat-label">Infrastructure</span>
+          <span class="orb-sat-label">Infra-<br>structure</span>
         </div>
       </div>
 
