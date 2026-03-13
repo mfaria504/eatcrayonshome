@@ -561,8 +561,8 @@ body {
 /* 1=top(0,-105) 2=upper-right(100,-32) 3=lower-right(62,85) 4=lower-left(-62,85) 5=upper-left(-100,-32) */
 .circle-diagram {
   position: relative;
-  width: 460px;
-  height: 440px;
+  width: 520px;
+  height: 500px;
   flex-shrink: 0;
 }
 .role-bubble {
@@ -576,7 +576,7 @@ body {
   text-align: center;
   color: white;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.2;
   padding: 14px;
   opacity: 0;
   will-change: transform, opacity;
@@ -601,12 +601,12 @@ body {
 .role-bubble--3,
 .role-bubble--4,
 .role-bubble--5 {
-  width: 116px;
-  height: 116px;
-  margin: -58px 0 0 -58px;
+  width: 130px;
+  height: 130px;
+  margin: -65px 0 0 -65px;
   background: rgba(15,7,2,0.72);
   border: 1px solid rgba(255,255,255,0.18);
-  font-size: 11px;
+  font-size: 9px;
   font-weight: 600;
   box-shadow: 0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08);
 }
@@ -620,24 +620,24 @@ body {
   100% { opacity: 1; transform: scale(1); }
 }
 @keyframes bubble-in-1 {
-  0%   { opacity: 0; transform: translate(0px, -128px) scale(0); }
-  100% { opacity: 0.88; transform: translate(0px, -128px) scale(1); }
+  0%   { opacity: 0; transform: translate(0px, -140px) scale(0); }
+  100% { opacity: 0.88; transform: translate(0px, -140px) scale(1); }
 }
 @keyframes bubble-in-2 {
-  0%   { opacity: 0; transform: translate(122px, -40px) scale(0); }
-  100% { opacity: 0.82; transform: translate(122px, -40px) scale(1); }
+  0%   { opacity: 0; transform: translate(133px, -43px) scale(0); }
+  100% { opacity: 0.82; transform: translate(133px, -43px) scale(1); }
 }
 @keyframes bubble-in-3 {
-  0%   { opacity: 0; transform: translate(75px, 103px) scale(0); }
-  100% { opacity: 0.78; transform: translate(75px, 103px) scale(1); }
+  0%   { opacity: 0; transform: translate(82px, 113px) scale(0); }
+  100% { opacity: 0.78; transform: translate(82px, 113px) scale(1); }
 }
 @keyframes bubble-in-4 {
-  0%   { opacity: 0; transform: translate(-75px, 103px) scale(0); }
-  100% { opacity: 0.78; transform: translate(-75px, 103px) scale(1); }
+  0%   { opacity: 0; transform: translate(-82px, 113px) scale(0); }
+  100% { opacity: 0.78; transform: translate(-82px, 113px) scale(1); }
 }
 @keyframes bubble-in-5 {
-  0%   { opacity: 0; transform: translate(-122px, -40px) scale(0); }
-  100% { opacity: 0.82; transform: translate(-122px, -40px) scale(1); }
+  0%   { opacity: 0; transform: translate(-133px, -43px) scale(0); }
+  100% { opacity: 0.82; transform: translate(-133px, -43px) scale(1); }
 }
 .circle-diagram.popped .role-bubble--1 {
   animation: bubble-in-1 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.00s forwards;
