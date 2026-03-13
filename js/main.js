@@ -96,4 +96,18 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
   fadeEls.forEach(el => observer.observe(el));
+
+  // ── Card stack fold-out ──
+  const cardStack = document.querySelector('.card-stack');
+  if (cardStack) {
+    const stackObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('folded-out');
+          stackObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.35 });
+    stackObserver.observe(cardStack);
+  }
 });
