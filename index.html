@@ -50,8 +50,9 @@
 
     /* ── ANNOUNCEMENT BAR ── */
     .announce-bar {
-      position: fixed;
+      position: sticky;
       top: 2px; left: 8px; right: 8px;
+      margin: 2px 8px 0;
       z-index: 300;
       background: var(--blue);
       height: 44px;
@@ -86,7 +87,7 @@
     /* ── HEADER ── */
     #site-header {
       position: fixed;
-      top: 52px; left: 0; right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 200;
       display: flex;
       align-items: center;
