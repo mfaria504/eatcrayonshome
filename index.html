@@ -1465,22 +1465,30 @@
   const logoPath = document.querySelector('.logo-mark svg path');
   const navLinks = document.querySelectorAll('.site-nav a');
 
-  // Light sections: logo turns brand blue, nav turns dark
-  const lightSectionSelectors = ['.about', '.services', '.testimonials', '.pricing', '.cta-section'];
-  lightSectionSelectors.forEach(sel => {
+  // Tag light-background sections
+  ['.about', '.services', '.testimonials', '.pricing', '.cta-section'].forEach(sel => {
     document.querySelectorAll(sel).forEach(el => el.dataset.logoTheme = 'light');
   });
 
+  const themedSections = Array.from(document.querySelectorAll('[data-logo-theme]'));
+
   function updateHeaderTheme() {
-    const sampleY = header.getBoundingClientRect().bottom - 4;
-    const sampleX = header.getBoundingClientRect().left + 60;
-    const el = document.elementFromPoint(sampleX, sampleY);
-    const section = el ? el.closest('[data-logo-theme]') : null;
-    const isLight = section && section.dataset.logoTheme === 'light';
+    // Use the midpoint Y of the header to decide which section we're over
+    const checkY = window.scrollY + header.getBoundingClientRect().bottom - 10;
+    let isLight = false;
+
+    for (const sec of themedSections) {
+      const top = sec.offsetTop;
+      const bottom = top + sec.offsetHeight;
+      if (checkY >= top && checkY < bottom) {
+        isLight = sec.dataset.logoTheme === 'light';
+        break;
+      }
+    }
 
     logoPath.style.fill = isLight ? '#448cf7' : 'white';
     navLinks.forEach(a => {
-      a.style.color = isLight ? 'rgba(18,18,23,0.75)' : 'white';
+      a.style.color = isLight ? 'rgba(18,18,23,0.8)' : 'white';
     });
   }
 
