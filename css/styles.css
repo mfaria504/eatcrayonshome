@@ -331,9 +331,9 @@ body {
   height: 0;
   transform-origin: 0 0;
 }
-.orb-arm--1 { animation: orbit 18s linear infinite; }
-.orb-arm--2 { animation: orbit 18s linear infinite -6s; }
-.orb-arm--3 { animation: orbit 18s linear infinite -12s; }
+.orb-arm--1 { animation: orbit 60s linear infinite; }
+.orb-arm--2 { animation: orbit 60s linear infinite -20s; }
+.orb-arm--3 { animation: orbit 60s linear infinite -40s; }
 @keyframes orbit {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
@@ -352,9 +352,9 @@ body {
   justify-content: center;
 }
 /* Counter-rotate so satellite stays upright */
-.orb-arm--1 .orb-satellite { animation: counter-orbit 18s linear infinite; }
-.orb-arm--2 .orb-satellite { animation: counter-orbit 18s linear infinite -6s; }
-.orb-arm--3 .orb-satellite { animation: counter-orbit 18s linear infinite -12s; }
+.orb-arm--1 .orb-satellite { animation: counter-orbit 60s linear infinite; }
+.orb-arm--2 .orb-satellite { animation: counter-orbit 60s linear infinite -20s; }
+.orb-arm--3 .orb-satellite { animation: counter-orbit 60s linear infinite -40s; }
 @keyframes counter-orbit {
   from { transform: rotate(0deg); }
   to   { transform: rotate(-360deg); }
@@ -482,6 +482,13 @@ body {
   font-size: clamp(1.7rem, 2.8vw, 2.4rem);
   font-weight: 800;
   letter-spacing: -0.035em;
+}
+.services-subhead {
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  margin-top: 12px;
+  letter-spacing: -0.01em;
 }
 .service-card {
   max-width: 1360px;
