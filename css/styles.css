@@ -806,7 +806,7 @@ body {
 }
 
 /* Tool stack table */
-.tool-stack { width: 100%; }
+.tool-stack { max-width: 480px; }
 .tool-row {
   display: flex;
   align-items: center;
@@ -839,7 +839,7 @@ body {
   font-size: 13px;
   font-weight: 700;
   padding: 13px 20px;
-  width: 116px;
+  width: 90px;
   flex-shrink: 0;
   text-align: center;
   border-radius: 50px 0 0 50px;
@@ -848,6 +848,7 @@ body {
 .tool-vals {
   overflow: hidden;
   flex: 1;
+  min-width: 0;
   color: rgba(255,255,255,0.75);
   font-size: 14px;
   font-weight: 500;
