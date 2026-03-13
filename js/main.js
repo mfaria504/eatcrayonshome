@@ -67,22 +67,24 @@ document.addEventListener('DOMContentLoaded', () => {
   updateScrollState();
 
   // ── Cycling word animation ──
-  const words = ['looks.', 'operates.', 'scales.'];
-  let idx = 0;
   const cycleEl = document.getElementById('word-cycle');
+  if (cycleEl) {
+    const words = ['looks.', 'operates.', 'scales.'];
+    let idx = 0;
 
-  function cycleWord() {
-    cycleEl.style.opacity = '0';
-    cycleEl.style.transform = 'translateY(-10px)';
-    setTimeout(() => {
-      idx = (idx + 1) % words.length;
-      cycleEl.textContent = words[idx];
-      cycleEl.style.opacity = '1';
-      cycleEl.style.transform = 'translateY(0)';
-    }, 280);
+    function cycleWord() {
+      cycleEl.style.opacity = '0';
+      cycleEl.style.transform = 'translateY(-10px)';
+      setTimeout(() => {
+        idx = (idx + 1) % words.length;
+        cycleEl.textContent = words[idx];
+        cycleEl.style.opacity = '1';
+        cycleEl.style.transform = 'translateY(0)';
+      }, 280);
+    }
+
+    setInterval(cycleWord, 2200);
   }
-
-  setInterval(cycleWord, 2200);
 
   // ── Scroll fade-up observer ──
   const fadeEls = document.querySelectorAll('.fade-up');
