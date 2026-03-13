@@ -37,9 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
     navLinks.forEach(a => {
       a.style.color = isLight ? 'rgba(18,18,23,0.8)' : 'white';
     });
-    document.querySelectorAll('.nav-toggle-bar').forEach(bar => {
-      bar.style.background = isLight ? 'rgba(18,18,23,0.8)' : 'white';
-    });
   }
 
   function updateHeaderPosition() {
@@ -175,4 +172,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) closeMenu();
   });
 
+  // Keep hamburger bar color in sync with header theming
+  const origUpdateHeaderTheme = updateHeaderTheme;
+  function updateToggleTheme(isLight) {
+    document.querySelectorAll('.nav-toggle-bar').forEach(bar => {
+      bar.style.background = isLight ? 'rgba(18,18,23,0.8)' : 'white';
+    });
+  }
+  // Patch scroll handler to also update toggle bars
+  window.addEventListener('scroll', () => {
+    const checkY = window.scrollY + header.getBoundingClientRect().bottom - 10;
+    let isLight = false;
+    for (const sec of themedSections) {
+      const top = sec.offsetTop;
+      const bottom = top + sec.offsetHeight;
+      if (checkY >= top && checkY < bottom) { isLight = sec.dataset.logoTheme === 'light'; break; }
+    }
+    updateToggleTheme(isLight);
+  }, { passive: true });
+  updateToggleTheme(false);
 });
