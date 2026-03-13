@@ -138,4 +138,57 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.35 });
     stackObserver.observe(cardStack);
   }
+
+  // ── Mobile menu ──
+  const navToggle = document.querySelector('.nav-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileLinks = document.querySelectorAll('.mobile-menu-link');
+
+  function openMenu() {
+    mobileMenu.classList.add('is-open');
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    navToggle.setAttribute('aria-expanded', 'true');
+    header.classList.add('menu-open');
+    document.body.style.overflow = 'hidden';
+    announceBar.classList.add('hidden');
+  }
+
+  function closeMenu() {
+    mobileMenu.classList.remove('is-open');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    navToggle.setAttribute('aria-expanded', 'false');
+    header.classList.remove('menu-open');
+    document.body.style.overflow = '';
+    if (window.scrollY <= SCROLL_THRESHOLD) announceBar.classList.remove('hidden');
+  }
+
+  navToggle.addEventListener('click', () => {
+    navToggle.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu();
+  });
+
+  mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) closeMenu();
+  });
+
+  // Keep hamburger bar color in sync with header theming
+  const origUpdateHeaderTheme = updateHeaderTheme;
+  function updateToggleTheme(isLight) {
+    document.querySelectorAll('.nav-toggle-bar').forEach(bar => {
+      bar.style.background = isLight ? 'rgba(18,18,23,0.8)' : 'white';
+    });
+  }
+  // Patch scroll handler to also update toggle bars
+  window.addEventListener('scroll', () => {
+    const checkY = window.scrollY + header.getBoundingClientRect().bottom - 10;
+    let isLight = false;
+    for (const sec of themedSections) {
+      const top = sec.offsetTop;
+      const bottom = top + sec.offsetHeight;
+      if (checkY >= top && checkY < bottom) { isLight = sec.dataset.logoTheme === 'light'; break; }
+    }
+    updateToggleTheme(isLight);
+  }, { passive: true });
+  updateToggleTheme(false);
 });
