@@ -51,18 +51,19 @@
     /* ── ANNOUNCEMENT BAR ── */
     .announce-bar {
       position: fixed;
-      top: 0; left: 0; right: 0;
+      top: 2px; left: 8px; right: 8px;
       z-index: 300;
       background: var(--blue);
-      height: 40px;
+      height: 36px;
       overflow: hidden;
       display: flex;
       align-items: center;
+      border-radius: 999px;
     }
     .announce-track {
       display: flex;
       white-space: nowrap;
-      animation: ticker 22s linear infinite;
+      animation: ticker 48s linear infinite;
     }
     .announce-item {
       font-family: var(--font-body);
@@ -85,7 +86,7 @@
     /* ── HEADER ── */
     #site-header {
       position: fixed;
-      top: 40px; left: 0; right: 0;
+      top: 44px; left: 0; right: 0;
       z-index: 200;
       display: flex;
       align-items: center;
