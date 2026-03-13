@@ -860,7 +860,7 @@ body {
   display: flex;
   width: max-content;
   will-change: transform;
-  animation: marquee-scroll 6s linear infinite;
+  animation: marquee-scroll 20s linear infinite;
 }
 .tool-vals-track > span {
   margin-right: 48px;
