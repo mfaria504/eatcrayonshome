@@ -1092,10 +1092,15 @@ footer {
 
 /* ── WATERMARK ── */
 .watermark-section {
-  background: linear-gradient(180deg, rgba(var(--blue-rgb), 0.04) 0%, rgba(var(--blue-rgb), 0.12) 100%);
+  background: radial-gradient(ellipse 90% 220% at 50% 60%,
+    rgba(var(--blue-rgb), 0.72) 0%,
+    rgba(var(--blue-rgb), 0.38) 35%,
+    rgba(var(--blue-rgb), 0.10) 60%,
+    transparent 80%);
   overflow: hidden;
   padding-top: 16px;
   line-height: 0.88;
+  text-align: center;
 }
 .watermark-text {
   font-size: clamp(80px, 14vw, 200px);
