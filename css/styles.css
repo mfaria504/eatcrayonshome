@@ -836,20 +836,37 @@ body {
 .tool-cat {
   background: rgba(0,0,0,0.45);
   color: rgba(255,255,255,0.9);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
-  padding: 9px 16px;
-  min-width: 82px;
-  border-radius: 50px;
+  padding: 13px 20px;
+  width: 116px;
+  flex-shrink: 0;
+  text-align: center;
+  border-radius: 50px 0 0 50px;
   letter-spacing: 0.02em;
 }
 .tool-vals {
-  display: flex;
-  gap: 14px;
-  padding: 0 18px;
+  overflow: hidden;
+  flex: 1;
   color: rgba(255,255,255,0.75);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
+  mask-image: linear-gradient(to right, transparent 0%, black 18%, black 82%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 18%, black 82%, transparent 100%);
+  transform: translateZ(0);
+}
+.tool-vals-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marquee-scroll 6s linear infinite;
+}
+.tool-vals-track > span {
+  margin-right: 48px;
+}
+@keyframes marquee-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
 }
 
 /* ── TRUST / STATS ── */
