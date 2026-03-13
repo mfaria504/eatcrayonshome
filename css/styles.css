@@ -604,7 +604,7 @@ body {
 }
 .pyr-level[data-topic] {
   cursor: pointer;
-  transition: opacity 0.5s ease, translate 0.5s ease, background 0.1s ease, color 0.1s ease;
+  transition: opacity 0.5s ease, translate 0.5s ease;
 }
 .pyr-level[data-topic]:hover {
   background: rgba(255,255,255,0.95) !important;
