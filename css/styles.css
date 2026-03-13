@@ -537,20 +537,21 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 .pyr-level {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  height: 56px;
-  border-radius: 0;
+  height: 52px;
+  border-radius: 9999px;
   padding: 0 20px;
   transition: opacity 0.5s ease, translate 0.5s ease;
   cursor: default;
   opacity: 0;
   translate: 0 24px;
+  backdrop-filter: blur(6px);
 }
 .growth-pyramid.in-view .pyr-level {
   opacity: 1;
@@ -562,12 +563,12 @@ body {
 .growth-pyramid.in-view .pyr-level--4 { transition-delay: 0.24s; }
 .growth-pyramid.in-view .pyr-level--5 { transition-delay: 0.32s; }
 .growth-pyramid.in-view .pyr-level--6 { transition-delay: 0.40s; }
-.pyr-level--6 { width: 40%; background: rgba(0,0,0,0.55); color: rgba(255,255,255,0.95); }
-.pyr-level--5 { width: 53%; background: rgba(0,0,0,0.48); color: rgba(255,255,255,0.95); }
-.pyr-level--4 { width: 64%; background: rgba(0,0,0,0.40); color: rgba(255,255,255,0.95); }
-.pyr-level--3 { width: 76%; background: rgba(0,0,0,0.32); color: rgba(255,255,255,0.95); }
-.pyr-level--2 { width: 88%; background: rgba(0,0,0,0.24); color: rgba(255,255,255,0.95); }
-.pyr-level--1 { width: 100%; background: rgba(0,0,0,0.16); color: rgba(255,255,255,0.95); }
+.pyr-level--6 { width: 38%; background: rgba(255,255,255,0.95); color: rgba(15,40,120,0.95); }
+.pyr-level--5 { width: 51%; background: rgba(255,255,255,0.68); color: rgba(15,40,120,0.95); }
+.pyr-level--4 { width: 63%; background: rgba(255,255,255,0.46); color: rgba(15,40,120,0.95); }
+.pyr-level--3 { width: 76%; background: rgba(255,255,255,0.28); color: rgba(15,40,120,0.95); }
+.pyr-level--2 { width: 88%; background: rgba(255,255,255,0.15); color: rgba(15,40,120,0.95); }
+.pyr-level--1 { width: 100%; background: rgba(255,255,255,0.07); color: rgba(15,40,120,0.95); }
 .pyr-num {
   font-size: 9px;
   font-weight: 800;
