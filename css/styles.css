@@ -94,7 +94,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 22px 52px;
+  padding: 22px 40px;
 }
 
 .logo-mark {
@@ -140,10 +140,10 @@ body {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 140px 52px 100px;
+  padding: 140px 40px 100px;
 }
 .hero-inner {
-  max-width: 1200px;
+  max-width: 1360px;
   margin: 0 auto;
   width: 100%;
   display: grid;
@@ -423,10 +423,10 @@ body {
 /* ── ABOUT ── */
 .about {
   background: white;
-  padding: 130px 52px;
+  padding: 130px 40px;
 }
 .about-inner {
-  max-width: 1200px;
+  max-width: 1360px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -471,10 +471,10 @@ body {
 
 /* ── SERVICES ── */
 .services {
-  padding: 0 52px 120px;
+  padding: 0 40px 120px;
 }
 .services-header {
-  max-width: 1200px;
+  max-width: 1360px;
   margin: 0 auto;
   padding-bottom: 48px;
 }
@@ -484,7 +484,7 @@ body {
   letter-spacing: -0.035em;
 }
 .service-card {
-  max-width: 1200px;
+  max-width: 1360px;
   margin: 0 auto 20px;
   border-radius: 20px;
   overflow: hidden;
@@ -495,7 +495,7 @@ body {
 /* Card 01 – Strategy */
 .card-01-content {
   background: #4A8EF8;
-  padding: 60px 52px;
+  padding: 60px 40px;
   color: white;
   display: flex;
   flex-direction: column;
@@ -518,7 +518,7 @@ body {
 }
 .card-02-content {
   background: linear-gradient(145deg, #7C3AED 0%, #6D28D9 100%);
-  padding: 60px 52px;
+  padding: 60px 40px;
   color: white;
   display: flex;
   flex-direction: column;
@@ -549,7 +549,7 @@ body {
   background-image:
     radial-gradient(ellipse at 10% 85%, rgba(var(--orange-rgb), 0.10) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 15%, rgba(var(--blue-rgb), 0.08) 0%, transparent 50%);
-  padding: 60px 52px;
+  padding: 60px 40px;
   color: white;
   display: flex;
   flex-direction: column;
@@ -855,10 +855,10 @@ body {
 /* ── TRUST / STATS ── */
 .trust {
   background: var(--dark);
-  padding: 120px 52px;
+  padding: 120px 40px;
   color: white;
 }
-.trust-inner { max-width: 1200px; margin: 0 auto; }
+.trust-inner { max-width: 1360px; margin: 0 auto; }
 .trust-quote {
   font-size: clamp(1.9rem, 3.8vw, 3.4rem);
   font-weight: 700;
@@ -917,9 +917,9 @@ body {
 /* ── TESTIMONIALS ── */
 .testimonials {
   background: white;
-  padding: 120px 52px;
+  padding: 120px 40px;
 }
-.testimonials-inner { max-width: 1200px; margin: 0 auto; }
+.testimonials-inner { max-width: 1360px; margin: 0 auto; }
 .testimonials-eyebrow {
   font-family: var(--font-body);
   font-size: 11px;
@@ -976,9 +976,9 @@ body {
 /* ── PRICING ── */
 .pricing {
   background: white;
-  padding: 120px 52px;
+  padding: 120px 40px;
 }
-.pricing-inner { max-width: 1200px; margin: 0 auto; }
+.pricing-inner { max-width: 1360px; margin: 0 auto; }
 .pricing-eyebrow {
   font-family: var(--font-body);
   font-size: 11px;
@@ -1116,7 +1116,7 @@ body {
 /* ── CTA SECTION ── */
 .cta-section {
   background: white;
-  padding: 120px 52px;
+  padding: 120px 40px;
   text-align: center;
   border-top: 1px solid rgba(0,0,0,0.05);
 }
@@ -1164,10 +1164,10 @@ body {
 footer {
   background: white;
   border-top: 1px solid rgba(0,0,0,0.06);
-  padding: 28px 52px;
+  padding: 28px 40px;
 }
 .footer-inner {
-  max-width: 1200px;
+  max-width: 1360px;
   margin: 0 auto;
   display: flex;
   align-items: center;
