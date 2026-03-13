@@ -218,16 +218,198 @@
     }
     .btn-arrow-circle svg { color: var(--dark); }
 
-    /* Venn Diagram */
-    .venn-wrap {
+    /* ── ORB SYSTEM ── */
+    .orb-system {
+      position: relative;
+      width: 400px;
+      height: 400px;
+      flex-shrink: 0;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .venn-svg {
-      width: 100%;
-      max-width: 400px;
-      filter: drop-shadow(0 0 80px rgba(var(--blue-rgb), 0.18));
+
+    /* Decorative orbital ring */
+    .orb-ring {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 312px;
+      height: 312px;
+      border-radius: 50%;
+      border: 1px solid rgba(68,140,247,0.14);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      animation: ring-spin 60s linear infinite;
+    }
+    .orb-ring::before {
+      content: '';
+      position: absolute;
+      top: -3px; left: -3px; right: -3px; bottom: -3px;
+      border-radius: 50%;
+      border: 1px solid rgba(68,140,247,0.05);
+    }
+    @keyframes ring-spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Central orb */
+    .orb-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 154px;
+      height: 154px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 33% 30%,
+        #1e3566 0%,
+        #0d1226 52%,
+        #070b1a 100%
+      );
+      box-shadow:
+        0 0 0 1px rgba(68,140,247,0.24),
+        0 0 40px rgba(68,140,247,0.40),
+        0 0 90px rgba(68,140,247,0.15),
+        inset 0 1px 0 rgba(255,255,255,0.10);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      z-index: 2;
+      animation: orb-breathe 5s ease-in-out infinite;
+    }
+    /* Specular highlight */
+    .orb-center::before {
+      content: '';
+      position: absolute;
+      top: 14%; left: 18%;
+      width: 42%; height: 30%;
+      background: radial-gradient(ellipse, rgba(255,255,255,0.20) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    @keyframes orb-breathe {
+      0%, 100% {
+        box-shadow:
+          0 0 0 1px rgba(68,140,247,0.24),
+          0 0 40px rgba(68,140,247,0.40),
+          0 0 90px rgba(68,140,247,0.15),
+          inset 0 1px 0 rgba(255,255,255,0.10);
+      }
+      50% {
+        box-shadow:
+          0 0 0 1px rgba(68,140,247,0.35),
+          0 0 60px rgba(68,140,247,0.58),
+          0 0 130px rgba(68,140,247,0.24),
+          inset 0 1px 0 rgba(255,255,255,0.14);
+      }
+    }
+    .orb-center-logo {
+      display: block;
+      width: 52px;
+      height: 53px;
+      flex-shrink: 0;
+    }
+    .orb-center-text {
+      font-family: var(--font-body);
+      font-size: 8.5px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+      line-height: 1;
+    }
+
+    /* Rotating arms */
+    .orb-arm {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 156px;
+      height: 0;
+      transform-origin: 0 0;
+    }
+    .orb-arm--1 { animation: orbit 18s linear infinite; }
+    .orb-arm--2 { animation: orbit 18s linear infinite -6s; }
+    .orb-arm--3 { animation: orbit 18s linear infinite -12s; }
+    @keyframes orbit {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* Satellite balls */
+    .orb-satellite {
+      position: absolute;
+      right: -34px;
+      top: -34px;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Counter-rotate so satellite stays upright */
+    .orb-arm--1 .orb-satellite { animation: counter-orbit 18s linear infinite; }
+    .orb-arm--2 .orb-satellite { animation: counter-orbit 18s linear infinite -6s; }
+    .orb-arm--3 .orb-satellite { animation: counter-orbit 18s linear infinite -12s; }
+    @keyframes counter-orbit {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(-360deg); }
+    }
+    /* Specular highlight on each satellite */
+    .orb-satellite::before {
+      content: '';
+      position: absolute;
+      top: 16%; left: 20%;
+      width: 38%; height: 28%;
+      background: radial-gradient(ellipse, rgba(255,255,255,0.38) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* Satellite color variants */
+    .orb-sat--1 {
+      background: radial-gradient(circle at 32% 28%,
+        rgba(130,190,255,0.98) 0%, rgba(50,110,230,0.98) 55%, rgba(20,55,160,1) 100%);
+      box-shadow:
+        0 0 0 1px rgba(68,140,247,0.45),
+        0 0 18px rgba(68,140,247,0.65),
+        0 0 44px rgba(68,140,247,0.28),
+        inset 0 1px 0 rgba(255,255,255,0.22);
+    }
+    .orb-sat--2 {
+      background: radial-gradient(circle at 32% 28%,
+        rgba(195,155,255,0.98) 0%, rgba(130,65,245,0.98) 55%, rgba(70,20,160,1) 100%);
+      box-shadow:
+        0 0 0 1px rgba(139,92,246,0.45),
+        0 0 18px rgba(139,92,246,0.65),
+        0 0 44px rgba(139,92,246,0.28),
+        inset 0 1px 0 rgba(255,255,255,0.22);
+    }
+    .orb-sat--3 {
+      background: radial-gradient(circle at 32% 28%,
+        rgba(255,225,175,0.98) 0%, rgba(235,155,75,0.98) 55%, rgba(160,75,15,1) 100%);
+      box-shadow:
+        0 0 0 1px rgba(242,179,123,0.45),
+        0 0 16px rgba(242,179,123,0.58),
+        0 0 40px rgba(242,179,123,0.20),
+        inset 0 1px 0 rgba(255,255,255,0.28);
+    }
+
+    /* Satellite labels */
+    .orb-sat-label {
+      position: absolute;
+      bottom: calc(-100% + 2px);
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-body);
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.50);
+      white-space: nowrap;
     }
 
     /* ── ABOUT ── */
@@ -852,6 +1034,13 @@
       #site-header { padding: 18px 24px; }
       .hero { padding: 130px 24px 80px; }
       .hero-inner { grid-template-columns: 1fr; gap: 52px; }
+      .orb-system { width: 320px; height: 320px; }
+      .orb-ring { width: 250px; height: 250px; }
+      .orb-center { width: 124px; height: 124px; }
+      .orb-center-logo { width: 42px; height: 43px; }
+      .orb-arm { width: 125px; }
+      .orb-satellite { width: 56px; height: 56px; right: -28px; top: -28px; }
+      .orb-sat-label { font-size: 8.5px; }
       .about { padding: 80px 24px; }
       .about-inner { grid-template-columns: 1fr; gap: 40px; }
       .services { padding: 0 24px 80px; }
@@ -873,6 +1062,12 @@
       .card-number { font-size: 72px; }
       .trust-quote { font-size: 1.8rem; }
       .cta-headline { font-size: 1.8rem; }
+      .orb-system { width: 280px; height: 280px; }
+      .orb-ring { width: 218px; height: 218px; }
+      .orb-center { width: 108px; height: 108px; }
+      .orb-center-logo { width: 36px; height: 37px; }
+      .orb-arm { width: 109px; }
+      .orb-satellite { width: 48px; height: 48px; right: -24px; top: -24px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -958,23 +1153,40 @@
       </a>
     </div>
 
-    <div class="venn-wrap">
-      <svg class="venn-svg" viewBox="0 0 400 390" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Strategy, Infrastructure, and Delivery Venn diagram">
-        <!-- Strategy (top, dark) -->
-        <circle cx="200" cy="138" r="132" fill="#1C1C28" opacity="0.96"/>
-        <!-- Delivery (bottom-left, translucent white) -->
-        <circle cx="143" cy="265" r="132" fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
-        <!-- Infrastructure (bottom-right, blue tint) -->
-        <circle cx="257" cy="265" r="132" fill="rgba(68,140,247,0.32)"/>
-        <!-- Center icon -->
-        <g transform="translate(185.4,196) scale(0.04854)">
-          <path fill="#448cf7" d="M477.86,0H0v618h601.92V0h-124.06ZM477.86,493.94H124.06v-124.06h229.74v-124.06H124.06v-121.76h353.8v369.88Z"/>
-        </g>
-        <!-- Labels -->
-        <text x="200" y="112" text-anchor="middle" fill="white" font-size="17" font-weight="700" font-family="Open Sans,sans-serif">Strategy</text>
-        <text x="112" y="295" text-anchor="middle" fill="white" font-size="17" font-weight="700" font-family="Open Sans,sans-serif">Delivery</text>
-        <text x="285" y="295" text-anchor="middle" fill="white" font-size="16" font-weight="700" font-family="Open Sans,sans-serif">Infrastructure</text>
-      </svg>
+    <div class="orb-system" role="img" aria-label="Strategy, Infrastructure, and Delivery orbiting a central growth engine">
+
+      <!-- Decorative orbital ring -->
+      <div class="orb-ring"></div>
+
+      <!-- Central orb -->
+      <div class="orb-center">
+        <svg class="orb-center-logo" viewBox="0 0 601.92 618" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path fill="rgba(255,255,255,0.90)" d="M477.86,0H0v618h601.92V0h-124.06ZM477.86,493.94H124.06v-124.06h229.74v-124.06H124.06v-121.76h353.8v369.88Z"/>
+        </svg>
+        <span class="orb-center-text">Growth Engine</span>
+      </div>
+
+      <!-- Satellite 1: Strategy (blue) -->
+      <div class="orb-arm orb-arm--1">
+        <div class="orb-satellite orb-sat--1">
+          <span class="orb-sat-label">Strategy</span>
+        </div>
+      </div>
+
+      <!-- Satellite 2: Infrastructure (purple) -->
+      <div class="orb-arm orb-arm--2">
+        <div class="orb-satellite orb-sat--2">
+          <span class="orb-sat-label">Infrastructure</span>
+        </div>
+      </div>
+
+      <!-- Satellite 3: Delivery (orange) -->
+      <div class="orb-arm orb-arm--3">
+        <div class="orb-satellite orb-sat--3">
+          <span class="orb-sat-label">Delivery</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
