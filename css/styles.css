@@ -1428,6 +1428,7 @@ footer {
   white-space: nowrap;
   line-height: 0.88;
   user-select: none;
+  transform: translateY(10%);
 }
 
 /* ── ANIMATIONS ── */
