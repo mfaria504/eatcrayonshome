@@ -589,36 +589,36 @@ body {
 }
 @keyframes card-float-back-1 {
   0%, 100% {
-    transform: rotate(8deg) translateY(0px) translateX(18px);
+    transform: rotate(10deg) translateY(0px) translateX(52px);
     box-shadow: 0 18px 50px rgba(0,0,0,0.42), 0 3px 10px rgba(0,0,0,0.26);
   }
   50% {
-    transform: rotate(7deg) translateY(-12px) translateX(18px);
+    transform: rotate(9deg) translateY(-12px) translateX(52px);
     box-shadow: 0 34px 70px rgba(0,0,0,0.55), 0 7px 20px rgba(0,0,0,0.36);
   }
 }
 @keyframes card-float-back-2 {
   0%, 100% {
-    transform: rotate(-2deg) translateY(0px) translateX(-20px);
+    transform: rotate(-4deg) translateY(0px) translateX(-56px);
     box-shadow: 0 14px 44px rgba(0,0,0,0.36), 0 2px 8px rgba(0,0,0,0.22);
   }
   50% {
-    transform: rotate(-3deg) translateY(-10px) translateX(-20px);
+    transform: rotate(-5deg) translateY(-10px) translateX(-56px);
     box-shadow: 0 28px 60px rgba(0,0,0,0.48), 0 5px 16px rgba(0,0,0,0.3);
   }
 }
 @keyframes card-fold-out-1 {
   from { transform: rotate(3.5deg) translateY(0) translateX(0); opacity: 0; }
-  to   { transform: rotate(8deg)   translateY(0) translateX(18px); opacity: 0.75; }
+  to   { transform: rotate(10deg)  translateY(0) translateX(52px); opacity: 0.75; }
 }
 @keyframes card-fold-out-2 {
   from { transform: rotate(3.5deg) translateY(0) translateX(0); opacity: 0; }
-  to   { transform: rotate(-2deg)  translateY(0) translateX(-20px); opacity: 0.48; }
+  to   { transform: rotate(-4deg)  translateY(0) translateX(-56px); opacity: 0.48; }
 }
 
 .card-stack {
   position: relative;
-  width: 310px;
+  width: 430px;
   height: 400px;
   display: flex;
   align-items: center;
