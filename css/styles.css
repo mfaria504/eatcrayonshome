@@ -508,6 +508,73 @@ body {
   justify-content: center;
   padding: 48px;
 }
+
+/* Growth Strategy Pyramid */
+.growth-pyramid {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.pyr-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin: 0;
+}
+.pyr-body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.pyr-level {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 56px;
+  border-radius: 0;
+  padding: 0 20px;
+  transition: opacity 0.5s ease, translate 0.5s ease;
+  cursor: default;
+  opacity: 0;
+  translate: 0 24px;
+}
+.growth-pyramid.in-view .pyr-level {
+  opacity: 1;
+  translate: 0 0;
+}
+.growth-pyramid.in-view .pyr-level--1 { transition-delay: 0s; }
+.growth-pyramid.in-view .pyr-level--2 { transition-delay: 0.08s; }
+.growth-pyramid.in-view .pyr-level--3 { transition-delay: 0.16s; }
+.growth-pyramid.in-view .pyr-level--4 { transition-delay: 0.24s; }
+.growth-pyramid.in-view .pyr-level--5 { transition-delay: 0.32s; }
+.growth-pyramid.in-view .pyr-level--6 { transition-delay: 0.40s; }
+.pyr-level--6 { width: 40%; background: rgba(0,0,0,0.55); color: rgba(255,255,255,0.95); }
+.pyr-level--5 { width: 53%; background: rgba(0,0,0,0.48); color: rgba(255,255,255,0.95); }
+.pyr-level--4 { width: 64%; background: rgba(0,0,0,0.40); color: rgba(255,255,255,0.95); }
+.pyr-level--3 { width: 76%; background: rgba(0,0,0,0.32); color: rgba(255,255,255,0.95); }
+.pyr-level--2 { width: 88%; background: rgba(0,0,0,0.24); color: rgba(255,255,255,0.95); }
+.pyr-level--1 { width: 100%; background: rgba(0,0,0,0.16); color: rgba(255,255,255,0.95); }
+.pyr-num {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+.pyr-text {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
 /* Card 02 – Infrastructure */
 .card-02-visual {
   background: linear-gradient(145deg, #9061F9 0%, #7C3AED 100%);
@@ -605,7 +672,7 @@ body {
   height: 130px;
   margin: -65px 0 0 -65px;
   background: rgba(15,7,2,0.72);
-  border: 1px solid rgba(255,255,255,0.18);
+  border: none;
   font-size: 9px;
   font-weight: 600;
   box-shadow: 0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08);
