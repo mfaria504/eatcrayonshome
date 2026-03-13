@@ -36,7 +36,7 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-body);
-  background: var(--white);
+  background: var(--dark);
   color: var(--dark);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -45,8 +45,10 @@ body {
 
 /* ── ANNOUNCEMENT BAR ── */
 .announce-bar {
-  position: relative;
-  margin: 2px 8px 0;
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  right: 8px;
   z-index: 300;
   background: var(--blue);
   height: 44px;
