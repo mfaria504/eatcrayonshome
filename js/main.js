@@ -7,8 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Scroll-driven header ──
   const header = document.getElementById('site-header');
   const announceBar = document.querySelector('.announce-bar');
+  const siteNav = document.querySelector('.site-nav');
   const logoPath = document.querySelector('.logo-mark svg path');
   const navLinks = document.querySelectorAll('.site-nav a');
+
+  const SCROLL_THRESHOLD = 60;
 
   // Tag light-background sections
   ['.about', '.services', '.testimonials', '.pricing', '.cta-section'].forEach(sel => {
@@ -41,12 +44,19 @@ document.addEventListener('DOMContentLoaded', () => {
     header.style.top = announceBottom + 'px';
   }
 
+  function updateScrollState() {
+    const scrolled = window.scrollY > SCROLL_THRESHOLD;
+    announceBar.classList.toggle('hidden', scrolled);
+    siteNav.classList.toggle('hidden', scrolled);
+  }
+
   let ticking = false;
   window.addEventListener('scroll', () => {
     if (!ticking) {
       requestAnimationFrame(() => {
         updateHeaderPosition();
         updateHeaderTheme();
+        updateScrollState();
         ticking = false;
       });
       ticking = true;
@@ -54,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
   updateHeaderPosition();
   updateHeaderTheme();
+  updateScrollState();
 
   // ── Cycling word animation ──
   const words = ['looks.', 'operates.', 'scales.'];
