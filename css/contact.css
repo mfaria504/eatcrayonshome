@@ -6,15 +6,65 @@
 /* ── HERO ── */
 .contact-hero {
   background: var(--dark);
-  background-image:
-    radial-gradient(ellipse at 88% 12%, rgba(var(--blue-rgb), 0.11) 0%, transparent 52%),
-    radial-gradient(ellipse at 12% 85%, rgba(var(--orange-rgb), 0.07) 0%, transparent 48%);
-  padding: 180px 40px 140px;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
 }
 
 .contact-hero-inner {
   max-width: 1360px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  align-items: stretch;
+  min-height: 640px;
+  position: relative;
+}
+
+/* Left: text */
+.contact-hero-text {
+  padding: 180px 80px 140px 40px;
+  position: relative;
+  z-index: 2;
+  background:
+    radial-gradient(ellipse at 0% 85%, rgba(var(--orange-rgb), 0.07) 0%, transparent 55%);
+}
+
+/* Right: photo */
+.contact-hero-photo {
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  filter: grayscale(18%) contrast(1.04);
+  transition: transform 8s ease;
+}
+
+.contact-hero:hover .contact-hero-img {
+  transform: scale(1.025);
+}
+
+/* Gradient fades that blend the photo into the dark bg */
+.contact-hero-photo-fade {
+  position: absolute;
+  inset: 0;
+  background:
+    /* left fade — blends into page bg */
+    linear-gradient(to right, var(--dark) 0%, transparent 28%),
+    /* top fade — blends into nav */
+    linear-gradient(to bottom, rgba(10,10,18,0.55) 0%, transparent 22%),
+    /* bottom fade */
+    linear-gradient(to top, var(--dark) 0%, transparent 30%),
+    /* subtle blue tint from the right */
+    linear-gradient(135deg, transparent 50%, rgba(var(--blue-rgb), 0.07) 100%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .contact-eyebrow {
@@ -403,8 +453,47 @@
 .success-back:hover { color: white; }
 
 /* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .contact-hero-inner {
+    grid-template-columns: 1fr 380px;
+  }
+  .contact-hero-text {
+    padding: 160px 60px 120px 40px;
+  }
+}
+
+@media (max-width: 860px) {
+  /* Stack: text on top, photo below (portrait crop) */
+  .contact-hero-inner {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 320px;
+    min-height: unset;
+  }
+  .contact-hero-text {
+    padding: 160px 24px 64px;
+    background: none;
+  }
+  .contact-hero-photo {
+    order: -1; /* photo goes above text on mobile */
+    height: 320px;
+  }
+  .contact-hero-photo-fade {
+    background:
+      linear-gradient(to bottom, rgba(10,10,18,0.55) 0%, transparent 20%),
+      linear-gradient(to top, var(--dark) 0%, transparent 35%);
+  }
+}
+
+@media (max-width: 690px) {
+  .contact-hero-text { padding: 140px 20px 56px; }
+  .contact-hero-photo { height: 260px; }
+  .contact-body { padding: 48px 20px 80px; }
+  .cf-options   { grid-template-columns: 1fr; }
+  .cf-field     { margin-bottom: 64px; }
+  .cf-btn       { width: 100%; justify-content: center; }
+}
+
 @media (max-width: 1000px) {
-  .contact-hero  { padding: 160px 24px 100px; }
   .contact-body  { padding: 64px 24px 100px; }
   .contact-body-inner {
     grid-template-columns: 1fr;
@@ -412,14 +501,6 @@
   }
   .contact-aside-sticky { position: static; }
   .aside-quote { display: none; }
-}
-
-@media (max-width: 690px) {
-  .contact-hero { padding: 140px 20px 80px; }
-  .contact-body { padding: 48px 20px 80px; }
-  .cf-options   { grid-template-columns: 1fr; }
-  .cf-field     { margin-bottom: 64px; }
-  .cf-btn       { width: 100%; justify-content: center; }
 }
 
 /* ── ACTIVE NAV STATE ── */
