@@ -297,19 +297,28 @@
     <p class="testimonials-sub">They love us</p>
     <div class="testimonials-grid">
       <div class="tcard fade-up">
-        <div class="tcard-initial">S</div>
+        <button class="tcard-thumb" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ" aria-label="Play video testimonial from Samuel Mitchell">
+          <div class="tcard-thumb-bg tcard-thumb-bg--1"></div>
+          <div class="tcard-play"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="12" fill="rgba(255,255,255,0.15)"/><path d="M10 8.5l6 3.5-6 3.5V8.5z" fill="white"/></svg></div>
+        </button>
         <p class="tcard-quote">"Straightforward and supportive. Working together turned numbers into an actionable plan I could trust."</p>
         <div class="tcard-name">Samuel Mitchell</div>
         <div class="tcard-role">Restaurant Owner</div>
       </div>
       <div class="tcard fade-up fade-up-d1">
-        <div class="tcard-initial">M</div>
+        <button class="tcard-thumb" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ" aria-label="Play video testimonial from Marissa Lawson">
+          <div class="tcard-thumb-bg tcard-thumb-bg--2"></div>
+          <div class="tcard-play"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="12" fill="rgba(255,255,255,0.15)"/><path d="M10 8.5l6 3.5-6 3.5V8.5z" fill="white"/></svg></div>
+        </button>
         <p class="tcard-quote">"Clear, practical advice that actually made sense. Exactly the guidance I received helped me move forward with confidence."</p>
         <div class="tcard-name">Marissa Lawson</div>
         <div class="tcard-role">CCO, Nectar Media</div>
       </div>
       <div class="tcard fade-up fade-up-d2">
-        <div class="tcard-initial">G</div>
+        <button class="tcard-thumb" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ" aria-label="Play video testimonial from Gabriel Roberts">
+          <div class="tcard-thumb-bg tcard-thumb-bg--3"></div>
+          <div class="tcard-play"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="12" fill="rgba(255,255,255,0.15)"/><path d="M10 8.5l6 3.5-6 3.5V8.5z" fill="white"/></svg></div>
+        </button>
         <p class="tcard-quote">"Professional, reliable, and easy to understand — Jonathan gave me the clarity I needed to plan my finances."</p>
         <div class="tcard-name">Gabriel Roberts</div>
         <div class="tcard-role">Marketing Director</div>
@@ -539,6 +548,68 @@
   modal.querySelector('.pyr-modal-close').addEventListener('click', closePyrModal);
   modal.addEventListener('click', e => { if (e.target === modal) closePyrModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closePyrModal(); });
+</script>
+
+<!-- ── VIDEO MODAL ── -->
+<div class="vid-modal" id="vid-modal" aria-modal="true" role="dialog" aria-label="Video testimonial" aria-hidden="true">
+  <div class="vid-modal-inner">
+    <button class="vid-modal-close" aria-label="Close video">&times;</button>
+    <div class="vid-modal-embed">
+      <iframe id="vid-iframe" src="" frameborder="0" allow="autoplay; fullscreen" allowfullscreen title="Video testimonial"></iframe>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var vidModal = document.getElementById('vid-modal');
+  var vidIframe = document.getElementById('vid-iframe');
+
+  function openVidModal(videoUrl) {
+    vidIframe.src = videoUrl + '?autoplay=1&rel=0';
+    vidModal.classList.add('is-open');
+    vidModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    vidModal.querySelector('.vid-modal-close').focus();
+  }
+
+  function closeVidModal() {
+    vidModal.classList.remove('is-open');
+    vidModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    setTimeout(function () { vidIframe.src = ''; }, 300);
+  }
+
+  // Set YouTube thumbnails from video URL
+  document.querySelectorAll('.tcard-thumb[data-video]').forEach(function (btn) {
+    var match = btn.dataset.video.match(/embed\/([^?&]+)/);
+    if (match) {
+      var videoId = match[1];
+      var bg = btn.querySelector('.tcard-thumb-bg');
+      if (bg) {
+        var hq = 'https://img.youtube.com/vi/' + videoId + '/maxresdefault.jpg';
+        var mq = 'https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg';
+        var img = new Image();
+        img.onload = function () {
+          // maxresdefault returns a 120x90 placeholder if unavailable — fall back to hqdefault
+          if (img.naturalWidth <= 120) {
+            bg.style.backgroundImage = 'url(' + mq + ')';
+          } else {
+            bg.style.backgroundImage = 'url(' + hq + ')';
+          }
+        };
+        img.onerror = function () {
+          bg.style.backgroundImage = 'url(' + mq + ')';
+        };
+        img.src = hq;
+      }
+    }
+    btn.addEventListener('click', function () { openVidModal(btn.dataset.video); });
+  });
+
+  vidModal.querySelector('.vid-modal-close').addEventListener('click', closeVidModal);
+  vidModal.addEventListener('click', function (e) { if (e.target === vidModal) closeVidModal(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && vidModal.classList.contains('is-open')) closeVidModal(); });
+})();
 </script>
 </body>
 </html>
