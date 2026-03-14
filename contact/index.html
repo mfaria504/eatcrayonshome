@@ -232,23 +232,44 @@
   'use strict';
 
   // ── Service option toggle ──
-  const options    = document.querySelectorAll('.cf-option');
+  const options     = document.querySelectorAll('.cf-option');
   const hiddenInput = document.getElementById('cf-services-hidden');
-  const selected   = new Set();
+  const selected    = new Set();
+  const BUNDLE      = ['strategy', 'infrastructure', 'delivery'];
+
+  function applySelection(vals) {
+    options.forEach(btn => {
+      const on = vals.has(btn.dataset.val);
+      btn.classList.toggle('selected', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    hiddenInput.value = Array.from(vals).join(', ');
+  }
 
   options.forEach(btn => {
     btn.addEventListener('click', () => {
       const val = btn.dataset.val;
+
+      // Toggle the clicked value
       if (selected.has(val)) {
         selected.delete(val);
-        btn.classList.remove('selected');
-        btn.setAttribute('aria-pressed', 'false');
+        // If "full" was selected and user picks an individual, clear full too
+        if (val !== 'full') selected.delete('full');
       } else {
         selected.add(val);
-        btn.classList.add('selected');
-        btn.setAttribute('aria-pressed', 'true');
+        // Clicking "full" clears the individual three
+        if (val === 'full') {
+          BUNDLE.forEach(v => selected.delete(v));
+        } else {
+          // If all three individuals now selected → upgrade to "full"
+          if (BUNDLE.every(v => selected.has(v))) {
+            BUNDLE.forEach(v => selected.delete(v));
+            selected.add('full');
+          }
+        }
       }
-      hiddenInput.value = Array.from(selected).join(', ');
+
+      applySelection(selected);
     });
   });
 
