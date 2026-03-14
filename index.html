@@ -396,12 +396,15 @@
   <div class="cta-inner">
     <h2 class="cta-headline fade-up" id="cta-heading">Start here to see if we're a match.</h2>
     <p class="cta-sub fade-up fade-up-d1">No pitch deck. Just an honest look at where you are, what's actually broken, and whether we're the right team to fix it. If we're not the right fit, we'll tell you.</p>
-    <div class="cta-buttons fade-up fade-up-d2">
-      <a href="mailto:hello@eatcrayons.com" class="btn-dark">Say hello</a>
-      <a href="#contact" class="btn-dark">Let's talk</a>
-      <a href="#contact" class="btn-dark">Start today</a>
-      <a href="tel:+1" class="btn-dark">Call us</a>
-    </div>
+    <form class="cta-email-form fade-up fade-up-d2" id="cta-email-form" action="/contact/" method="GET">
+      <div class="cta-email-wrap">
+        <input class="cta-email-input" type="email" name="email" placeholder="Best email to reach you?" required autocomplete="email">
+        <button class="cta-email-btn" type="submit">
+          <span>Let's talk</span>
+          <span class="cta-email-arrow">→</span>
+        </button>
+      </div>
+    </form>
   </div>
 </section>
 
@@ -453,6 +456,21 @@
 <script src="js/transitions.js"></script>
 <script src="js/main.js"></script>
 <script>
+  // ── CTA email form → redirect with transition ──
+  document.getElementById('cta-email-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var email = this.querySelector('[name="email"]').value.trim();
+    if (!email) return;
+    var href = '/contact/?email=' + encodeURIComponent(email);
+    // Trigger the page transition by creating a temporary link and clicking it
+    var tmp = document.createElement('a');
+    tmp.href = href;
+    tmp.style.display = 'none';
+    document.body.appendChild(tmp);
+    tmp.click();
+    document.body.removeChild(tmp);
+  });
+
   const pyramidObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {

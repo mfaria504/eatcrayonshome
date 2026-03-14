@@ -155,6 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     header.classList.add('menu-open');
     document.body.style.overflow = 'hidden';
     if (announceBar) announceBar.classList.add('hidden');
+    updateToggleTheme(false);
   }
 
   function closeMenu() {
@@ -179,6 +180,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Keep hamburger bar color in sync with header theming
   const origUpdateHeaderTheme = updateHeaderTheme;
   function updateToggleTheme(isLight) {
+    // Always keep toggle bars white/light when mobile menu is open
+    if (mobileMenu && mobileMenu.classList.contains('is-open')) isLight = false;
     document.querySelectorAll('.nav-toggle-bar').forEach(bar => {
       bar.style.background = isLight ? 'rgba(18,18,23,0.8)' : 'white';
     });

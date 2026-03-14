@@ -238,6 +238,16 @@
 (function () {
   'use strict';
 
+  // ── Autopopulate email from query param ──
+  var params = new URLSearchParams(window.location.search);
+  var prefillEmail = params.get('email');
+  if (prefillEmail) {
+    var emailField = document.getElementById('cf-email');
+    if (emailField) emailField.value = prefillEmail;
+    // Clean URL without reloading
+    history.replaceState(null, '', window.location.pathname);
+  }
+
   // ── Service option toggle ──
   const options     = document.querySelectorAll('.cf-option');
   const hiddenInput = document.getElementById('cf-services-hidden');
