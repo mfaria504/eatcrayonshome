@@ -270,6 +270,8 @@
     hiddenInput.value = Array.from(vals).join(', ');
   }
 
+  const fgeBtn = document.querySelector('.cf-option[data-val="full"]');
+
   options.forEach(btn => {
     btn.addEventListener('click', () => {
       const val = btn.dataset.val;
@@ -289,10 +291,19 @@
           if (selected.has('full')) {
             selected.delete('full');
           }
-          // If all three individuals now selected → upgrade to "full"
+          // If all three individuals now selected → animate upgrade to "full"
           if (BUNDLE.every(v => selected.has(v))) {
             BUNDLE.forEach(v => selected.delete(v));
-            selected.add('full');
+            applySelection(selected); // deselect the 3 tiles first
+            setTimeout(() => {
+              fgeBtn.classList.add('is-upgrading');
+              setTimeout(() => {
+                selected.add('full');
+                fgeBtn.classList.remove('is-upgrading');
+                applySelection(selected);
+              }, 560);
+            }, 120);
+            return;
           }
         }
       }

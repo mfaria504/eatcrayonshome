@@ -339,6 +339,27 @@
   color: rgba(68, 140, 247, 0.65);
 }
 
+/* ── FGE AUTO-UPGRADE ANIMATION ── */
+@keyframes fge-upgrade {
+  0%   { transform: scale(1);    box-shadow: 0 0 0 0 rgba(68,140,247,0); border-color: rgba(0,0,0,0.08); background: white; }
+  25%  { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(68,140,247,0.12); border-color: var(--blue); background: rgba(68,140,247,0.09); }
+  55%  { transform: scale(0.98); box-shadow: 0 0 0 4px rgba(68,140,247,0.08); }
+  80%  { transform: scale(1.01); }
+  100% { transform: scale(1);    box-shadow: 0 0 0 1px rgba(68,140,247,0.22), 0 4px 24px rgba(68,140,247,0.10); border-color: var(--blue); background: rgba(68,140,247,0.09); }
+}
+
+.cf-option.is-upgrading {
+  animation: fge-upgrade 560ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  pointer-events: none;
+}
+
+.cf-option.is-upgrading .cf-opt-icon { color: var(--blue); }
+.cf-option.is-upgrading .cf-opt-desc { color: rgba(68, 140, 247, 0.65); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cf-option.is-upgrading { animation-duration: 0.01ms !important; }
+}
+
 /* ── SUBMIT ── */
 .cf-submit {
   margin-top: -8px;
