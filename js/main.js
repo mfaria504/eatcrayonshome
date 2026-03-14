@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const SCROLL_THRESHOLD = 60;
 
   // Tag light-background sections
-  ['.about', '.services', '.testimonials', '.pricing', '.cta-section'].forEach(sel => {
+  ['.about', '.services', '.testimonials', '.pricing', '.cta-section', '.contact-body'].forEach(sel => {
     document.querySelectorAll(sel).forEach(el => el.dataset.logoTheme = 'light');
   });
 
