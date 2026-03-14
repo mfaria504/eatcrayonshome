@@ -40,11 +40,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateHeaderPosition() {
+    if (!announceBar) return;
     const announceBottom = Math.max(0, announceBar.getBoundingClientRect().bottom);
     header.style.top = announceBottom + 'px';
   }
 
   function updateScrollState() {
+    if (!announceBar) return;
     const scrolled = window.scrollY > SCROLL_THRESHOLD;
     announceBar.classList.toggle('hidden', scrolled);
     siteNav.classList.toggle('hidden', scrolled);
@@ -152,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navToggle.setAttribute('aria-expanded', 'true');
     header.classList.add('menu-open');
     document.body.style.overflow = 'hidden';
-    announceBar.classList.add('hidden');
+    if (announceBar) announceBar.classList.add('hidden');
   }
 
   function closeMenu() {
@@ -161,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navToggle.setAttribute('aria-expanded', 'false');
     header.classList.remove('menu-open');
     document.body.style.overflow = '';
-    if (window.scrollY <= SCROLL_THRESHOLD) announceBar.classList.remove('hidden');
+    if (announceBar && window.scrollY <= SCROLL_THRESHOLD) announceBar.classList.remove('hidden');
   }
 
   navToggle.addEventListener('click', () => {

@@ -16,12 +16,16 @@
   opacity: 0;
 }
 
-/* ── LOGO ELEMENT ── */
+/* ── LOGO ELEMENT ──
+   Sized large so the SVG rasterizes at high res.
+   We scale DOWN from here (0.02) then back UP to 1.
+   This keeps the vector crisp on all devices. */
 .page-transition-logo {
-  width: 60px;
-  height: 62px;
+  width: 200vmax;
+  height: 200vmax;
   opacity: 0;
   will-change: transform, opacity;
+  transform: scale(0.02);
 }
 
 .page-transition-logo svg {
@@ -54,9 +58,9 @@
 }
 
 @keyframes logoGrow {
-  0%   { opacity: 0; transform: scale(0.6); }
+  0%   { opacity: 0; transform: scale(0.015); }
   15%  { opacity: 1; }
-  100% { opacity: 1; transform: scale(45); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
 /* ═══════════════════════════════════
@@ -70,7 +74,7 @@
 
 .page-transition.is-covered .page-transition-logo {
   opacity: 1;
-  transform: scale(45);
+  transform: scale(1);
 }
 
 /* ═══════════════════════════════════
@@ -93,9 +97,9 @@
 }
 
 @keyframes logoShrink {
-  0%   { opacity: 1; transform: scale(45); }
+  0%   { opacity: 1; transform: scale(1); }
   60%  { opacity: 1; }
-  100% { opacity: 0; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.02); }
 }
 
 /* ── PAGE CONTENT ENTER ── */
