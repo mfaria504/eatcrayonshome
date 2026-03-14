@@ -246,6 +246,13 @@
     if (emailField) emailField.value = prefillEmail;
     // Clean URL without reloading
     history.replaceState(null, '', window.location.pathname);
+    // Scroll to form section after page transition completes
+    var formSection = document.querySelector('.contact-body');
+    if (formSection) {
+      setTimeout(function () {
+        formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 900);
+    }
   }
 
   // ── Service option toggle ──
