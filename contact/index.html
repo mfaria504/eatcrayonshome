@@ -268,6 +268,10 @@
         if (val === 'full') {
           BUNDLE.forEach(v => selected.delete(v));
         } else {
+          // Clicking an individual while "full" is active → uncheck full
+          if (selected.has('full')) {
+            selected.delete('full');
+          }
           // If all three individuals now selected → upgrade to "full"
           if (BUNDLE.every(v => selected.has(v))) {
             BUNDLE.forEach(v => selected.delete(v));
