@@ -12,8 +12,8 @@
 }
 
 .contact-hero-inner {
-  max-width: 1360px;
-  margin: 0 auto;
+  /* Full viewport width — photo bleeds to the right edge */
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 480px;
   align-items: stretch;
@@ -21,9 +21,10 @@
   position: relative;
 }
 
-/* Left: text */
+/* Left: text — padding keeps text aligned with the rest of the page */
 .contact-hero-text {
-  padding: 180px 80px 140px 40px;
+  /* Left padding mirrors the page's 40px gutter + auto-centering offset at wide viewports */
+  padding: 180px 80px 140px max(40px, calc((100vw - 1360px) / 2 + 40px));
   position: relative;
   z-index: 2;
   background:
@@ -458,7 +459,7 @@
     grid-template-columns: 1fr 380px;
   }
   .contact-hero-text {
-    padding: 160px 60px 120px 40px;
+    padding: 160px 60px 120px max(24px, calc((100vw - 1360px) / 2 + 24px));
   }
 }
 
@@ -470,7 +471,7 @@
     min-height: unset;
   }
   .contact-hero-text {
-    padding: 160px 24px 64px;
+    padding: 160px 24px 64px 24px;
     background: none;
   }
   .contact-hero-photo {
