@@ -35,8 +35,8 @@
   --logo-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 601.92 618' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='white' d='M477.86,0H0v618h601.92V0h-124.06ZM477.86,493.94H124.06v-124.06h229.74v-124.06H124.06v-121.76h353.8v369.88Z'/%3E%3C/svg%3E");
   -webkit-mask-image: var(--logo-mask), linear-gradient(#fff, #fff);
   mask-image: var(--logo-mask), linear-gradient(#fff, #fff);
-  -webkit-mask-size: 18% auto, 100% 100%;
-  mask-size: 18% auto, 100% 100%;
+  -webkit-mask-size: 50% auto, 100% 100%;
+  mask-size: 50% auto, 100% 100%;
   -webkit-mask-position: center, center;
   mask-position: center, center;
   -webkit-mask-repeat: no-repeat, no-repeat;
