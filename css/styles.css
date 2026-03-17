@@ -859,6 +859,18 @@ body {
   opacity: 0.78;
   max-width: 340px;
 }
+.card-cta {
+  display: inline-block;
+  margin-top: 24px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: opacity 150ms;
+}
+.card-cta:hover { opacity: 0.6; }
 
 /* Campaign mockup card stack */
 @keyframes card-float {
