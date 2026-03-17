@@ -9,7 +9,7 @@
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  background: var(--dark);
+  /* No background — the dark fill comes from the logo div with cutout */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,25 +17,37 @@
 }
 
 /* ── LOGO ELEMENT ──
-   Sized large so the SVG rasterizes at high res.
-   We scale DOWN from here (0.02) then back UP to 1.
-   This keeps the vector crisp on all devices. */
+   Dark fill with the logo shape punched out (transparent).
+   Sized large so it covers the viewport when fully scaled.
+   We scale DOWN from here (0.02) then back UP to 1. */
 .page-transition-logo {
   width: 200vmax;
   height: 200vmax;
   opacity: 0;
   will-change: transform, opacity;
   transform: scale(0.02);
+  background: var(--dark, #121217);
+
+  /* Two mask layers composited to create the cutout:
+     Layer 1 (top): logo SVG — white where the logo shape is
+     Layer 2 (bottom): solid white covering everything
+     XOR/exclude: where both are white (logo area) → transparent */
+  --logo-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 601.92 618' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='white' d='M477.86,0H0v618h601.92V0h-124.06ZM477.86,493.94H124.06v-124.06h229.74v-124.06H124.06v-121.76h353.8v369.88Z'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--logo-mask), linear-gradient(#fff, #fff);
+  mask-image: var(--logo-mask), linear-gradient(#fff, #fff);
+  -webkit-mask-size: 18% auto, 100% 100%;
+  mask-size: 18% auto, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
 }
 
+/* Hide the DOM SVG — the CSS mask handles the visual */
 .page-transition-logo svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.page-transition-logo svg path {
-  fill: white;
+  display: none;
 }
 
 /* ═══════════════════════════════════
