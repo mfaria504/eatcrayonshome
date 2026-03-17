@@ -12,11 +12,20 @@
   --orange-rgb: 242, 179, 123;
   --dark: #121217;
   --dark-2: #1a1a24;
+  --dark-3: #0e0e13;
   --purple: #8B5CF6;
   --purple-dark: #7C3AED;
   --white: #ffffff;
+  --t1: #ffffff;
+  --t2: rgba(255,255,255,0.58);
+  --t3: rgba(255,255,255,0.28);
+  --t4: rgba(255,255,255,0.12);
+  --border: rgba(255,255,255,0.09);
+  --border-blue: rgba(68,140,247,0.4);
   --font-display: 'Inter', sans-serif;
   --font-body: 'DM Sans', sans-serif;
+  --spring: cubic-bezier(0.34,1.56,0.64,1);
+  --ease: cubic-bezier(0.4,0,0.2,1);
 }
 
 /* ── DISPLAY FONT — applied to all headings and headline elements ── */
