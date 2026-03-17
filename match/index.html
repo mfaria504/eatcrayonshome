@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EatCrayons — Growth Matchmaker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/transitions.css">
+<style>
+:root {
+  --blue: #448CF7;
+  --blue-rgb: 68,140,247;
+  --orange: #F2B37B;
+  --orange-rgb: 242,179,123;
+  --purple: #8B5CF6;
+  --dark: #121217;
+  --dark-2: #1a1a24;
+  --dark-3: #0e0e13;
+  --white: #ffffff;
+  --t1: #ffffff;
+  --t2: rgba(255,255,255,0.58);
+  --t3: rgba(255,255,255,0.28);
+  --t4: rgba(255,255,255,0.12);
+  --border: rgba(255,255,255,0.09);
+  --border-blue: rgba(68,140,247,0.4);
+  --font-display: 'Inter', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --spring: cubic-bezier(0.34,1.56,0.64,1);
+  --ease: cubic-bezier(0.4,0,0.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--dark);
+  color: var(--t1);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Site-matching hero gradients */
+.hero-bg {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    radial-gradient(ellipse at 8% 88%, rgba(var(--orange-rgb),0.12) 0%, transparent 52%),
+    radial-gradient(ellipse at 85% 10%, rgba(var(--blue-rgb),0.10) 0%, transparent 52%);
+}
+
+.wrap {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 140px 40px 100px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── ANNOUNCE BAR + HEADER: handled by ../css/styles.css ── */
+
+/* ── INTRO ── */
+#intro { padding: 72px 0 72px; }
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(var(--blue-rgb),0.9);
+  margin-bottom: 20px;
+  animation: fadeUp 0.7s var(--spring) both;
+}
+
+.hero-h {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 7vw, 4.4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--t1);
+  margin-bottom: 24px;
+  animation: fadeUp 0.7s var(--spring) 0.06s both;
+}
+.hero-h em { font-style: normal; color: var(--blue); }
+
+.hero-p {
+  font-family: var(--font-body);
+  font-size: 17px; line-height: 1.7;
+  color: var(--t2);
+  max-width: 480px;
+  margin-bottom: 40px;
+  animation: fadeUp 0.7s var(--spring) 0.12s both;
+}
+
+.meta {
+  display: flex; align-items: center; gap: 0;
+  font-size: 12px; color: var(--t3);
+  margin-bottom: 44px;
+  font-family: var(--font-body);
+  font-weight: 400; letter-spacing: 0.04em;
+  animation: fadeUp 0.7s var(--spring) 0.18s both;
+}
+.meta span + span::before { content: '  ·  '; }
+
+/* Site-matching white pill button */
+.btn-start {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: white;
+  color: var(--dark);
+  font-family: var(--font-body);
+  font-size: 16px; font-weight: 600;
+  border: 1.5px solid white;
+  border-radius: 50px;
+  padding: 14px 28px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 120ms ease, border-color 120ms ease, transform 400ms var(--spring), box-shadow 120ms ease;
+  animation: fadeUp 0.7s var(--spring) 0.22s both;
+}
+.btn-start:hover { background: rgba(255,255,255,0.88); border-color: rgba(255,255,255,0.88); transform: scale(1.02); }
+.btn-start:active { transform: scale(0.97); transition-duration: 60ms; }
+
+.btn-arrow {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--dark);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.btn-arrow svg { width: 14px; height: 14px; }
+
+/* ── SURVEY ── */
+#survey { padding-top: 56px; }
+
+/* Chapter progress — thin bar with section label */
+.chapter-bar {
+  margin-bottom: 52px;
+}
+
+.chapter-top {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 12px;
+}
+
+.chapter-section {
+  font-family: var(--font-display);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--blue);
+}
+
+.chapter-frac {
+  font-family: var(--font-body);
+  font-size: 11px; color: var(--t3);
+  font-variant-numeric: tabular-nums;
+}
+
+.chapter-segments {
+  display: flex; gap: 4px;
+}
+
+.ch-seg {
+  flex: 1; height: 2px; border-radius: 100px;
+  background: var(--border);
+  transition: background 400ms var(--ease);
+  overflow: hidden;
+  position: relative;
+}
+.ch-seg.done { background: rgba(var(--blue-rgb),0.35); }
+.ch-seg.active { background: var(--blue); box-shadow: 0 0 8px rgba(var(--blue-rgb),0.5); }
+
+/* Question */
+.q-wrap { animation: fadeUp 0.36s var(--spring) both; }
+
+.q-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.5vw, 1.95rem);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  color: var(--t1);
+  margin-bottom: 32px;
+}
+
+/* ── MICRO REACTION ── */
+.reaction {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 11px 16px;
+  background: rgba(var(--blue-rgb),0.07);
+  border: 1px solid rgba(var(--blue-rgb),0.18);
+  border-radius: 50px;
+  margin-top: 16px;
+  animation: reactionIn 0.3s var(--spring) both;
+}
+.reaction-pip {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--blue); flex-shrink: 0;
+  margin-top: 4px;
+  animation: pulse 2s ease infinite;
+}
+.reaction-text {
+  font-family: var(--font-body);
+  font-size: 13px; color: var(--t2);
+  font-style: italic; line-height: 1.4;
+}
+
+/* ── RADIO CARDS ── */
+.radio-grid { display: flex; flex-direction: column; gap: 8px; }
+
+.r-card {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 260ms var(--spring);
+  text-align: left; width: 100%;
+}
+.r-card:hover { border-color: rgba(var(--blue-rgb),0.3); background: rgba(255,255,255,0.05); transform: translateX(3px); }
+.r-card:active { transform: scale(0.995); }
+.r-card.sel {
+  border-color: var(--border-blue);
+  background: rgba(var(--blue-rgb),0.08);
+  transform: translateX(5px);
+}
+
+.r-pip {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 1.5px solid var(--t3); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 260ms var(--spring);
+}
+.r-card.sel .r-pip {
+  border-color: var(--blue); background: var(--blue);
+  box-shadow: 0 0 12px rgba(var(--blue-rgb),0.5);
+}
+.r-card.sel .r-pip::after {
+  content: ''; width: 5px; height: 5px;
+  background: white; border-radius: 50%;
+  animation: popIn 0.22s var(--spring) both;
+}
+.r-label {
+  font-family: var(--font-body);
+  font-size: 15px; font-weight: 400; color: var(--t1); line-height: 1.4;
+}
+.r-card.sel .r-label { color: white; font-weight: 500; }
+
+/* ── SLIDER ── */
+.slider-wrap { padding: 4px 0 20px; }
+
+.slider-display {
+  font-family: var(--font-display);
+  font-size: 3.2rem; font-weight: 800;
+  letter-spacing: -0.04em; color: var(--t1);
+  margin-bottom: 28px; min-height: 56px;
+  font-variant-numeric: tabular-nums; line-height: 1;
+}
+.slider-display .val { color: var(--blue); }
+
+input[type=range] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 2px;
+  border-radius: 100px; outline: none; cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: white; border: 2.5px solid var(--dark);
+  box-shadow: 0 0 0 2.5px var(--blue), 0 4px 16px rgba(0,0,0,0.5);
+  transition: transform 240ms var(--spring);
+}
+input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.18); }
+input[type=range]::-webkit-slider-thumb:active { transform: scale(1.1); }
+input[type=range]::-moz-range-thumb {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: white; border: 2.5px solid var(--dark);
+  box-shadow: 0 0 0 2.5px var(--blue), 0 4px 16px rgba(0,0,0,0.5);
+  cursor: pointer;
+}
+.slider-labels {
+  display: flex; justify-content: space-between;
+  margin-top: 12px; font-size: 11px; color: var(--t3);
+  font-family: var(--font-body); font-variant-numeric: tabular-nums;
+}
+
+/* ── SCALE ── */
+.scale-row { display: flex; gap: 5px; margin-bottom: 12px; }
+.scale-btn {
+  flex: 1; aspect-ratio: 1;
+  border: 1px solid var(--border);
+  border-radius: 12px; background: rgba(255,255,255,0.03);
+  cursor: pointer; font-family: var(--font-display);
+  font-size: 13px; font-weight: 600; color: var(--t3);
+  transition: all 200ms var(--spring);
+  display: flex; align-items: center; justify-content: center;
+}
+.scale-btn:hover { border-color: rgba(var(--blue-rgb),0.3); color: var(--t2); transform: translateY(-2px); }
+.scale-btn.sel {
+  background: var(--blue); border-color: var(--blue); color: white;
+  box-shadow: 0 0 16px rgba(var(--blue-rgb),0.4); transform: translateY(-3px);
+}
+.scale-ends {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--t3); font-family: var(--font-body);
+}
+
+/* ── NAV ── */
+.nav-row {
+  display: flex; align-items: center; gap: 16px;
+  margin-top: 44px; padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.btn-back {
+  font-family: var(--font-body); font-size: 14px; font-weight: 400;
+  color: var(--t3); background: none; border: none;
+  cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+  transition: color 200ms ease;
+}
+.btn-back:hover { color: var(--t2); }
+
+.btn-next {
+  margin-left: auto;
+  display: inline-flex; align-items: center; gap: 12px;
+  background: white; color: var(--dark);
+  font-family: var(--font-body); font-size: 15px; font-weight: 600;
+  border: 1.5px solid white; border-radius: 50px;
+  padding: 13px 26px; cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, transform 400ms var(--spring), box-shadow 120ms ease;
+}
+.btn-next:hover:not(:disabled) { background: rgba(255,255,255,0.88); border-color: rgba(255,255,255,0.88); transform: scale(1.02); }
+.btn-next:active:not(:disabled) { transform: scale(0.97); transition-duration: 60ms; }
+.btn-next:disabled { opacity: 0.18; cursor: not-allowed; }
+
+.btn-next-arrow {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--dark); display: flex; align-items: center; justify-content: center;
+}
+.btn-next-arrow svg { width: 12px; height: 12px; }
+
+/* ── LOADING ── */
+#loading {
+  position: fixed; inset: 0;
+  background: var(--dark);
+  background-image:
+    radial-gradient(ellipse at 8% 88%, rgba(var(--orange-rgb),0.10) 0%, transparent 52%),
+    radial-gradient(ellipse at 85% 10%, rgba(var(--blue-rgb),0.08) 0%, transparent 52%);
+  z-index: 100;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+
+.loading-inner { text-align: left; width: 320px; }
+
+.loading-title {
+  font-family: var(--font-display);
+  font-size: 1.75rem; font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--t1); margin-bottom: 40px;
+}
+
+.loading-steps { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+
+.loading-step {
+  display: flex; align-items: center; gap: 14px;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+.loading-step.show { opacity: 1; transform: translateY(0); }
+
+.step-pip {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border); flex-shrink: 0;
+  transition: all 300ms var(--spring);
+}
+.loading-step.active .step-pip {
+  background: var(--blue);
+  box-shadow: 0 0 10px rgba(var(--blue-rgb),0.6);
+  animation: pulse 1s ease infinite;
+}
+.loading-step.done .step-pip { background: var(--blue); opacity: 0.4; }
+
+.step-label {
+  font-family: var(--font-body);
+  font-size: 14px; color: var(--t3);
+  transition: color 300ms ease;
+}
+.loading-step.active .step-label { color: var(--t1); }
+.loading-step.done .step-label { color: var(--t3); text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.15); }
+
+.loading-line {
+  height: 1px; background: var(--border); border-radius: 100px; overflow: hidden;
+}
+.loading-line-fill {
+  height: 100%; background: var(--blue); width: 0;
+  transition: width 180ms ease;
+  box-shadow: 0 0 8px rgba(var(--blue-rgb),0.5);
+}
+
+/* ── RESULTS ── */
+#result { padding-top: 56px; animation: fadeUp 0.5s var(--spring) both; }
+
+.result-top { margin-bottom: 48px; }
+
+/* Score display — site-style large number */
+.score-block {
+  display: flex; align-items: flex-end; gap: 16px;
+  margin-bottom: 28px;
+}
+
+.score-num {
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 14vw, 8rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: var(--t1);
+  font-variant-numeric: tabular-nums;
+  transition: color 600ms ease;
+}
+.score-num.blue { color: var(--blue); }
+.score-num.green { color: #3ecf8e; }
+.score-num.red { color: #f06060; }
+
+.score-meta {
+  padding-bottom: 10px;
+}
+.score-label {
+  font-family: var(--font-body);
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--t3); margin-bottom: 6px;
+}
+.score-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--font-body);
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 999px;
+}
+.score-badge.green { background: rgba(62,207,142,0.1); border: 1px solid rgba(62,207,142,0.25); color: #3ecf8e; }
+.score-badge.blue { background: rgba(var(--blue-rgb),0.1); border: 1px solid rgba(var(--blue-rgb),0.25); color: var(--blue); }
+.score-badge.dim { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--t3); }
+.badge-pip { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.score-badge.green .badge-pip { background: #3ecf8e; animation: pulse 2s ease infinite; }
+.score-badge.blue .badge-pip { background: var(--blue); animation: pulse 2s ease infinite; }
+
+.result-divider { height: 1px; background: var(--border); margin: 28px 0; }
+
+.r-hed {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800; letter-spacing: -0.04em;
+  line-height: 1.06; color: var(--t1); margin-bottom: 18px;
+}
+.r-hed em { font-style: normal; color: var(--blue); }
+
+.r-body {
+  font-family: var(--font-body);
+  font-size: 16px; line-height: 1.75;
+  color: var(--t2); max-width: 520px;
+}
+
+/* Insights */
+.insights { display: flex; flex-direction: column; gap: 10px; margin: 40px 0; }
+.insight {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 20px; border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  font-family: var(--font-body);
+  font-size: 14px; line-height: 1.6; color: var(--t2);
+  animation: fadeUp 0.4s var(--spring) both;
+}
+.insight:nth-child(2) { animation-delay: 0.05s; }
+.insight:nth-child(3) { animation-delay: 0.1s; }
+.insight:nth-child(4) { animation-delay: 0.15s; }
+.i-pip { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+.i-pip.pos { background: #3ecf8e; box-shadow: 0 0 6px rgba(62,207,142,0.5); }
+.i-pip.neg { background: #f06060; box-shadow: 0 0 6px rgba(240,96,96,0.4); }
+.i-pip.neu { background: var(--blue); box-shadow: 0 0 6px rgba(var(--blue-rgb),0.4); }
+
+/* Offer card */
+.offer-card {
+  border: 1px solid rgba(var(--blue-rgb),0.2);
+  border-radius: 24px; padding: 40px;
+  margin: 0 0 20px;
+  position: relative; overflow: hidden;
+  background: linear-gradient(145deg, rgba(var(--blue-rgb),0.08) 0%, rgba(var(--blue-rgb),0.02) 60%, transparent 100%);
+}
+.offer-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--blue-rgb),0.5), transparent);
+}
+.offer-eyebrow {
+  font-family: var(--font-body);
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 14px; opacity: 0.85;
+}
+.offer-hed {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800; letter-spacing: -0.035em;
+  line-height: 1.1; color: var(--t1); margin-bottom: 14px;
+}
+.offer-hed em { font-style: normal; color: var(--blue); }
+.offer-body {
+  font-family: var(--font-body);
+  font-size: 15px; line-height: 1.7; color: var(--t2);
+  max-width: 400px; margin-bottom: 28px;
+}
+.perks { display: flex; flex-direction: column; gap: 9px; margin-bottom: 32px; }
+.perk {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-body); font-size: 14px; color: var(--t2);
+}
+.perk-dash { color: var(--blue); font-size: 16px; font-weight: 300; }
+
+/* Site-matching CTA button */
+.btn-offer {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: white; color: var(--dark);
+  font-family: var(--font-body); font-size: 16px; font-weight: 600;
+  border: 1.5px solid white; border-radius: 50px;
+  padding: 14px 28px; cursor: pointer; text-decoration: none;
+  transition: background 120ms ease, border-color 120ms ease, transform 400ms var(--spring);
+}
+.btn-offer:hover { background: rgba(255,255,255,0.88); border-color: rgba(255,255,255,0.88); transform: scale(1.02); }
+.btn-offer:active { transform: scale(0.97); }
+.btn-offer-arrow {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--dark); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.btn-offer-arrow svg { width: 14px; height: 14px; }
+
+/* No match */
+.no-match-card {
+  border: 1px solid var(--border); border-radius: 24px;
+  padding: 36px; margin-bottom: 20px;
+}
+.no-match-hed {
+  font-family: var(--font-display);
+  font-size: 1.5rem; font-weight: 800;
+  letter-spacing: -0.03em; color: var(--t1); margin-bottom: 12px;
+}
+.no-match-body { font-family: var(--font-body); font-size: 14px; line-height: 1.7; color: var(--t2); }
+
+/* Breakdown */
+.breakdown {
+  border: 1px solid var(--border); border-radius: 20px;
+  padding: 28px; background: rgba(255,255,255,0.02);
+}
+.bk-title {
+  font-family: var(--font-body);
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--t3); margin-bottom: 20px;
+}
+.bk-row {
+  display: flex; align-items: center; gap: 16px;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.bk-row:last-child { border-bottom: none; }
+.bk-name { font-family: var(--font-body); font-size: 13px; color: var(--t2); flex: 1; min-width: 100px; }
+.bk-track { flex: 1.4; height: 2px; background: rgba(255,255,255,0.06); border-radius: 100px; overflow: hidden; }
+.bk-fill { height: 100%; border-radius: 100px; width: 0; transition: width 1s var(--ease) 0.4s; }
+.bk-fill.hi { background: #3ecf8e; }
+.bk-fill.mid { background: var(--orange); }
+.bk-fill.lo { background: #f06060; }
+.bk-pct { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--t3); font-variant-numeric: tabular-nums; min-width: 28px; text-align: right; }
+
+/* Footer */
+footer {
+  padding: 40px 0 0; text-align: center;
+  font-family: var(--font-body); font-size: 12px; color: var(--t3);
+  border-top: 1px solid var(--border); margin-top: 28px;
+}
+footer a { color: var(--blue); text-decoration: none; opacity: 0.7; }
+footer a:hover { opacity: 1; }
+
+.hidden { display: none !important; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+@keyframes popIn { from { transform:scale(0); opacity:0; } to { transform:scale(1); opacity:1; } }
+@keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.45; transform:scale(0.7); } }
+@keyframes reactionIn { from { opacity:0; transform:translateY(8px) scale(0.97); } to { opacity:1; transform:translateY(0) scale(1); } }
+
+@media (max-width: 500px) {
+  .scale-row { gap: 4px; }
+  .scale-btn { font-size: 12px; border-radius: 8px; }
+  .offer-card, .no-match-card { padding: 28px 22px; }
+  .score-num { font-size: 5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero-bg"></div>
+
+<!-- ANNOUNCE BAR (matches site) -->
+<!-- ── ANNOUNCEMENT BAR ── -->
+<a href="../match/" class="announce-bar" role="marquee" aria-label="Growth Matchmaker">
+  <div class="announce-track">
+    <span class="announce-item">Find Your Match<span class="dot">✦</span></span>
+    <span class="announce-item">Growth Matchmaker<span class="dot">✦</span></span>
+    <span class="announce-item">3 Minutes<span class="dot">✦</span></span>
+    <span class="announce-item">Honest Result<span class="dot">✦</span></span>
+    <span class="announce-item">No Pitch Deck<span class="dot">✦</span></span>
+    <span class="announce-item">Find Your Match<span class="dot">✦</span></span>
+    <span class="announce-item">Growth Matchmaker<span class="dot">✦</span></span>
+    <span class="announce-item">3 Minutes<span class="dot">✦</span></span>
+    <span class="announce-item">Honest Result<span class="dot">✦</span></span>
+    <span class="announce-item">No Pitch Deck<span class="dot">✦</span></span>
+  </div>
+</a>
+
+<!-- ── HEADER ── -->
+<header id="site-header">
+  <a href="../" class="logo-mark" aria-label="EatCrayons Home">
+    <svg viewBox="0 0 601.92 618" xmlns="http://www.w3.org/2000/svg">
+      <path fill="white" d="M477.86,0H0v618h601.92V0h-124.06ZM477.86,493.94H124.06v-124.06h229.74v-124.06H124.06v-121.76h353.8v369.88Z"/>
+    </svg>
+  </a>
+  <nav class="site-nav" aria-label="Main navigation">
+    <a href="../#about">About</a>
+    <a href="../#services">Services</a>
+    <a href="../#testimonials">Testimonials</a>
+    <a href="../#pricing">Pricing</a>
+    <a href="../contact/">Contact</a>
+  </nav>
+  <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+  </button>
+</header>
+
+<!-- ── MOBILE MENU ── -->
+<div id="mobile-menu" class="mobile-menu" aria-hidden="true" role="dialog" aria-label="Mobile navigation">
+  <div class="mobile-menu-bg"></div>
+  <nav class="mobile-menu-nav" aria-label="Mobile navigation links">
+    <a href="../#about"         class="mobile-menu-link" data-index="0">About</a>
+    <a href="../#services"      class="mobile-menu-link" data-index="1">Services</a>
+    <a href="../#testimonials"  class="mobile-menu-link" data-index="2">Testimonials</a>
+    <a href="../#pricing"       class="mobile-menu-link" data-index="3">Pricing</a>
+    <a href="../contact/"       class="mobile-menu-link" data-index="4">Contact</a>
+  </nav>
+  <div class="mobile-menu-footer">
+    <svg class="mobile-menu-logo" viewBox="0 0 601.92 618" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path fill="white" d="M477.86,0H0v618h601.92V0h-124.06ZM477.86,493.94H124.06v-124.06h229.74v-124.06H124.06v-121.76h353.8v369.88Z"/>
+    </svg>
+    <p class="mobile-menu-tagline">Build. Scale. Win.</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- INTRO -->
+  <div id="intro">
+    <div class="eyebrow">Executive Matchmaker</div>
+    <h1 class="hero-h">What if you knew <em>exactly</em><br>who would grow<br>your business most?</h1>
+    <p class="hero-p">The right growth partner doesn't just do work — they change the trajectory of your company. We've spent five years learning exactly who that partner is. Three minutes to find out if it's us.</p>
+    <div class="meta">
+      <span>3 minutes</span>
+      <span>10 questions</span>
+      <span>Instant result</span>
+    </div>
+    <button class="btn-start" onclick="startSurvey()">
+      Find my match
+      <div class="btn-arrow">
+        <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </button>
+  </div>
+
+  <!-- SURVEY -->
+  <div id="survey" class="hidden">
+    <div class="chapter-bar">
+      <div class="chapter-top">
+        <span class="chapter-section" id="ch-section">Your Business</span>
+        <span class="chapter-frac" id="ch-frac">1 / 10</span>
+      </div>
+      <div class="chapter-segments" id="ch-segs"></div>
+    </div>
+    <div id="q-mount"></div>
+    <div class="nav-row">
+      <button class="btn-back hidden" id="btn-back" onclick="goBack()">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back
+      </button>
+      <button class="btn-next" id="btn-next" onclick="goNext()" disabled>
+        Continue
+        <div class="btn-next-arrow">
+          <svg viewBox="0 0 12 12" fill="none"><path d="M1.5 6h9M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div id="loading" class="hidden">
+    <div class="loading-inner">
+      <div class="loading-title">Reading your<br>profile…</div>
+      <div class="loading-steps" id="lsteps"></div>
+      <div class="loading-line"><div class="loading-line-fill" id="lbar"></div></div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result" class="hidden"></div>
+
+
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="social-icons">
+        <a href="#" aria-label="X (Twitter)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="#" aria-label="LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+        </a>
+      </div>
+      <span class="footer-copy">© Rise Marketing Co., LLC – EatCrayons. 2026.</span>
+    </div>
+    <nav class="footer-nav-links" aria-label="Footer navigation">
+      <a href="../#about">About</a>
+      <a href="../#services">Services</a>
+      <a href="../#pricing">Pricing</a>
+    </nav>
+    <span class="footer-right">All Rights Reserved.</span>
+  </div>
+</footer>
+
+<!-- ── WATERMARK ── -->
+<div class="watermark-section" aria-hidden="true">
+  <div class="watermark-text">eatcrayons</div>
+</div>
+
+<script>
+// ── QUESTIONS ─────────────────────────────────────────────────────────────────
+const Qs = [
+  {
+    id: 'revenue', section: 'Your Business',
+    text: 'Let\'s start with where you are. What\'s your annual revenue today?',
+    type: 'slider', min: 0, max: 11, step: 1,
+    labels: ['Pre-revenue','$500K','$1M','$2M','$3M','$5M','$8M','$10M','$15M','$20M','$30M','$50M+'],
+    reactions: ['Still building — let\'s talk timing.','Getting traction. Interesting.','Now we\'re talking.','That\'s our sweet spot.','Plenty to work with.','Serious scale.','That\'s significant.','Enterprise territory.','Large operation.','Very established.','You\'ve built something real.','At this size, the conversation shifts.'],
+    scoreSlider: v => {
+      if (v === 0) return { s: 0, flag: 'pre_revenue' };
+      if (v === 1) return { s: 4 };
+      if (v <= 4) return { s: 10 };
+      if (v <= 7) return { s: 10 };
+      if (v <= 9) return { s: 8 };
+      return { s: 5 };
+    }
+  },
+  {
+    id: 'model', section: 'Your Business',
+    text: 'Who do you sell to?',
+    type: 'radio',
+    opts: [
+      { l: 'Other businesses (B2B)', s: 10, r: 'Right in our wheelhouse.' },
+      { l: 'A mix of businesses and consumers', s: 6, r: 'Some overlap — worth exploring.' },
+      { l: 'Directly to consumers (B2C)', s: 2, r: 'Honest answer, and we appreciate it.' },
+      { l: 'Software or SaaS product', s: 5, r: 'Tech is interesting. Context matters.' },
+    ]
+  },
+  {
+    id: 'deal_size', section: 'Your Business',
+    text: 'When you close a deal — what does it actually look like?',
+    type: 'slider', min: 0, max: 5, step: 1,
+    labels: ['Under $1K','$1K–$5K','$5K–$25K','$25K–$100K','$100K–$500K','$500K+'],
+    reactions: ['Transactional — volume is the game.','Decent ticket. Patterns matter here.','That\'s a real deal size.','One win pays for months of work.','High-stakes selling. We like this.','Enterprise deal size. Noted.'],
+    scoreSlider: v => {
+      if (v <= 1) return { s: 1 };
+      if (v === 2) return { s: 6 };
+      if (v === 3) return { s: 9 };
+      return { s: 10 };
+    }
+  },
+  {
+    id: 'marketing', section: 'Your Growth',
+    text: 'What does your marketing look like right now? Be honest.',
+    type: 'radio',
+    opts: [
+      { l: 'A full team and system already running', s: 1, r: 'Sounds like you\'ve got it covered.' },
+      { l: 'A few pieces, nothing really connected', s: 7, r: 'Scattered is actually fixable.' },
+      { l: 'Almost entirely referrals and word of mouth', s: 10, r: 'That\'s the most exciting answer on this list.' },
+      { l: 'Tried agencies — been disappointed', s: 8, r: 'We hear that a lot. And we get it.' },
+      { l: 'Nothing formal exists yet', s: 10, r: 'A blank canvas. A lot of upside.' },
+    ]
+  },
+  {
+    id: 'growth_feel', section: 'Your Growth',
+    text: 'How much untapped potential does your business have right now?',
+    type: 'scale',
+    scaleEnds: ['Very little', 'Enormous'],
+    reactions: ['Very little room to move.','Modest room to grow.','Some runway ahead.','There\'s something there.','A solid gap to close.','Meaningful potential.','You feel the ceiling.','Getting interesting.','That\'s a lot of upside.','That\'s the answer we look for.'],
+    scoreScale: v => {
+      if (v >= 7) return { s: 10 };
+      if (v >= 4) return { s: 7 };
+      return { s: 3 };
+    }
+  },
+  {
+    id: 'patience', section: 'Working Together',
+    text: 'When you invest in something — how do you think about it?',
+    type: 'radio',
+    opts: [
+      { l: 'I need to see measurable returns within 60 days', s: 0, flag: 'impatient', r: 'Noted. That\'s a real constraint to work with.' },
+      { l: 'I invest long-term — great things take time', s: 10, r: 'That\'s the mindset that makes this work.' },
+      { l: 'I go all-in when I believe in who I\'m working with', s: 9, r: 'Conviction-based. We like that.' },
+      { l: 'I\'ve been burned before — trust has to come first', s: 7, r: 'Fair. We\'d rather earn it than ask for it.' },
+    ]
+  },
+  {
+    id: 'style', section: 'Working Together',
+    text: 'How do you actually lead?',
+    type: 'radio',
+    opts: [
+      { l: 'I like to stay closely involved and approve the details', s: 0, flag: 'micromanager', r: 'Appreciated for the honesty.' },
+      { l: 'I stay informed but let my partners run', s: 9, r: 'That\'s a functional partnership.' },
+      { l: 'I hire people I trust completely and get out of the way', s: 10, r: 'That\'s the answer.' },
+      { l: 'I have strong opinions on marketing specifically', s: 1, flag: 'opinionated', r: 'Good to know early.' },
+    ]
+  },
+  {
+    id: 'authority', section: 'Working Together',
+    text: 'What\'s your standing in your industry?',
+    type: 'radio',
+    opts: [
+      { l: 'I\'m a recognized name in my space', s: 10, r: 'Authority is the asset. We build the engine.' },
+      { l: 'Known in some circles — my profile is growing', s: 7, r: 'There\'s something to amplify.' },
+      { l: 'My company has standing, though I stay behind the scenes', s: 6, r: 'Brand authority works too.' },
+      { l: 'Still building credibility in my market', s: 2, r: 'Early stage. Noted.' },
+    ]
+  },
+  {
+    id: 'buyer_type', section: 'Your Market',
+    text: 'When you close a deal — who actually said yes?',
+    type: 'radio',
+    opts: [
+      { l: 'A business owner or founder', s: 10, r: 'Decision-makers who can move. Perfect.' },
+      { l: 'A department head or operations leader', s: 9, r: 'Authority with context. Good signal.' },
+      { l: 'A mid-level manager or team lead', s: 6, r: 'Depends on how much autonomy they have.' },
+      { l: 'A procurement committee or buying group', s: 1, flag: 'enterprise_buyer', r: 'Long cycles, lots of politics. That\'s a hard game.' },
+      { l: 'A C-suite exec at a large corporation', s: 2, flag: 'enterprise_buyer', r: 'Enterprise selling is a different discipline entirely.' },
+    ]
+  },
+  {
+    id: 'budget', section: 'The Investment',
+    text: 'Last one. What monthly investment feels right for a real engagement?',
+    type: 'slider', min: 0, max: 5, step: 1,
+    labels: ['Under $2K','$2K–$4K','$4K–$6K','$6K–$10K','$10K–$15K','$15K+'],
+    reactions: ['That\'s a tight budget for this kind of work.','Still tight — but let\'s keep going.','Getting into real engagement territory.','That works. Room to operate.','Serious investment. We can do serious work.','Full commitment. Let\'s talk.'],
+    scoreSlider: v => {
+      if (v === 0) return { s: 0, flag: 'low_budget' };
+      if (v === 1) return { s: 1, flag: 'low_budget' };
+      if (v === 2) return { s: 4 };
+      if (v === 3) return { s: 9 };
+      return { s: 10 };
+    }
+  }
+];
+
+const CHAPTERS = ['Your Business','Your Growth','Working Together','Your Market','The Investment'];
+const CATS = CHAPTERS;
+let cur = 0, answers = {}, sliderVals = {};
+
+// ── START ─────────────────────────────────────────────────────────────────────
+function startSurvey() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('survey').classList.remove('hidden');
+  render();
+}
+
+// ── CHAPTER BAR ───────────────────────────────────────────────────────────────
+function renderChapterBar() {
+  const q = Qs[cur];
+  document.getElementById('ch-section').textContent = q.section;
+  document.getElementById('ch-frac').textContent = `${cur + 1} / ${Qs.length}`;
+
+  const segsEl = document.getElementById('ch-segs');
+  segsEl.innerHTML = Qs.map((q2, i) => {
+    const cls = i < cur ? 'done' : i === cur ? 'active' : '';
+    return `<div class="ch-seg ${cls}"></div>`;
+  }).join('');
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function render() {
+  renderChapterBar();
+  const q = Qs[cur];
+  const mount = document.getElementById('q-mount');
+  mount.innerHTML = '';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'q-wrap';
+
+  const qtxt = document.createElement('div');
+  qtxt.className = 'q-text';
+  qtxt.textContent = q.text;
+  wrap.appendChild(qtxt);
+
+  if (q.type === 'radio') wrap.appendChild(buildRadio(q));
+  else if (q.type === 'slider') wrap.appendChild(buildSlider(q));
+  else if (q.type === 'scale') wrap.appendChild(buildScale(q));
+
+  // Restore reaction
+  if (answers[cur] !== undefined || sliderVals[cur] !== undefined) {
+    const rt = getReactionText(q, answers[cur], sliderVals[cur]);
+    if (rt) wrap.appendChild(buildReactionEl(rt));
+  }
+
+  mount.appendChild(wrap);
+
+  document.getElementById('btn-back').classList.toggle('hidden', cur === 0);
+  const nb = document.getElementById('btn-next');
+  nb.disabled = answers[cur] === undefined && sliderVals[cur] === undefined;
+  const isLast = cur === Qs.length - 1;
+  nb.innerHTML = isLast
+    ? `See my result <div class="btn-next-arrow"><svg viewBox="0 0 12 12" fill="none"><path d="M1.5 6h9M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`
+    : `Continue <div class="btn-next-arrow"><svg viewBox="0 0 12 12" fill="none"><path d="M1.5 6h9M6.5 2.5l3.5 3.5-3.5 3.5" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
+}
+
+// ── REACTION ──────────────────────────────────────────────────────────────────
+function getReactionText(q, ai, sv) {
+  if (q.type === 'radio' && ai !== undefined) return q.opts[ai]?.r || '';
+  if (q.type === 'slider' && sv !== undefined) return q.reactions?.[sv] || '';
+  if (q.type === 'scale' && ai !== undefined) return q.reactions?.[ai - 1] || '';
+  return '';
+}
+function buildReactionEl(text) {
+  const el = document.createElement('div');
+  el.className = 'reaction'; el.id = 'rxn';
+  el.innerHTML = `<div class="reaction-pip"></div><div class="reaction-text">${text}</div>`;
+  return el;
+}
+function showReaction(text) {
+  const existing = document.getElementById('rxn');
+  if (existing) existing.remove();
+  if (!text) return;
+  const wrap = document.querySelector('.q-wrap');
+  if (wrap) wrap.appendChild(buildReactionEl(text));
+}
+
+// ── BUILDERS ──────────────────────────────────────────────────────────────────
+function buildRadio(q) {
+  const grid = document.createElement('div');
+  grid.className = 'radio-grid';
+  q.opts.forEach((o, i) => {
+    const card = document.createElement('button');
+    card.className = 'r-card' + (answers[cur] === i ? ' sel' : '');
+    card.innerHTML = `<div class="r-pip"></div><div class="r-label">${o.l}</div>`;
+    card.onclick = () => {
+      document.querySelectorAll('.r-card').forEach(c => c.classList.remove('sel'));
+      card.classList.add('sel');
+      answers[cur] = i;
+      document.getElementById('btn-next').disabled = false;
+      showReaction(o.r || '');
+    };
+    grid.appendChild(card);
+  });
+  return grid;
+}
+
+function buildSlider(q) {
+  const wrap = document.createElement('div');
+  wrap.className = 'slider-wrap';
+  const init = sliderVals[cur] !== undefined ? sliderVals[cur] : Math.round((q.min + q.max) / 2);
+  if (sliderVals[cur] === undefined) sliderVals[cur] = init;
+
+  const display = document.createElement('div');
+  display.className = 'slider-display';
+  display.innerHTML = `<span class="val">${q.labels[init]}</span>`;
+
+  const input = document.createElement('input');
+  input.type = 'range'; input.min = q.min; input.max = q.max; input.step = q.step; input.value = init;
+
+  function updateFill() {
+    const p = ((input.value - q.min) / (q.max - q.min)) * 100;
+    input.style.background = `linear-gradient(to right, #448CF7 0%, #448CF7 ${p}%, rgba(255,255,255,0.08) ${p}%, rgba(255,255,255,0.08) 100%)`;
+  }
+  updateFill();
+
+  let t;
+  input.oninput = () => {
+    const v = parseInt(input.value);
+    sliderVals[cur] = v;
+    display.innerHTML = `<span class="val">${q.labels[v]}</span>`;
+    updateFill();
+    document.getElementById('btn-next').disabled = false;
+    clearTimeout(t);
+    t = setTimeout(() => showReaction(q.reactions?.[v] || ''), 180);
+  };
+
+  const labels = document.createElement('div');
+  labels.className = 'slider-labels';
+  labels.innerHTML = `<span>${q.labels[q.min]}</span><span>${q.labels[q.max]}</span>`;
+
+  wrap.appendChild(display);
+  wrap.appendChild(input);
+  wrap.appendChild(labels);
+  return wrap;
+}
+
+function buildScale(q) {
+  const wrap = document.createElement('div');
+  const row = document.createElement('div');
+  row.className = 'scale-row';
+  for (let i = 1; i <= 10; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'scale-btn' + (answers[cur] === i ? ' sel' : '');
+    btn.textContent = i;
+    btn.onclick = () => {
+      document.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('sel'));
+      btn.classList.add('sel');
+      answers[cur] = i;
+      document.getElementById('btn-next').disabled = false;
+      showReaction(q.reactions?.[i - 1] || '');
+    };
+    row.appendChild(btn);
+  }
+  const ends = document.createElement('div');
+  ends.className = 'scale-ends';
+  ends.innerHTML = `<span>${q.scaleEnds?.[0]||'Low'}</span><span>${q.scaleEnds?.[1]||'High'}</span>`;
+  wrap.appendChild(row); wrap.appendChild(ends);
+  return wrap;
+}
+
+// ── NAV ───────────────────────────────────────────────────────────────────────
+function goNext() {
+  if (cur < Qs.length - 1) { cur++; render(); scrollTo(0, 0); }
+  else showLoading();
+}
+function goBack() {
+  if (cur > 0) { cur--; render(); scrollTo(0, 0); }
+}
+
+// ── LOADING THEATER ───────────────────────────────────────────────────────────
+function showLoading() {
+  document.getElementById('survey').classList.add('hidden');
+  const lEl = document.getElementById('loading');
+  lEl.classList.remove('hidden');
+
+  const steps = ['Checking business fit','Reviewing your market','Assessing working style','Evaluating investment alignment','Building your match profile'];
+  const stEl = document.getElementById('lsteps');
+  stEl.innerHTML = steps.map((s,i) =>
+    `<div class="loading-step" id="ls${i}"><div class="step-pip" id="lp${i}"></div><div class="step-label">${s}</div></div>`
+  ).join('');
+
+  const bar = document.getElementById('lbar');
+  let si = 0;
+  function run() {
+    if (si >= steps.length) {
+      bar.style.width = '100%';
+      setTimeout(() => { lEl.classList.add('hidden'); showResults(); }, 380);
+      return;
+    }
+    const sEl = document.getElementById(`ls${si}`);
+    const pEl = document.getElementById(`lp${si}`);
+    sEl.classList.add('show','active'); pEl.classList.add('active');
+    bar.style.width = `${((si + 0.4) / steps.length) * 100}%`;
+    setTimeout(() => {
+      pEl.classList.remove('active'); pEl.classList.add('done');
+      sEl.classList.remove('active'); sEl.classList.add('done');
+      bar.style.width = `${((si + 1) / steps.length) * 100}%`;
+      si++; setTimeout(run, 100);
+    }, 400);
+  }
+  setTimeout(run, 150);
+}
+
+// ── SCORING ───────────────────────────────────────────────────────────────────
+function calcScore() {
+  let total = 0, max = 0;
+  const catS = {}, catM = {}, flags = [];
+  Qs.forEach((q, i) => {
+    let s = 0, mx = 0, flag = null;
+    if (q.type === 'radio') {
+      mx = Math.max(...q.opts.map(o => o.s));
+      if (answers[i] !== undefined) { const o = q.opts[answers[i]]; s = o.s; if (o.flag) flag = o.flag; }
+    } else if (q.type === 'slider') {
+      mx = 10;
+      const v = sliderVals[i] !== undefined ? sliderVals[i] : Math.round((q.min+q.max)/2);
+      const r = q.scoreSlider(v); s = r.s; if (r.flag) flag = r.flag;
+    } else if (q.type === 'scale') {
+      mx = 10;
+      if (answers[i] !== undefined) { const r = q.scoreScale(answers[i]); s = r.s; }
+    }
+    total += s; max += mx;
+    if (flag) flags.push(flag);
+    catS[q.section] = (catS[q.section]||0) + s;
+    catM[q.section] = (catM[q.section]||0) + mx;
+  });
+  let pct = Math.round((total / max) * 100);
+  if (flags.some(f => ['micromanager','impatient','low_budget','pre_revenue'].includes(f))) pct = Math.min(pct, 36);
+  else if (flags.some(f => ['opinionated','enterprise_buyer'].includes(f))) pct = Math.min(pct, 54);
+  return { pct, catS, catM, flags };
+}
+
+// ── INSIGHTS ──────────────────────────────────────────────────────────────────
+function getInsights(flags, pct) {
+  const a = answers, sv = sliderVals;
+  const pos = [], neg = [];
+  const rev = sv[0]??5;
+  if (rev >= 2 && rev <= 7) pos.push("Your revenue range is where our model creates the most impact — proven enough to build on, with real room to grow.");
+  if (rev === 0) neg.push("Pre-revenue is genuinely too early for what we do. There needs to be something to build from.");
+  if (a[1] === 0) pos.push("B2B is where we live. Every system we build is designed for exactly this kind of business.");
+  if ((sv[2]??3) >= 3) pos.push("Your deal size means a single closed opportunity more than justifies the engagement. The math works in your favor.");
+  if (a[3] === 2) pos.push("A business running entirely on referrals with no designed engine is exactly where we create the most leverage.");
+  if (a[3] === 3) pos.push("Having been burned by agencies actually works in our favor — you know what bad looks like.");
+  if ((a[4]??5) >= 8) pos.push("That level of untapped potential you're sensing is usually exactly right. The ceiling is visible — we help raise it.");
+  if (a[6] === 2) pos.push("Full delegation is rare. It's the condition that lets us actually do our best work.");
+  if (flags.includes('micromanager')) neg.push("Staying closely involved in every detail is at odds with how our engagements function. That tension rarely resolves.");
+  if (flags.includes('impatient')) neg.push("A 60-day ROI expectation and a compounding growth system point in opposite directions.");
+  if (flags.includes('opinionated')) neg.push("Strong convictions about marketing direction tend to limit what's possible. We need room to make the calls that move the needle.");
+  if ((sv[9]??3) >= 3) pos.push("Investment alignment means we can operate without constraints — constrained engagements produce constrained results.");
+  if (flags.includes('low_budget')) neg.push("The investment you're comfortable with won't support the depth of engagement required to make this worthwhile for either of us.");
+  if (flags.includes('enterprise_buyer')) neg.push("When procurement committees or large-corp executives hold the buying decision, sales cycles become long and political — hard to move with marketing alone.");
+  if (!flags.includes('enterprise_buyer') && a[8] !== undefined && a[8] <= 1) pos.push("Your buyers can say yes on their own authority. That's the kind of market where good marketing creates immediate momentum.");
+
+  if (pct >= 70) return [...pos.slice(0,3)].slice(0,4).map(t => ({ t:'pos', txt:t }));
+  if (pct >= 48) return [...pos.slice(0,2).map(t=>({t:'pos',txt:t})), ...neg.slice(0,1).map(t=>({t:'neg',txt:t}))].slice(0,4);
+  return [...neg.slice(0,3).map(t=>({t:'neg',txt:t})), ...pos.slice(0,1).map(t=>({t:'pos',txt:t}))].slice(0,4);
+}
+
+// ── HEADLINE ──────────────────────────────────────────────────────────────────
+function getHeadline(pct, flags, a, sv) {
+  if (flags.includes('micromanager')) return { h:"Great chemistry,<br>wrong <em>dynamic.</em>", b:"The most impactful partnerships require both sides playing to their strengths. Our model needs room to execute. Your answers suggest that would be a persistent source of friction — and we'd rather say that clearly now." };
+  if (flags.includes('impatient')) return { h:"The vision<br>doesn't <em>align.</em>", b:"We'd genuinely love to work with you. But you're looking for fast results, and we build systems that compound. Those two things are fundamentally incompatible right now." };
+  if (flags.includes('enterprise_buyer')) return { h:"Your market makes<br>this <em>very hard.</em>", b:"When procurement committees or large-corporation executives control the buying decision, sales cycles become long, political, and difficult to accelerate with marketing alone. Our model was built for markets where decision-makers can say yes — and act on it." };
+  if (flags.includes('pre_revenue')) return { h:"The moment<br>isn't <em>here yet.</em>", b:"The conditions that make this kind of partnership extraordinary — proven momentum and room to invest — aren't quite in place. That's not permanent. Come back when they are." };
+  if (flags.includes('low_budget')) return { h:"The spark is real,<br>the <em>investment isn't.</em>", b:"We want to work with you. But exceptional partnerships require room to do exceptional work. The investment you're comfortable with would limit what's possible — and we'd rather be direct about that now." };
+  if (pct >= 82) return { h:"We've been<br>looking for <em>exactly you.</em>", b:"Profiles like this are rare. The business, the mindset, the conditions — everything points in the same direction. We'd like to make you an offer we don't make often." };
+  if (pct >= 68) {
+    if ((a[4]??5) >= 7) return { h:"You feel the ceiling —<br>we know <em>how to raise it.</em>", b:"That untapped potential you're sensing? It's usually exactly right. Strong fundamentals, real reputation, growth happening — but no designed system behind it. That gap is where we create the most value." };
+    return { h:"There's something<br><em>really interesting</em> here.", b:"Your profile has strong signals across the areas that matter most. A few things to explore together — but the chemistry is clearly there. This is worth a real conversation." };
+  }
+  if (pct >= 48) return { h:"Promising signals,<br>and some <em>friction.</em>", b:"You hit the marks in several key areas, but there are a few places where our approaches might create tension. Those aren't dealbreakers — they're worth talking about honestly." };
+  return { h:"This isn't the<br>right match <em>right now.</em>", b:"The best matchmakers know when to say not yet — and we respect you too much to pretend otherwise. The conditions for this to be extraordinary aren't quite in place. That can change." };
+}
+
+// ── RESULTS ───────────────────────────────────────────────────────────────────
+function showResults() {
+  const { pct, catS, catM, flags } = calcScore();
+  const insights = getInsights(flags, pct);
+  const { h, b } = getHeadline(pct, flags, answers, sliderVals);
+
+  const isStrong = pct >= 78, isGood = pct >= 48 && pct < 78;
+  const scoreColor = isStrong ? 'green' : isGood ? 'blue' : 'red';
+  const badgeClass = isStrong ? 'green' : isGood ? 'blue' : 'dim';
+  const badgeText = isStrong ? '✦ Exceptional Match' : isGood ? '✦ Strong Potential' : 'Not the Right Fit — Yet';
+
+  const insightHtml = insights.map(ins =>
+    `<div class="insight"><div class="i-pip ${ins.t}"></div><div>${ins.txt}</div></div>`
+  ).join('');
+
+  const bkHtml = CATS.map(cat => {
+    if (!catM[cat]) return '';
+    const p = Math.round(((catS[cat]||0)/catM[cat])*100);
+    const cls = p >= 70 ? 'hi' : p >= 45 ? 'mid' : 'lo';
+    return `<div class="bk-row"><div class="bk-name">${cat}</div><div class="bk-track"><div class="bk-fill ${cls}" data-t="${p}"></div></div><div class="bk-pct">${p}%</div></div>`;
+  }).join('');
+
+  const arrowBtn = `<div class="btn-offer-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
+
+  let actionHtml;
+  if (pct >= 78) {
+    actionHtml = `<div class="offer-card"><div class="offer-eyebrow">✦ Your Match Offer</div><h3 class="offer-hed">Your <em>first month</em> is on us.</h3><p class="offer-body">We don't make this offer often. Because your profile is this strong, we're prepared to onboard you at zero cost for 30 days. We either earn your trust — or we don't. No contracts. No obligation.</p><div class="perks"><div class="perk"><span class="perk-dash">–</span>Full growth strategy and audit in week one</div><div class="perk"><span class="perk-dash">–</span>CRM and infrastructure assessment</div><div class="perk"><span class="perk-dash">–</span>Real deliverables in your hands by day 30</div><div class="perk"><span class="perk-dash">–</span>Zero obligation to continue</div></div><a class="btn-offer" href="https://eatcrayonshome.vercel.app/contact/" target="_blank">Claim your match ${arrowBtn}</a></div>`;
+  } else if (pct >= 48) {
+    actionHtml = `<div class="offer-card"><div class="offer-eyebrow">✦ Your Next Step</div><h3 class="offer-hed">Let's have a <em>real conversation.</em></h3><p class="offer-body">Not a sales call. Think of it like a first meeting — 20 minutes where we both figure out if the chemistry is actually there. No pitch. No pressure. Just an honest exchange.</p><div class="perks"><div class="perk"><span class="perk-dash">–</span>We'll do a quick opportunity scan before we meet</div><div class="perk"><span class="perk-dash">–</span>No deck, no pitch — just candid conversation</div><div class="perk"><span class="perk-dash">–</span>You'll know exactly where you stand in 20 minutes</div></div><a class="btn-offer" href="https://eatcrayonshome.vercel.app/contact/" target="_blank">Let's meet ${arrowBtn}</a></div>`;
+  } else {
+    actionHtml = `<div class="no-match-card"><h3 class="no-match-hed">The best matchmakers know when to say "not yet."</h3><p class="no-match-body">The conditions that make this kind of partnership extraordinary aren't fully in place right now. That's not permanent. Come back when the timing is right — we'll be here.</p></div><div style="margin-bottom:20px;"><a class="btn-offer" href="https://eatcrayonshome.vercel.app/" target="_blank" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);">Follow our work ${arrowBtn}</a></div>`;
+  }
+
+  const el = document.getElementById('result');
+  el.innerHTML = `
+    <div class="result-top">
+      <div class="score-block">
+        <div class="score-num ${scoreColor}" id="snum">0%</div>
+        <div class="score-meta">
+          <div class="score-label">Match Score</div>
+          <div class="score-badge ${badgeClass}">${badgeClass!=='dim'?'<span class="badge-pip"></span>':''}${badgeText}</div>
+        </div>
+      </div>
+      <div class="result-divider"></div>
+      <h2 class="r-hed">${h}</h2>
+      <p class="r-body">${b}</p>
+    </div>
+    ${insights.length ? `<div class="insights">${insightHtml}</div>` : ''}
+    ${actionHtml}
+    <div class="breakdown"><div class="bk-title">Compatibility breakdown</div>${bkHtml}</div>
+  `;
+  el.classList.remove('hidden');
+
+  setTimeout(() => {
+    const numEl = document.getElementById('snum');
+    if (numEl) {
+      let t0 = null;
+      (function step(ts) {
+        if (!t0) t0 = ts;
+        const p = Math.min((ts-t0)/1400, 1);
+        numEl.textContent = Math.round((1-Math.pow(1-p,3))*pct) + '%';
+        if (p < 1) requestAnimationFrame(step);
+      })(performance.now());
+    }
+    el.querySelectorAll('.bk-fill').forEach(b => { b.style.width = b.dataset.t+'%'; });
+  }, 150);
+
+  scrollTo(0, 0);
+}
+</script>
+<script src="../js/transitions.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

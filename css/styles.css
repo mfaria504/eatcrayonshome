@@ -57,6 +57,8 @@ body {
   align-items: center;
   border-radius: 999px;
   transition: opacity 600ms ease, transform 600ms ease;
+  cursor: pointer;
+  text-decoration: none;
 }
 .announce-bar.hidden {
   opacity: 0;
