@@ -5,10 +5,29 @@
 
 /* ── LAYOUT ── */
 .hero-bg {
-  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  /* Background image — right-aligned, elegant crop */
   background-image:
-    radial-gradient(ellipse at 8% 88%, rgba(var(--orange-rgb),0.12) 0%, transparent 52%),
-    radial-gradient(ellipse at 85% 10%, rgba(var(--blue-rgb),0.10) 0%, transparent 52%);
+    /* Dark overlay for text legibility */
+    linear-gradient(
+      to right,
+      rgba(10, 12, 20, 0.92) 0%,
+      rgba(10, 12, 20, 0.78) 35%,
+      rgba(10, 12, 20, 0.45) 65%,
+      rgba(10, 12, 20, 0.30) 100%
+    ),
+    /* Subtle brand color tints layered over the photo */
+    radial-gradient(ellipse at 8% 88%, rgba(var(--orange-rgb), 0.10) 0%, transparent 52%),
+    radial-gradient(ellipse at 85% 10%, rgba(var(--blue-rgb), 0.08) 0%, transparent 52%),
+    /* The photo */
+    url('../images/Therightpartners.jpg');
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
 }
 
 .wrap {

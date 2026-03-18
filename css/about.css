@@ -499,9 +499,10 @@
 /* ── WHY THE NAME — 4 pillars ── */
 .abt-name {
   background: var(--dark);
-  padding: 0 40px 140px;
   color: white;
   position: relative;
+  /* Tall section — extra height = scroll runway for the horizontal movement */
+  /* JS will calculate exact height based on card track overflow */
 }
 
 /* Subtle top divider line */
@@ -509,9 +510,17 @@
   content: '';
   display: block;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto 0;
   border-top: 1px solid rgba(255,255,255,0.06);
   padding-top: 120px;
+}
+
+/* Sticky container — pins to viewport while user scrolls through the tall section */
+.abt-name-sticky {
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  padding: 0 40px 80px;
 }
 
 .abt-name-inner {
@@ -522,6 +531,7 @@
 .abt-name-header {
   margin-bottom: 72px;
   max-width: 640px;
+  padding-top: 64px;
 }
 
 .abt-name-eyebrow {
@@ -551,80 +561,82 @@
   line-height: 1.7;
 }
 
-/* Horizontal scroll track */
+/* Horizontal scroll track — driven by vertical page scroll */
 .abt-name-scroll-wrap {
   position: relative;
+  overflow: hidden;
 }
 
-/* Right-edge fade hint */
+/* Edge fades — both sides */
+.abt-name-scroll-wrap::before,
 .abt-name-scroll-wrap::after {
   content: '';
   position: absolute;
   top: 0;
-  right: 0;
   width: 80px;
   height: 100%;
-  background: linear-gradient(to right, transparent, var(--dark));
   pointer-events: none;
   z-index: 2;
+}
+.abt-name-scroll-wrap::before {
+  left: 0;
+  background: linear-gradient(to right, var(--dark), transparent);
+  opacity: 0; /* fades in once scrolled */
+  transition: opacity 300ms ease;
+}
+.abt-name-scroll-wrap.has-scrolled::before {
+  opacity: 1;
+}
+.abt-name-scroll-wrap::after {
+  right: 0;
+  background: linear-gradient(to left, var(--dark), transparent);
+  transition: opacity 300ms ease;
+}
+.abt-name-scroll-wrap.at-end::after {
+  opacity: 0;
 }
 
 .abt-name-bento {
   display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  overflow-y: visible;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 8px;
-  cursor: grab;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.08) transparent;
+  gap: 20px;
+  will-change: transform;
 }
 
-.abt-name-bento:active,
-.abt-name-bento.is-dragging {
-  cursor: grabbing;
-}
-
-.abt-name-bento.is-dragging .abt-name-card {
-  pointer-events: none;
-  user-select: none;
-}
-
-.abt-name-bento::-webkit-scrollbar {
+/* Smooth progress bar under the cards */
+.abt-name-progress {
+  margin-top: 32px;
   height: 2px;
-}
-.abt-name-bento::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.06);
   border-radius: 2px;
+  overflow: hidden;
 }
-.abt-name-bento::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.12);
+.abt-name-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, var(--blue), var(--purple));
   border-radius: 2px;
+  transition: width 60ms linear;
 }
 
 .abt-name-card {
   position: relative;
-  flex: 0 0 clamp(280px, 36vw, 440px);
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
+  flex: 0 0 clamp(300px, 38vw, 480px);
   border-radius: 20px;
-  padding: 48px;
+  padding: 56px 48px;
   overflow: hidden;
-  scroll-snap-align: start;
-  transition: border-color 300ms ease, transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: white;
+  border: none;
+  transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 300ms ease;
 }
 
 .abt-name-card:hover {
-  border-color: rgba(255,255,255,0.12);
-  transform: translateY(-4px);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 
-/* Featured — same width as others in scroll layout */
+/* Featured — wider in scroll layout */
 .abt-name-card--featured {
-  flex: 0 0 clamp(320px, 42vw, 520px);
-  padding: 48px;
+  flex: 0 0 clamp(340px, 44vw, 560px);
 }
 
 .abt-name-card--featured .abt-name-card-inner {
@@ -632,55 +644,46 @@
 }
 
 .abt-name-card--featured .abt-name-card-h {
-  font-size: 1.4rem;
+  font-size: clamp(1.5rem, 2.2vw, 1.8rem);
 }
 
-/* Giant background number */
+/* Giant background number — matching home page card-number style */
 .abt-name-bg-num {
   position: absolute;
   font-family: var(--font-display);
-  font-size: clamp(140px, 18vw, 220px);
-  font-weight: 800;
+  font-size: clamp(120px, 16vw, 200px);
+  font-weight: 700;
   line-height: 1;
   letter-spacing: -0.05em;
   right: -10px;
-  bottom: -20px;
-  color: rgba(255,255,255,0.03);
+  bottom: -24px;
+  color: rgba(255,255,255,0.08);
   pointer-events: none;
   user-select: none;
 }
 
 .abt-name-card--featured .abt-name-bg-num {
-  font-size: clamp(180px, 22vw, 300px);
-  right: 40px;
-  bottom: -40px;
+  font-size: clamp(160px, 20vw, 260px);
+  right: 32px;
+  bottom: -36px;
 }
 
-/* Color accent — top border glow per card */
+/* Solid gradient fills — matching home page service cards */
 .abt-name-card--blue {
-  border-top: 2px solid var(--blue);
-  box-shadow: 0 -8px 40px -12px rgba(68,140,247,0.15);
+  background: linear-gradient(145deg, #5B9BF9 0%, #4080E8 100%);
 }
-.abt-name-card--blue .abt-name-bg-num { color: rgba(68,140,247,0.05); }
 
 .abt-name-card--purple {
-  border-top: 2px solid var(--purple);
-  box-shadow: 0 -8px 40px -12px rgba(139,92,246,0.15);
+  background: linear-gradient(145deg, #9061F9 0%, #7C3AED 100%);
 }
-.abt-name-card--purple .abt-name-bg-num { color: rgba(139,92,246,0.05); }
 
 .abt-name-card--orange {
-  border-top: 2px solid var(--orange);
-  box-shadow: 0 -8px 40px -12px rgba(242,179,123,0.15);
+  background: linear-gradient(145deg, #EB9B4B 0%, #A04B0F 100%);
 }
-.abt-name-card--orange .abt-name-bg-num { color: rgba(242,179,123,0.05); }
 
 .abt-name-card--purple-blue {
-  border-top: 2px solid transparent;
-  border-image: linear-gradient(to right, var(--purple), var(--blue)) 1;
-  box-shadow: 0 -8px 40px -12px rgba(139,92,246,0.12);
+  background: linear-gradient(145deg, #7C3AED 0%, #4080E8 100%);
 }
-.abt-name-card--purple-blue .abt-name-bg-num { color: rgba(139,92,246,0.04); }
 
 .abt-name-card-inner {
   position: relative;
@@ -691,33 +694,31 @@
   display: block;
   font-family: var(--font-body);
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: var(--blue);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.50);
   margin-bottom: 16px;
 }
 
-.abt-name-card--purple .abt-name-num { color: var(--purple); }
-.abt-name-card--orange .abt-name-num { color: var(--orange); }
-
 .abt-name-card-h {
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: white;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .abt-name-card--featured .abt-name-card-h {
-  font-size: clamp(1.5rem, 2.2vw, 1.8rem);
+  font-size: clamp(1.6rem, 2.2vw, 1.9rem);
 }
 
 .abt-name-card-p {
   font-family: var(--font-body);
   font-size: 15px;
-  line-height: 1.75;
-  color: rgba(255,255,255,0.50);
+  line-height: 1.72;
+  color: rgba(255,255,255,0.78);
   max-width: 52ch;
 }
 
@@ -921,19 +922,19 @@
   .abt-story-inner {
     gap: 24px;
   }
-  .abt-name {
-    padding: 0 24px 100px;
+  .abt-name-sticky {
+    padding: 0 24px 60px;
   }
   .abt-name::before {
     padding-top: 80px;
   }
   .abt-name-card {
-    flex: 0 0 min(340px, 78vw);
-    padding: 32px;
+    flex: 0 0 min(340px, 80vw);
+    padding: 36px 32px;
   }
   .abt-name-card--featured {
-    flex: 0 0 min(380px, 84vw);
-    padding: 32px;
+    flex: 0 0 min(400px, 85vw);
+    padding: 36px 32px;
   }
   .abt-values {
     padding: 80px 24px 100px;
@@ -960,17 +961,19 @@
   .abt-story {
     padding: 64px 16px 80px;
   }
-  .abt-name {
-    padding: 0 16px 80px;
+  .abt-name-sticky {
+    padding: 0 16px 48px;
   }
   .abt-name::before {
     padding-top: 64px;
   }
   .abt-name-card {
-    flex: 0 0 min(300px, 85vw);
+    flex: 0 0 min(280px, 85vw);
+    padding: 32px 28px;
   }
   .abt-name-card--featured {
-    flex: 0 0 min(320px, 88vw);
+    flex: 0 0 min(300px, 88vw);
+    padding: 32px 28px;
   }
   .abt-values {
     padding: 64px 16px 80px;

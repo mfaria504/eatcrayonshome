@@ -186,32 +186,62 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
   updateToggleTheme(false);
 
-  // ── Drag-to-scroll on horizontal card tracks ──
-  document.querySelectorAll('.abt-name-bento').forEach(track => {
-    let isDown = false;
-    let startX;
-    let scrollLeft;
+  // ── Scroll-driven horizontal card movement ──
+  const nameSection = document.querySelector('.abt-name');
+  const bento = document.querySelector('.abt-name-bento');
+  const scrollWrap = document.querySelector('.abt-name-scroll-wrap');
+  const progressBar = document.querySelector('.abt-name-progress-bar');
 
-    track.addEventListener('mousedown', e => {
-      isDown = true;
-      track.classList.add('is-dragging');
-      startX = e.pageX - track.offsetLeft;
-      scrollLeft = track.scrollLeft;
-    });
-    track.addEventListener('mouseleave', () => {
-      isDown = false;
-      track.classList.remove('is-dragging');
-    });
-    track.addEventListener('mouseup', () => {
-      isDown = false;
-      track.classList.remove('is-dragging');
-    });
-    track.addEventListener('mousemove', e => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - track.offsetLeft;
-      const walk = (x - startX) * 1.5;
-      track.scrollLeft = scrollLeft - walk;
-    });
-  });
+  if (nameSection && bento) {
+    function setupScrollCards() {
+      // Measure how far the cards overflow
+      const trackWidth = bento.scrollWidth;
+      const viewportWidth = scrollWrap ? scrollWrap.offsetWidth : window.innerWidth;
+      const overflow = Math.max(0, trackWidth - viewportWidth);
+
+      // Set section height: viewport + overflow creates the scroll runway
+      // The sticky container pins while user scrolls through the extra height
+      const stickyHeight = window.innerHeight;
+      const totalHeight = stickyHeight + overflow;
+      nameSection.style.height = totalHeight + 'px';
+    }
+
+    function onScrollCards() {
+      if (!bento || !nameSection || !scrollWrap) return;
+
+      const rect = nameSection.getBoundingClientRect();
+      const stickyHeight = window.innerHeight;
+      const trackWidth = bento.scrollWidth;
+      const viewportWidth = scrollWrap.offsetWidth;
+      const overflow = Math.max(0, trackWidth - viewportWidth);
+
+      // How far into the section have we scrolled?
+      // rect.top starts positive (below viewport), goes negative (scrolled past)
+      // Progress 0 = section just reached top, 1 = fully scrolled through
+      const scrolled = -rect.top;
+      const progress = Math.max(0, Math.min(1, scrolled / overflow));
+
+      // Drive horizontal translation
+      const translateX = -progress * overflow;
+      bento.style.transform = 'translateX(' + translateX + 'px)';
+
+      // Toggle edge fades
+      if (scrollWrap) {
+        scrollWrap.classList.toggle('has-scrolled', progress > 0.02);
+        scrollWrap.classList.toggle('at-end', progress > 0.98);
+      }
+
+      // Update progress bar
+      if (progressBar) {
+        progressBar.style.width = (progress * 100) + '%';
+      }
+    }
+
+    setupScrollCards();
+    window.addEventListener('resize', setupScrollCards);
+    window.addEventListener('scroll', () => {
+      requestAnimationFrame(onScrollCards);
+    }, { passive: true });
+    onScrollCards();
+  }
 });
