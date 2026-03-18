@@ -463,3 +463,9 @@ body.contact-light {
   opacity: 0.5;
   pointer-events: none;
 }
+
+/* ── HEADER — dark on light page ── */
+body.contact-light #site-header {
+  background: var(--dark);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
