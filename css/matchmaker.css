@@ -16,11 +16,11 @@
     /* Primary text-legibility gradient — dark left column, clear right for photo */
     linear-gradient(
       to right,
-      rgba(8, 10, 18, 0.98) 0%,
-      rgba(8, 10, 18, 0.97) 35%,
-      rgba(8, 10, 18, 0.92) 50%,
-      rgba(8, 10, 18, 0.60) 62%,
-      rgba(8, 10, 18, 0.15) 74%,
+      rgba(8, 10, 18, 0.92) 0%,
+      rgba(8, 10, 18, 0.82) 30%,
+      rgba(8, 10, 18, 0.65) 48%,
+      rgba(8, 10, 18, 0.35) 62%,
+      rgba(8, 10, 18, 0.10) 74%,
       rgba(8, 10, 18, 0.02) 100%
     ),
     /* Bottom vignette — grounds the composition */
