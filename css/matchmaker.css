@@ -82,7 +82,7 @@
 
 /* ── INTRO — Hero layout ── */
 #intro {
-  min-height: calc(100vh - 280px);
+  min-height: calc(100vh - 420px);
   display: flex;
   flex-direction: column;
   justify-content: center;
