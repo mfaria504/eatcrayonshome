@@ -107,12 +107,12 @@
   pointer-events: none;
 }
 
-/* ── Layer 3: Scan-line texture + noise ── */
+/* ── Layer 3: Scan-line texture + noise (below content) ── */
 .abt-hero::after {
   content: '';
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 1;
   background-image:
     /* Subtle scan lines */
     repeating-linear-gradient(
@@ -130,7 +130,7 @@
 
 .abt-hero-inner {
   position: relative;
-  z-index: 3;
+  z-index: 5;
   max-width: 1360px;
   margin: 0 auto;
   width: 100%;
@@ -143,16 +143,7 @@
 .abt-hero-content {
   padding-bottom: 80px;
   position: relative;
-}
-
-/* Dark halo behind text — dims streaks for readability */
-.abt-hero-content::before {
-  content: '';
-  position: absolute;
-  inset: -80px -120px -80px -100px;
-  background: radial-gradient(ellipse at 30% 45%, rgba(6,8,22,0.92) 0%, rgba(6,8,22,0.6) 45%, transparent 72%);
-  z-index: -1;
-  pointer-events: none;
+  z-index: 5;
 }
 
 .abt-hero-eyebrow {
@@ -187,7 +178,7 @@
 /* Photo — mix-blend-mode: lighten makes black bg transparent */
 .abt-hero-photo {
   position: relative;
-  z-index: 3;
+  z-index: 5;
   align-self: end;
 }
 
