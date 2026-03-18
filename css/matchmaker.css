@@ -678,6 +678,10 @@ input[type=range]::-moz-range-thumb {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
+  .hero-bg {
+    background-image: none;
+    background-color: var(--dark);
+  }
   .wrap {
     padding: 120px 28px 80px;
   }
