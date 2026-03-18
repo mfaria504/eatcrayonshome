@@ -399,6 +399,9 @@ function buildSlider(q) {
     const v = parseInt(input.value);
     sliderVals[cur] = v;
     display.innerHTML = `<span class="val">${q.labels[v]}</span>`;
+    display.classList.remove('val-change');
+    void display.offsetWidth;
+    display.classList.add('val-change');
     updateFill();
     document.getElementById('btn-next').disabled = false;
     clearTimeout(t);
