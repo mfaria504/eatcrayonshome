@@ -551,20 +551,68 @@
   line-height: 1.7;
 }
 
-/* Bento grid — featured cards span full width */
+/* Horizontal scroll track */
+.abt-name-scroll-wrap {
+  position: relative;
+}
+
+/* Right-edge fade hint */
+.abt-name-scroll-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 100%;
+  background: linear-gradient(to right, transparent, var(--dark));
+  pointer-events: none;
+  z-index: 2;
+}
+
 .abt-name-bento {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   gap: 16px;
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 8px;
+  cursor: grab;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.08) transparent;
+}
+
+.abt-name-bento:active,
+.abt-name-bento.is-dragging {
+  cursor: grabbing;
+}
+
+.abt-name-bento.is-dragging .abt-name-card {
+  pointer-events: none;
+  user-select: none;
+}
+
+.abt-name-bento::-webkit-scrollbar {
+  height: 2px;
+}
+.abt-name-bento::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.04);
+  border-radius: 2px;
+}
+.abt-name-bento::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.12);
+  border-radius: 2px;
 }
 
 .abt-name-card {
   position: relative;
+  flex: 0 0 clamp(280px, 36vw, 440px);
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 20px;
   padding: 48px;
   overflow: hidden;
+  scroll-snap-align: start;
   transition: border-color 300ms ease, transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -573,14 +621,18 @@
   transform: translateY(-4px);
 }
 
-/* Featured cards span full width */
+/* Featured — same width as others in scroll layout */
 .abt-name-card--featured {
-  grid-column: 1 / -1;
-  padding: 56px 56px 56px 48px;
+  flex: 0 0 clamp(320px, 42vw, 520px);
+  padding: 48px;
 }
 
 .abt-name-card--featured .abt-name-card-inner {
-  max-width: 600px;
+  max-width: none;
+}
+
+.abt-name-card--featured .abt-name-card-h {
+  font-size: 1.4rem;
 }
 
 /* Giant background number */
@@ -852,10 +904,8 @@
   .abt-story-label-col {
     position: static;
   }
-  .abt-name-bento {
-    grid-template-columns: 1fr 1fr;
-  }
 }
+
 
 @media (max-width: 768px) {
   .abt-hero {
@@ -877,14 +927,12 @@
   .abt-name::before {
     padding-top: 80px;
   }
-  .abt-name-bento {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
   .abt-name-card {
+    flex: 0 0 min(340px, 78vw);
     padding: 32px;
   }
   .abt-name-card--featured {
+    flex: 0 0 min(380px, 84vw);
     padding: 32px;
   }
   .abt-values {
@@ -917,6 +965,12 @@
   }
   .abt-name::before {
     padding-top: 64px;
+  }
+  .abt-name-card {
+    flex: 0 0 min(300px, 85vw);
+  }
+  .abt-name-card--featured {
+    flex: 0 0 min(320px, 88vw);
   }
   .abt-values {
     padding: 64px 16px 80px;
