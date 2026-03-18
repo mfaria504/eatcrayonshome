@@ -32,78 +32,254 @@
     radial-gradient(ellipse 25% 20% at 95% 5%, rgba(139,92,246,0.08) 0%, transparent 100%);
 }
 
-/* ── Layer 2: Neon horizontal light streaks ── */
+/* ── Layer 2: Animated neon streaks ── */
+.abt-streaks {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Base streak — thin horizontal line with radial fade */
+.streak {
+  position: absolute;
+  height: 2px;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* ═══ KEYFRAMES ═══ */
+@keyframes drift-right {
+  0%, 100% { transform: translateX(-8%); }
+  50%      { transform: translateX(8%); }
+}
+@keyframes drift-left {
+  0%, 100% { transform: translateX(8%); }
+  50%      { transform: translateX(-8%); }
+}
+@keyframes drift-right-pulse {
+  0%   { transform: translateX(-8%); opacity: 0.3; }
+  50%  { transform: translateX(8%);  opacity: 1; }
+  100% { transform: translateX(-8%); opacity: 0.3; }
+}
+@keyframes drift-left-pulse {
+  0%   { transform: translateX(8%);  opacity: 0.3; }
+  50%  { transform: translateX(-8%); opacity: 1; }
+  100% { transform: translateX(8%);  opacity: 0.3; }
+}
+
+/* Shooting star — flies across screen then resets */
+@keyframes shoot-right {
+  0%   { transform: translateX(-120%); opacity: 0; }
+  5%   { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateX(120%);  opacity: 0; }
+}
+@keyframes shoot-left {
+  0%   { transform: translateX(120%);  opacity: 0; }
+  5%   { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateX(-120%); opacity: 0; }
+}
+
+/* ═══ PRIMARY STREAKS — Bold with glow ═══ */
+
+/* Orange — behind heads */
+.streak--orange-1 {
+  --streak-o: 0.95;
+  width: 48%; top: 36%; left: 48%;
+  background: radial-gradient(ellipse at center, rgba(242,179,123,0.95) 0%, transparent 70%);
+  box-shadow: 0 0 20px 6px rgba(242,179,123,0.10);
+  animation: drift-right-pulse 8s ease-in-out infinite;
+}
+.streak--orange-1e {
+  --streak-o: 0.4;
+  width: 35%; height: 1px; top: 33%; left: 52%;
+  background: radial-gradient(ellipse at center, rgba(242,179,123,0.40) 0%, transparent 70%);
+  animation: drift-right 10s ease-in-out infinite 1s;
+}
+
+/* Purple — upper left */
+.streak--purple-1 {
+  --streak-o: 0.9;
+  width: 55%; top: 5%; left: -3%;
+  background: radial-gradient(ellipse at center, rgba(139,92,246,0.90) 0%, transparent 70%);
+  box-shadow: 0 0 18px 5px rgba(139,92,246,0.08);
+  animation: drift-left-pulse 9s ease-in-out infinite;
+}
+.streak--purple-1e {
+  --streak-o: 0.35;
+  width: 32%; height: 1px; top: 8%; left: 2%;
+  background: radial-gradient(ellipse at center, rgba(139,92,246,0.35) 0%, transparent 70%);
+  animation: drift-left 12s ease-in-out infinite 2s;
+}
+
+/* Blue — left edge */
+.streak--blue-l {
+  --streak-o: 1;
+  width: 50%; height: 3px; top: 44%; left: -22%;
+  background: radial-gradient(ellipse at center, rgba(68,140,247,1) 0%, transparent 65%);
+  box-shadow: 0 0 24px 8px rgba(68,140,247,0.15);
+  animation: drift-right-pulse 7s ease-in-out infinite;
+}
+.streak--blue-le {
+  --streak-o: 0.35;
+  width: 34%; height: 1px; top: 47%; left: -12%;
+  background: radial-gradient(ellipse at center, rgba(68,140,247,0.35) 0%, transparent 70%);
+  animation: drift-right 9s ease-in-out infinite 1s;
+}
+
+/* Blue — right edge */
+.streak--blue-r {
+  --streak-o: 0.92;
+  width: 48%; height: 2.5px; top: 52%; right: -22%;
+  background: radial-gradient(ellipse at center, rgba(68,140,247,0.92) 0%, transparent 65%);
+  box-shadow: 0 0 20px 6px rgba(68,140,247,0.12);
+  animation: drift-left-pulse 8s ease-in-out infinite 1s;
+}
+.streak--blue-re {
+  --streak-o: 0.28;
+  width: 30%; height: 1px; top: 55%; right: -10%;
+  background: radial-gradient(ellipse at center, rgba(68,140,247,0.28) 0%, transparent 70%);
+  animation: drift-left 10s ease-in-out infinite 2s;
+}
+
+/* Orange — lower left */
+.streak--orange-2 {
+  --streak-o: 0.9;
+  width: 44%; top: 78%; left: -6%;
+  background: radial-gradient(ellipse at center, rgba(242,179,123,0.90) 0%, transparent 70%);
+  box-shadow: 0 0 16px 5px rgba(242,179,123,0.10);
+  animation: drift-right-pulse 9s ease-in-out infinite 0.5s;
+}
+.streak--orange-2e {
+  --streak-o: 0.32;
+  width: 26%; height: 1px; top: 81%; left: 2%;
+  background: radial-gradient(ellipse at center, rgba(242,179,123,0.32) 0%, transparent 70%);
+  animation: drift-right 11s ease-in-out infinite 2s;
+}
+
+/* Purple — lower right */
+.streak--purple-2 {
+  --streak-o: 0.88;
+  width: 52%; top: 86%; right: -10%;
+  background: radial-gradient(ellipse at center, rgba(139,92,246,0.88) 0%, transparent 70%);
+  box-shadow: 0 0 18px 6px rgba(139,92,246,0.10);
+  animation: drift-left-pulse 8s ease-in-out infinite 2s;
+}
+.streak--purple-2e {
+  --streak-o: 0.30;
+  width: 30%; height: 1px; top: 89%; right: 0%;
+  background: radial-gradient(ellipse at center, rgba(139,92,246,0.30) 0%, transparent 70%);
+  animation: drift-left 10s ease-in-out infinite 3s;
+}
+
+/* ═══ SECONDARY STREAKS — Thinner, subtler ═══ */
+.streak--s1 {
+  --streak-o: 0.55;
+  width: 36%; height: 1.5px; top: 14%; right: 2%;
+  background: radial-gradient(ellipse at center, rgba(124,58,237,0.55) 0%, transparent 70%);
+  animation: drift-left-pulse 10s ease-in-out infinite 0.5s;
+}
+.streak--s2 {
+  --streak-o: 0.42;
+  width: 22%; height: 1px; top: 11%; left: 2%;
+  background: radial-gradient(ellipse at center, rgba(139,92,246,0.42) 0%, transparent 70%);
+  animation: drift-right-pulse 11s ease-in-out infinite 2s;
+}
+.streak--s3 {
+  --streak-o: 0.28;
+  width: 18%; height: 1px; top: 10%; right: 0%;
+  background: radial-gradient(ellipse at center, rgba(242,179,123,0.28) 0%, transparent 70%);
+  animation: drift-left 13s ease-in-out infinite 3s;
+}
+.streak--s4 {
+  --streak-o: 0.20;
+  width: 38%; height: 1.5px; top: 60%; left: 5%;
+  background: radial-gradient(ellipse at center, rgba(68,140,247,0.20) 0%, transparent 70%);
+  animation: drift-right-pulse 9s ease-in-out infinite 1s;
+}
+.streak--s5 {
+  --streak-o: 0.15;
+  width: 32%; height: 1px; top: 62%; right: 10%;
+  background: radial-gradient(ellipse at center, rgba(139,92,246,0.15) 0%, transparent 70%);
+  animation: drift-left 12s ease-in-out infinite 4s;
+}
+.streak--s6 {
+  --streak-o: 0.12;
+  width: 65%; height: 1px; top: 94%; left: 15%;
+  background: radial-gradient(ellipse at center, rgba(68,140,247,0.12) 0%, transparent 70%);
+  animation: drift-right 14s ease-in-out infinite 1s;
+}
+
+/* ═══ SHOOTING STARS — Fly across the screen ═══ */
+
+/* Blue — shoots right, upper area */
+.streak--shoot-1 {
+  width: 25%; height: 2px; top: 15%; left: 0;
+  background: linear-gradient(to right, transparent, rgba(68,140,247,0.9) 40%, rgba(68,140,247,0.4) 70%, transparent);
+  box-shadow: 0 0 12px 3px rgba(68,140,247,0.15);
+  animation: shoot-right 3s linear infinite;
+}
+
+/* Orange — shoots left, mid area */
+.streak--shoot-2 {
+  width: 20%; height: 2px; top: 40%; right: 0;
+  background: linear-gradient(to left, transparent, rgba(242,179,123,0.9) 40%, rgba(242,179,123,0.4) 70%, transparent);
+  box-shadow: 0 0 12px 3px rgba(242,179,123,0.12);
+  animation: shoot-left 4s linear infinite 1.5s;
+}
+
+/* Purple — shoots right, lower-mid */
+.streak--shoot-3 {
+  width: 22%; height: 1.5px; top: 65%; left: 0;
+  background: linear-gradient(to right, transparent, rgba(139,92,246,0.85) 40%, rgba(139,92,246,0.35) 70%, transparent);
+  box-shadow: 0 0 10px 3px rgba(139,92,246,0.10);
+  animation: shoot-right 3.5s linear infinite 2.5s;
+}
+
+/* Blue — shoots left, near bottom */
+.streak--shoot-4 {
+  width: 30%; height: 1.5px; top: 88%; right: 0;
+  background: linear-gradient(to left, transparent, rgba(68,140,247,0.7) 40%, rgba(68,140,247,0.3) 70%, transparent);
+  box-shadow: 0 0 8px 2px rgba(68,140,247,0.10);
+  animation: shoot-left 4.5s linear infinite 3.5s;
+}
+
+/* Orange — shoots right, upper-mid (thin, fast) */
+.streak--shoot-5 {
+  width: 18%; height: 1px; top: 28%; left: 0;
+  background: linear-gradient(to right, transparent, rgba(242,179,123,0.7) 40%, rgba(242,179,123,0.3) 70%, transparent);
+  animation: shoot-right 2.5s linear infinite 5s;
+}
+
+/* Purple — shoots left, lower (thin) */
+.streak--shoot-6 {
+  width: 24%; height: 1px; top: 72%; right: 0;
+  background: linear-gradient(to left, transparent, rgba(139,92,246,0.6) 40%, rgba(139,92,246,0.25) 70%, transparent);
+  animation: shoot-left 3s linear infinite 2s;
+}
+
+/* ── Static whisper lines (stay on ::before) ── */
 .abt-hero::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 1;
   background-image:
-
-    /* ═══ HERO STREAKS — Bold primaries ═══ */
-
-    /* Orange — behind heads (hero accent) */
-    radial-gradient(ellipse 48% 2.5px at 72% 36%, rgba(242,179,123,0.95) 0%, transparent 100%),
-    radial-gradient(ellipse 42% 24px at 72% 36%, rgba(242,179,123,0.10) 0%, transparent 100%),
-    radial-gradient(ellipse 35% 1px at 66% 33%, rgba(242,179,123,0.40) 0%, transparent 100%),
-    radial-gradient(ellipse 25% 1px at 78% 39%, rgba(242,179,123,0.28) 0%, transparent 100%),
-
-    /* Purple — upper left (hero accent) */
-    radial-gradient(ellipse 55% 2px at 24% 5%, rgba(139,92,246,0.90) 0%, transparent 100%),
-    radial-gradient(ellipse 45% 20px at 24% 5%, rgba(139,92,246,0.08) 0%, transparent 100%),
-    radial-gradient(ellipse 32% 1px at 30% 8%, rgba(139,92,246,0.35) 0%, transparent 100%),
-    radial-gradient(ellipse 20% 1px at 18% 3%, rgba(139,92,246,0.25) 0%, transparent 100%),
-
-    /* Blue — left edge (hero accent) */
-    radial-gradient(ellipse 50% 3px at 4% 44%, rgba(68,140,247,1) 0%, transparent 100%),
-    radial-gradient(ellipse 42% 28px at 2% 44%, rgba(68,140,247,0.18) 0%, transparent 100%),
-    radial-gradient(ellipse 34% 1px at 9% 47%, rgba(68,140,247,0.35) 0%, transparent 100%),
-
-    /* Blue — right edge (hero accent) */
-    radial-gradient(ellipse 48% 2.5px at 96% 52%, rgba(68,140,247,0.92) 0%, transparent 100%),
-    radial-gradient(ellipse 40% 22px at 98% 52%, rgba(68,140,247,0.14) 0%, transparent 100%),
-    radial-gradient(ellipse 30% 1px at 89% 55%, rgba(68,140,247,0.28) 0%, transparent 100%),
-
-    /* Orange — lower left (hero accent) */
-    radial-gradient(ellipse 44% 2px at 16% 78%, rgba(242,179,123,0.90) 0%, transparent 100%),
-    radial-gradient(ellipse 36% 18px at 14% 78%, rgba(242,179,123,0.12) 0%, transparent 100%),
-    radial-gradient(ellipse 26% 1px at 24% 81%, rgba(242,179,123,0.32) 0%, transparent 100%),
-
-    /* Purple — lower right (hero accent) */
-    radial-gradient(ellipse 52% 2px at 84% 86%, rgba(139,92,246,0.88) 0%, transparent 100%),
-    radial-gradient(ellipse 44% 20px at 86% 86%, rgba(139,92,246,0.12) 0%, transparent 100%),
-    radial-gradient(ellipse 30% 1px at 76% 89%, rgba(139,92,246,0.30) 0%, transparent 100%),
-
-    /* ═══ SECONDARY STREAKS — Supporting rhythm ═══ */
-
-    /* Purple/blue — upper right */
-    radial-gradient(ellipse 36% 1.5px at 88% 14%, rgba(124,58,237,0.55) 0%, transparent 100%),
-    radial-gradient(ellipse 22% 1px at 82% 17%, rgba(124,58,237,0.22) 0%, transparent 100%),
-    /* Purple — far upper left */
-    radial-gradient(ellipse 22% 1px at 6% 11%, rgba(139,92,246,0.42) 0%, transparent 100%),
-    /* Orange — far upper right */
-    radial-gradient(ellipse 18% 1px at 94% 10%, rgba(242,179,123,0.28) 0%, transparent 100%),
-    /* Blue — mid-left secondary */
-    radial-gradient(ellipse 38% 1.5px at 20% 60%, rgba(68,140,247,0.20) 0%, transparent 100%),
-    /* Purple — mid-right secondary */
-    radial-gradient(ellipse 32% 1px at 70% 62%, rgba(139,92,246,0.15) 0%, transparent 100%),
-
-    /* ═══ WHISPER LINES — Atmosphere fill ═══ */
-
-    radial-gradient(ellipse 72% 1px at 50% 20%, rgba(68,140,247,0.10) 0%, transparent 100%),
-    radial-gradient(ellipse 60% 1px at 45% 26%, rgba(68,140,247,0.08) 0%, transparent 100%),
-    radial-gradient(ellipse 48% 1px at 60% 30%, rgba(139,92,246,0.07) 0%, transparent 100%),
-    radial-gradient(ellipse 28% 1px at 14% 32%, rgba(242,179,123,0.12) 0%, transparent 100%),
-    radial-gradient(ellipse 52% 1px at 42% 50%, rgba(139,92,246,0.06) 0%, transparent 100%),
-    radial-gradient(ellipse 80% 1px at 50% 58%, rgba(68,140,247,0.07) 0%, transparent 100%),
-    radial-gradient(ellipse 44% 1px at 55% 66%, rgba(139,92,246,0.08) 0%, transparent 100%),
-    radial-gradient(ellipse 32% 1px at 32% 70%, rgba(68,140,247,0.10) 0%, transparent 100%),
-    radial-gradient(ellipse 26% 1px at 82% 72%, rgba(242,179,123,0.10) 0%, transparent 100%),
-    radial-gradient(ellipse 65% 1px at 50% 94%, rgba(68,140,247,0.12) 0%, transparent 100%),
-    radial-gradient(ellipse 40% 1px at 38% 97%, rgba(139,92,246,0.08) 0%, transparent 100%),
-    radial-gradient(ellipse 20% 1px at 62% 91%, rgba(242,179,123,0.09) 0%, transparent 100%),
-    radial-gradient(ellipse 24% 1px at 8% 90%, rgba(139,92,246,0.12) 0%, transparent 100%);
-
+    radial-gradient(ellipse 72% 1px at 50% 20%, rgba(68,140,247,0.08) 0%, transparent 100%),
+    radial-gradient(ellipse 60% 1px at 45% 26%, rgba(68,140,247,0.06) 0%, transparent 100%),
+    radial-gradient(ellipse 48% 1px at 60% 30%, rgba(139,92,246,0.05) 0%, transparent 100%),
+    radial-gradient(ellipse 28% 1px at 14% 32%, rgba(242,179,123,0.08) 0%, transparent 100%),
+    radial-gradient(ellipse 52% 1px at 42% 50%, rgba(139,92,246,0.05) 0%, transparent 100%),
+    radial-gradient(ellipse 80% 1px at 50% 58%, rgba(68,140,247,0.06) 0%, transparent 100%),
+    radial-gradient(ellipse 44% 1px at 55% 66%, rgba(139,92,246,0.06) 0%, transparent 100%),
+    radial-gradient(ellipse 32% 1px at 32% 70%, rgba(68,140,247,0.08) 0%, transparent 100%),
+    radial-gradient(ellipse 26% 1px at 82% 72%, rgba(242,179,123,0.07) 0%, transparent 100%),
+    radial-gradient(ellipse 65% 1px at 50% 94%, rgba(68,140,247,0.08) 0%, transparent 100%),
+    radial-gradient(ellipse 40% 1px at 38% 97%, rgba(139,92,246,0.06) 0%, transparent 100%),
+    radial-gradient(ellipse 20% 1px at 62% 91%, rgba(242,179,123,0.06) 0%, transparent 100%);
   pointer-events: none;
 }
 
@@ -688,5 +864,8 @@
 @media (prefers-reduced-motion: reduce) {
   .abt-name-card {
     transition: none;
+  }
+  .streak {
+    animation: none !important;
   }
 }
