@@ -6,109 +6,125 @@
 /* ── HERO — Neon light streaks + team photo ── */
 .abt-hero {
   position: relative;
-  background: #080a1a;
+  background: #060816;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
   padding: 100px 40px 0;
 }
 
-/* Neon horizontal light streaks — pure CSS recreation */
+/* ── Layer 1: Ambient atmosphere — large soft color pools ── */
+.abt-hero-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    /* Blue pool — upper right quadrant */
+    radial-gradient(ellipse 50% 45% at 75% 20%, rgba(68,140,247,0.07) 0%, transparent 100%),
+    /* Purple pool — left center */
+    radial-gradient(ellipse 40% 50% at 15% 50%, rgba(139,92,246,0.05) 0%, transparent 100%),
+    /* Orange warm pool — behind subjects */
+    radial-gradient(ellipse 35% 40% at 68% 55%, rgba(242,179,123,0.04) 0%, transparent 100%),
+    /* Blue deep pool — bottom center */
+    radial-gradient(ellipse 60% 30% at 50% 90%, rgba(68,140,247,0.06) 0%, transparent 100%),
+    /* Purple accent — top right corner */
+    radial-gradient(ellipse 25% 20% at 95% 5%, rgba(139,92,246,0.08) 0%, transparent 100%);
+}
+
+/* ── Layer 2: Neon horizontal light streaks ── */
 .abt-hero::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 1;
   background-image:
-    /* ── Top area ── */
-    /* Orange — behind heads area */
-    radial-gradient(ellipse 45% 2px at 72% 38%, rgba(242,179,123,0.92) 0%, transparent 100%),
-    radial-gradient(ellipse 38% 14px at 72% 38%, rgba(242,179,123,0.16) 0%, transparent 100%),
-    /* Orange — thin echo line nearby */
-    radial-gradient(ellipse 30% 1px at 65% 35%, rgba(242,179,123,0.35) 0%, transparent 100%),
-    /* Purple — upper left (primary) */
-    radial-gradient(ellipse 52% 1.5px at 26% 4%, rgba(139,92,246,0.85) 0%, transparent 100%),
-    radial-gradient(ellipse 42% 10px at 26% 4%, rgba(139,92,246,0.12) 0%, transparent 100%),
-    /* Purple — thin echo below */
-    radial-gradient(ellipse 30% 1px at 32% 8%, rgba(139,92,246,0.30) 0%, transparent 100%),
-    /* Purple/blue thin — upper right */
-    radial-gradient(ellipse 38% 1px at 86% 13%, rgba(124,58,237,0.55) 0%, transparent 100%),
-    /* Blue thin — upper area */
-    radial-gradient(ellipse 78% 1px at 50% 18%, rgba(68,140,247,0.18) 0%, transparent 100%),
-    /* Purple whisper — far upper left */
-    radial-gradient(ellipse 25% 1px at 8% 10%, rgba(139,92,246,0.40) 0%, transparent 100%),
-    /* Orange whisper — far upper right */
-    radial-gradient(ellipse 20% 1px at 92% 9%, rgba(242,179,123,0.30) 0%, transparent 100%),
 
-    /* ── Upper-mid zone ── */
-    /* Blue subtle line */
-    radial-gradient(ellipse 65% 1px at 45% 24%, rgba(68,140,247,0.14) 0%, transparent 100%),
-    /* Purple subtle line */
-    radial-gradient(ellipse 50% 1px at 60% 28%, rgba(139,92,246,0.10) 0%, transparent 100%),
-    /* Orange whisper */
-    radial-gradient(ellipse 30% 1px at 15% 30%, rgba(242,179,123,0.20) 0%, transparent 100%),
+    /* ═══ HERO STREAKS — Bold primaries ═══ */
 
-    /* ── Middle area ── */
-    /* Bright blue — left edge (primary) */
-    radial-gradient(ellipse 48% 2.5px at 5% 42%, rgba(68,140,247,1) 0%, transparent 100%),
-    radial-gradient(ellipse 40% 20px at 3% 42%, rgba(68,140,247,0.22) 0%, transparent 100%),
-    /* Blue — left edge echo */
-    radial-gradient(ellipse 32% 1px at 10% 45%, rgba(68,140,247,0.30) 0%, transparent 100%),
-    /* Blue — right edge (primary) */
-    radial-gradient(ellipse 46% 2px at 95% 50%, rgba(68,140,247,0.88) 0%, transparent 100%),
-    radial-gradient(ellipse 38% 16px at 97% 50%, rgba(68,140,247,0.18) 0%, transparent 100%),
-    /* Blue — right edge echo */
-    radial-gradient(ellipse 28% 1px at 88% 53%, rgba(68,140,247,0.25) 0%, transparent 100%),
-    /* Purple mid line */
-    radial-gradient(ellipse 55% 1px at 40% 48%, rgba(139,92,246,0.10) 0%, transparent 100%),
-    /* Orange mid whisper */
-    radial-gradient(ellipse 40% 1px at 75% 38%, rgba(242,179,123,0.12) 0%, transparent 100%),
-    /* Blue thin mid lines */
-    radial-gradient(ellipse 82% 1px at 50% 56%, rgba(68,140,247,0.12) 0%, transparent 100%),
-    radial-gradient(ellipse 70% 1px at 50% 34%, rgba(139,92,246,0.10) 0%, transparent 100%),
+    /* Orange — behind heads (hero accent) */
+    radial-gradient(ellipse 48% 2.5px at 72% 36%, rgba(242,179,123,0.95) 0%, transparent 100%),
+    radial-gradient(ellipse 42% 24px at 72% 36%, rgba(242,179,123,0.10) 0%, transparent 100%),
+    radial-gradient(ellipse 35% 1px at 66% 33%, rgba(242,179,123,0.40) 0%, transparent 100%),
+    radial-gradient(ellipse 25% 1px at 78% 39%, rgba(242,179,123,0.28) 0%, transparent 100%),
 
-    /* ── Lower-mid zone ── */
-    /* Purple subtle line */
-    radial-gradient(ellipse 45% 1px at 55% 64%, rgba(139,92,246,0.12) 0%, transparent 100%),
-    /* Blue whisper */
-    radial-gradient(ellipse 35% 1px at 30% 68%, rgba(68,140,247,0.15) 0%, transparent 100%),
-    /* Orange whisper */
-    radial-gradient(ellipse 28% 1px at 80% 70%, rgba(242,179,123,0.18) 0%, transparent 100%),
+    /* Purple — upper left (hero accent) */
+    radial-gradient(ellipse 55% 2px at 24% 5%, rgba(139,92,246,0.90) 0%, transparent 100%),
+    radial-gradient(ellipse 45% 20px at 24% 5%, rgba(139,92,246,0.08) 0%, transparent 100%),
+    radial-gradient(ellipse 32% 1px at 30% 8%, rgba(139,92,246,0.35) 0%, transparent 100%),
+    radial-gradient(ellipse 20% 1px at 18% 3%, rgba(139,92,246,0.25) 0%, transparent 100%),
 
-    /* ── Bottom area ── */
-    /* Orange — lower left (primary) */
-    radial-gradient(ellipse 42% 2px at 18% 76%, rgba(242,179,123,0.88) 0%, transparent 100%),
-    radial-gradient(ellipse 35% 14px at 16% 76%, rgba(242,179,123,0.18) 0%, transparent 100%),
-    /* Orange — lower left echo */
-    radial-gradient(ellipse 28% 1px at 25% 79%, rgba(242,179,123,0.30) 0%, transparent 100%),
-    /* Purple — lower right (primary) */
-    radial-gradient(ellipse 54% 2px at 82% 84%, rgba(139,92,246,0.90) 0%, transparent 100%),
-    radial-gradient(ellipse 44% 16px at 84% 84%, rgba(139,92,246,0.18) 0%, transparent 100%),
-    /* Purple — lower right echo */
-    radial-gradient(ellipse 30% 1px at 75% 87%, rgba(139,92,246,0.28) 0%, transparent 100%),
-    /* Blue bottom lines */
-    radial-gradient(ellipse 68% 1px at 50% 92%, rgba(68,140,247,0.22) 0%, transparent 100%),
-    radial-gradient(ellipse 50% 1px at 40% 95%, rgba(68,140,247,0.15) 0%, transparent 100%),
-    /* Orange bottom whisper */
-    radial-gradient(ellipse 22% 1px at 60% 89%, rgba(242,179,123,0.15) 0%, transparent 100%),
-    /* Purple bottom whisper */
-    radial-gradient(ellipse 25% 1px at 10% 88%, rgba(139,92,246,0.18) 0%, transparent 100%);
+    /* Blue — left edge (hero accent) */
+    radial-gradient(ellipse 50% 3px at 4% 44%, rgba(68,140,247,1) 0%, transparent 100%),
+    radial-gradient(ellipse 42% 28px at 2% 44%, rgba(68,140,247,0.18) 0%, transparent 100%),
+    radial-gradient(ellipse 34% 1px at 9% 47%, rgba(68,140,247,0.35) 0%, transparent 100%),
+
+    /* Blue — right edge (hero accent) */
+    radial-gradient(ellipse 48% 2.5px at 96% 52%, rgba(68,140,247,0.92) 0%, transparent 100%),
+    radial-gradient(ellipse 40% 22px at 98% 52%, rgba(68,140,247,0.14) 0%, transparent 100%),
+    radial-gradient(ellipse 30% 1px at 89% 55%, rgba(68,140,247,0.28) 0%, transparent 100%),
+
+    /* Orange — lower left (hero accent) */
+    radial-gradient(ellipse 44% 2px at 16% 78%, rgba(242,179,123,0.90) 0%, transparent 100%),
+    radial-gradient(ellipse 36% 18px at 14% 78%, rgba(242,179,123,0.12) 0%, transparent 100%),
+    radial-gradient(ellipse 26% 1px at 24% 81%, rgba(242,179,123,0.32) 0%, transparent 100%),
+
+    /* Purple — lower right (hero accent) */
+    radial-gradient(ellipse 52% 2px at 84% 86%, rgba(139,92,246,0.88) 0%, transparent 100%),
+    radial-gradient(ellipse 44% 20px at 86% 86%, rgba(139,92,246,0.12) 0%, transparent 100%),
+    radial-gradient(ellipse 30% 1px at 76% 89%, rgba(139,92,246,0.30) 0%, transparent 100%),
+
+    /* ═══ SECONDARY STREAKS — Supporting rhythm ═══ */
+
+    /* Purple/blue — upper right */
+    radial-gradient(ellipse 36% 1.5px at 88% 14%, rgba(124,58,237,0.55) 0%, transparent 100%),
+    radial-gradient(ellipse 22% 1px at 82% 17%, rgba(124,58,237,0.22) 0%, transparent 100%),
+    /* Purple — far upper left */
+    radial-gradient(ellipse 22% 1px at 6% 11%, rgba(139,92,246,0.42) 0%, transparent 100%),
+    /* Orange — far upper right */
+    radial-gradient(ellipse 18% 1px at 94% 10%, rgba(242,179,123,0.28) 0%, transparent 100%),
+    /* Blue — mid-left secondary */
+    radial-gradient(ellipse 38% 1.5px at 20% 60%, rgba(68,140,247,0.20) 0%, transparent 100%),
+    /* Purple — mid-right secondary */
+    radial-gradient(ellipse 32% 1px at 70% 62%, rgba(139,92,246,0.15) 0%, transparent 100%),
+
+    /* ═══ WHISPER LINES — Atmosphere fill ═══ */
+
+    radial-gradient(ellipse 72% 1px at 50% 20%, rgba(68,140,247,0.10) 0%, transparent 100%),
+    radial-gradient(ellipse 60% 1px at 45% 26%, rgba(68,140,247,0.08) 0%, transparent 100%),
+    radial-gradient(ellipse 48% 1px at 60% 30%, rgba(139,92,246,0.07) 0%, transparent 100%),
+    radial-gradient(ellipse 28% 1px at 14% 32%, rgba(242,179,123,0.12) 0%, transparent 100%),
+    radial-gradient(ellipse 52% 1px at 42% 50%, rgba(139,92,246,0.06) 0%, transparent 100%),
+    radial-gradient(ellipse 80% 1px at 50% 58%, rgba(68,140,247,0.07) 0%, transparent 100%),
+    radial-gradient(ellipse 44% 1px at 55% 66%, rgba(139,92,246,0.08) 0%, transparent 100%),
+    radial-gradient(ellipse 32% 1px at 32% 70%, rgba(68,140,247,0.10) 0%, transparent 100%),
+    radial-gradient(ellipse 26% 1px at 82% 72%, rgba(242,179,123,0.10) 0%, transparent 100%),
+    radial-gradient(ellipse 65% 1px at 50% 94%, rgba(68,140,247,0.12) 0%, transparent 100%),
+    radial-gradient(ellipse 40% 1px at 38% 97%, rgba(139,92,246,0.08) 0%, transparent 100%),
+    radial-gradient(ellipse 20% 1px at 62% 91%, rgba(242,179,123,0.09) 0%, transparent 100%),
+    radial-gradient(ellipse 24% 1px at 8% 90%, rgba(139,92,246,0.12) 0%, transparent 100%);
+
   pointer-events: none;
 }
 
-/* Subtle scan-line texture overlay */
+/* ── Layer 3: Scan-line texture + noise ── */
 .abt-hero::after {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 2;
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(255,255,255,0.015) 2px,
-    rgba(255,255,255,0.015) 3px
-  );
+  background-image:
+    /* Subtle scan lines */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(255,255,255,0.012) 3px,
+      rgba(255,255,255,0.012) 4px
+    ),
+    /* Noise texture via SVG */
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  background-size: auto, 200px 200px;
   pointer-events: none;
 }
 
@@ -133,15 +149,15 @@
 .abt-hero-content::before {
   content: '';
   position: absolute;
-  inset: -60px -100px -60px -80px;
-  background: radial-gradient(ellipse at 35% 45%, rgba(8,10,26,0.88) 0%, rgba(8,10,26,0.5) 50%, transparent 75%);
+  inset: -80px -120px -80px -100px;
+  background: radial-gradient(ellipse at 30% 45%, rgba(6,8,22,0.92) 0%, rgba(6,8,22,0.6) 45%, transparent 72%);
   z-index: -1;
   pointer-events: none;
 }
 
 .abt-hero-eyebrow {
   font-family: var(--font-body);
-  color: rgba(255,255,255,0.35);
+  color: var(--blue);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -161,7 +177,7 @@
 
 .abt-hero-sub {
   font-family: var(--font-body);
-  color: #ffffff;
+  color: rgba(255,255,255,0.72);
   font-size: 16px;
   font-weight: 400;
   line-height: 1.7;
@@ -175,18 +191,36 @@
   align-self: end;
 }
 
+/* Warm glow behind subjects */
+.abt-hero-photo::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  bottom: 20%;
+  background: radial-gradient(ellipse at 50% 40%,
+    rgba(242,179,123,0.12) 0%,
+    rgba(139,92,246,0.06) 40%,
+    transparent 70%
+  );
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(40px);
+}
+
 .abt-hero-photo img {
   display: block;
   width: 100%;
   height: auto;
   mix-blend-mode: lighten;
-  /* Soft fade on bottom + sides for seamless blend */
+  /* Soft fade — bottom + sides for seamless blend */
   -webkit-mask-image:
-    linear-gradient(to bottom, black 50%, transparent 98%),
-    linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    linear-gradient(to bottom, black 50%, transparent 96%),
+    linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
   mask-image:
-    linear-gradient(to bottom, black 50%, transparent 98%),
-    linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    linear-gradient(to bottom, black 50%, transparent 96%),
+    linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
 }
@@ -197,7 +231,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 200px;
+  height: 240px;
   background: linear-gradient(to bottom, transparent, var(--dark));
   z-index: 4;
   pointer-events: none;

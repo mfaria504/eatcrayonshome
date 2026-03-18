@@ -68,8 +68,9 @@
      HERO — Neon light streaks + team photo
      ═══════════════════════════════════════════ -->
 <section class="abt-hero" aria-labelledby="abt-hero-heading">
-  <!-- Neon streaks are rendered via ::before pseudo-element in CSS -->
-  <!-- Scan-line texture via ::after -->
+  <!-- Layer 1: Ambient color atmosphere -->
+  <div class="abt-hero-atmosphere" aria-hidden="true"></div>
+  <!-- Layer 2: Neon streaks via ::before | Layer 3: Scan lines + noise via ::after -->
   <div class="abt-hero-inner">
     <div class="abt-hero-content">
       <p class="abt-hero-eyebrow">About EatCrayons</p>
