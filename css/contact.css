@@ -466,6 +466,12 @@ body.contact-light {
 
 /* ── HEADER — dark on light page ── */
 body.contact-light #site-header {
-  background: var(--dark);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(8, 10, 18, 0.98) 0%,
+      rgba(14, 18, 38, 0.96) 50%,
+      rgba(10, 14, 28, 0.95) 100%
+    );
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
