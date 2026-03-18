@@ -467,13 +467,11 @@
 
 .abt-story-sig {
   margin-top: 48px;
-  padding-top: 40px;
-  border-top: 1px solid rgba(0,0,0,0.08);
 }
 
 .abt-story-sig img {
   display: block;
-  width: 160px;
+  width: 120px;
   height: auto;
   opacity: 0.85;
   margin-bottom: 16px;
@@ -553,24 +551,88 @@
   line-height: 1.7;
 }
 
-.abt-name-grid {
+/* Bento grid — featured cards span full width */
+.abt-name-bento {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 16px;
 }
 
 .abt-name-card {
+  position: relative;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 16px;
-  padding: 40px;
-  transition: background 300ms ease, border-color 300ms ease, transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-radius: 20px;
+  padding: 48px;
+  overflow: hidden;
+  transition: border-color 300ms ease, transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .abt-name-card:hover {
-  background: rgba(255,255,255,0.05);
-  border-color: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.12);
   transform: translateY(-4px);
+}
+
+/* Featured cards span full width */
+.abt-name-card--featured {
+  grid-column: 1 / -1;
+  padding: 56px 56px 56px 48px;
+}
+
+.abt-name-card--featured .abt-name-card-inner {
+  max-width: 600px;
+}
+
+/* Giant background number */
+.abt-name-bg-num {
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: clamp(140px, 18vw, 220px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  right: -10px;
+  bottom: -20px;
+  color: rgba(255,255,255,0.03);
+  pointer-events: none;
+  user-select: none;
+}
+
+.abt-name-card--featured .abt-name-bg-num {
+  font-size: clamp(180px, 22vw, 300px);
+  right: 40px;
+  bottom: -40px;
+}
+
+/* Color accent — top border glow per card */
+.abt-name-card--blue {
+  border-top: 2px solid var(--blue);
+  box-shadow: 0 -8px 40px -12px rgba(68,140,247,0.15);
+}
+.abt-name-card--blue .abt-name-bg-num { color: rgba(68,140,247,0.05); }
+
+.abt-name-card--purple {
+  border-top: 2px solid var(--purple);
+  box-shadow: 0 -8px 40px -12px rgba(139,92,246,0.15);
+}
+.abt-name-card--purple .abt-name-bg-num { color: rgba(139,92,246,0.05); }
+
+.abt-name-card--orange {
+  border-top: 2px solid var(--orange);
+  box-shadow: 0 -8px 40px -12px rgba(242,179,123,0.15);
+}
+.abt-name-card--orange .abt-name-bg-num { color: rgba(242,179,123,0.05); }
+
+.abt-name-card--purple-blue {
+  border-top: 2px solid transparent;
+  border-image: linear-gradient(to right, var(--purple), var(--blue)) 1;
+  box-shadow: 0 -8px 40px -12px rgba(139,92,246,0.12);
+}
+.abt-name-card--purple-blue .abt-name-bg-num { color: rgba(139,92,246,0.04); }
+
+.abt-name-card-inner {
+  position: relative;
+  z-index: 1;
 }
 
 .abt-name-num {
@@ -580,23 +642,31 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   color: var(--blue);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
+
+.abt-name-card--purple .abt-name-num { color: var(--purple); }
+.abt-name-card--orange .abt-name-num { color: var(--orange); }
 
 .abt-name-card-h {
   font-family: var(--font-display);
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: white;
   margin-bottom: 14px;
 }
 
+.abt-name-card--featured .abt-name-card-h {
+  font-size: clamp(1.5rem, 2.2vw, 1.8rem);
+}
+
 .abt-name-card-p {
   font-family: var(--font-body);
-  font-size: 14.5px;
+  font-size: 15px;
   line-height: 1.75;
-  color: rgba(255,255,255,0.48);
+  color: rgba(255,255,255,0.50);
+  max-width: 52ch;
 }
 
 
@@ -782,7 +852,7 @@
   .abt-story-label-col {
     position: static;
   }
-  .abt-name-grid {
+  .abt-name-bento {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -807,11 +877,14 @@
   .abt-name::before {
     padding-top: 80px;
   }
-  .abt-name-grid {
+  .abt-name-bento {
     grid-template-columns: 1fr;
     gap: 16px;
   }
   .abt-name-card {
+    padding: 32px;
+  }
+  .abt-name-card--featured {
     padding: 32px;
   }
   .abt-values {
