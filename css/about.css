@@ -1,0 +1,500 @@
+/* ══════════════════════════════════════════════════════════════
+   EatCrayons – About Page
+   © Rise Marketing Co., LLC – EatCrayons. 2026.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── HERO ── */
+.about-hero {
+  min-height: 92vh;
+  display: flex;
+  align-items: flex-end;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  background: var(--dark);
+}
+
+.about-hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 140px 40px 0;
+  gap: 60px;
+}
+
+.about-hero-text {
+  padding-bottom: 80px;
+}
+
+.about-eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(68,140,247,0.9);
+  margin-bottom: 24px;
+}
+
+.about-headline {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+  color: white;
+  margin-bottom: 28px;
+}
+
+.about-headline em {
+  font-style: normal;
+  color: var(--blue);
+}
+
+.about-hero-sub {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.58);
+  max-width: 460px;
+}
+
+.about-hero-photo {
+  position: relative;
+  align-self: end;
+}
+
+.about-hero-img {
+  width: 100%;
+  max-width: 560px;
+  display: block;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 16px 16px 0 0;
+  filter: grayscale(15%);
+}
+
+.about-hero-photo-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to top, var(--dark), transparent);
+  pointer-events: none;
+}
+
+/* ── STORY SECTION ── */
+.about-story {
+  background: var(--dark);
+  padding: 100px 40px;
+}
+
+.about-story-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.about-story-label {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  color: white;
+  position: sticky;
+  top: 100px;
+}
+
+.about-story-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.about-story-body p {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.65);
+}
+
+.about-story-body p em {
+  font-style: italic;
+  color: rgba(255,255,255,0.45);
+}
+
+.about-sig {
+  margin-top: 40px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255,255,255,0.09);
+}
+
+.about-sig img {
+  height: 56px;
+  width: auto;
+  display: block;
+  margin-bottom: 12px;
+  opacity: 0.9;
+  filter: invert(1);
+}
+
+.about-sig-name {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.01em;
+}
+
+.about-sig-title {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 2px;
+}
+
+/* ── WHY EATCRAYONS ── */
+.about-name {
+  background: var(--dark-2);
+  padding: 100px 40px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.about-name-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+}
+
+.about-name-header {
+  margin-bottom: 72px;
+}
+
+.about-name-eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(68,140,247,0.9);
+  margin-bottom: 20px;
+}
+
+.about-name-hed {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: white;
+  max-width: 640px;
+}
+
+.about-name-hed em {
+  font-style: normal;
+  color: var(--blue);
+}
+
+.about-name-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+
+.about-name-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px;
+  padding: 40px;
+  transition: background 200ms ease, border-color 200ms ease;
+}
+
+.about-name-card:hover {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(68,140,247,0.2);
+}
+
+.about-name-card-num {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 16px;
+  opacity: 0.8;
+}
+
+.about-name-card-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: white;
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+
+.about-name-card-body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.55);
+}
+
+.about-name-closing {
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: rgba(255,255,255,0.7);
+  max-width: 780px;
+  line-height: 1.4;
+}
+
+.about-name-closing em {
+  font-style: normal;
+  color: white;
+}
+
+/* ── VALUES ── */
+.about-values {
+  background: var(--dark);
+  padding: 100px 40px;
+}
+
+.about-values-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+}
+
+.about-values-header {
+  margin-bottom: 64px;
+}
+
+.about-values-eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(68,140,247,0.9);
+  margin-bottom: 20px;
+}
+
+.about-values-hed {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: white;
+}
+
+.about-values-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.about-value-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 2fr;
+  gap: 40px;
+  align-items: baseline;
+  padding: 36px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.about-value-row:first-child {
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.about-value-num {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+}
+
+.about-value-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: white;
+}
+
+.about-value-desc {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.5);
+}
+
+/* ── CTA ── */
+.about-cta {
+  background: var(--dark-2);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 100px 40px;
+}
+
+.about-cta-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+}
+
+.about-cta-text {}
+
+.about-cta-eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(68,140,247,0.9);
+  margin-bottom: 20px;
+}
+
+.about-cta-hed {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: white;
+  margin-bottom: 16px;
+}
+
+.about-cta-hed em {
+  font-style: normal;
+  color: var(--blue);
+}
+
+.about-cta-sub {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.5);
+  max-width: 400px;
+}
+
+.about-cta-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.about-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  color: var(--dark);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  border: 1.5px solid white;
+  border-radius: 50px;
+  padding: 16px 32px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 120ms ease, transform 300ms var(--spring, cubic-bezier(0.34,1.56,0.64,1));
+}
+
+.about-btn-primary:hover {
+  background: rgba(255,255,255,0.88);
+  transform: scale(1.02);
+}
+
+.about-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  transition: color 150ms ease;
+  text-align: center;
+}
+
+.about-btn-secondary:hover {
+  color: white;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .about-hero-inner {
+    grid-template-columns: 1fr;
+    padding-top: 120px;
+  }
+
+  .about-hero-photo {
+    display: none;
+  }
+
+  .about-story-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .about-story-label {
+    position: static;
+  }
+
+  .about-name-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-value-row {
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+  }
+
+  .about-value-desc {
+    grid-column: 2;
+    margin-top: 4px;
+  }
+
+  .about-cta-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-hero,
+  .about-story,
+  .about-name,
+  .about-values,
+  .about-cta {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .about-hero-inner {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
