@@ -530,7 +530,6 @@ body {
   color: rgba(255,255,255,0.45);
   line-height: 1.7;
   margin-top: 20px;
-  white-space: nowrap;
 }
 .services-intro-coda {
   font-size: clamp(0.95rem, 1.1vw, 1.05rem);
