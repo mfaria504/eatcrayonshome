@@ -1,0 +1,658 @@
+/* ══════════════════════════════════════════════════════════════
+   About Page – EatCrayons
+   Uses design tokens from styles.css :root
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── HERO — Neon light streaks + team photo ── */
+.abt-hero {
+  position: relative;
+  background: #080a1a;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  padding: 100px 40px 0;
+}
+
+/* Neon horizontal light streaks — pure CSS recreation */
+.abt-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image:
+    /* ── Top area ── */
+    /* Orange — behind heads area */
+    radial-gradient(ellipse 45% 2px at 72% 38%, rgba(242,179,123,0.92) 0%, transparent 100%),
+    radial-gradient(ellipse 38% 14px at 72% 38%, rgba(242,179,123,0.16) 0%, transparent 100%),
+    /* Orange — thin echo line nearby */
+    radial-gradient(ellipse 30% 1px at 65% 35%, rgba(242,179,123,0.35) 0%, transparent 100%),
+    /* Purple — upper left (primary) */
+    radial-gradient(ellipse 52% 1.5px at 26% 4%, rgba(139,92,246,0.85) 0%, transparent 100%),
+    radial-gradient(ellipse 42% 10px at 26% 4%, rgba(139,92,246,0.12) 0%, transparent 100%),
+    /* Purple — thin echo below */
+    radial-gradient(ellipse 30% 1px at 32% 8%, rgba(139,92,246,0.30) 0%, transparent 100%),
+    /* Purple/blue thin — upper right */
+    radial-gradient(ellipse 38% 1px at 86% 13%, rgba(124,58,237,0.55) 0%, transparent 100%),
+    /* Blue thin — upper area */
+    radial-gradient(ellipse 78% 1px at 50% 18%, rgba(68,140,247,0.18) 0%, transparent 100%),
+    /* Purple whisper — far upper left */
+    radial-gradient(ellipse 25% 1px at 8% 10%, rgba(139,92,246,0.40) 0%, transparent 100%),
+    /* Orange whisper — far upper right */
+    radial-gradient(ellipse 20% 1px at 92% 9%, rgba(242,179,123,0.30) 0%, transparent 100%),
+
+    /* ── Upper-mid zone ── */
+    /* Blue subtle line */
+    radial-gradient(ellipse 65% 1px at 45% 24%, rgba(68,140,247,0.14) 0%, transparent 100%),
+    /* Purple subtle line */
+    radial-gradient(ellipse 50% 1px at 60% 28%, rgba(139,92,246,0.10) 0%, transparent 100%),
+    /* Orange whisper */
+    radial-gradient(ellipse 30% 1px at 15% 30%, rgba(242,179,123,0.20) 0%, transparent 100%),
+
+    /* ── Middle area ── */
+    /* Bright blue — left edge (primary) */
+    radial-gradient(ellipse 48% 2.5px at 5% 42%, rgba(68,140,247,1) 0%, transparent 100%),
+    radial-gradient(ellipse 40% 20px at 3% 42%, rgba(68,140,247,0.22) 0%, transparent 100%),
+    /* Blue — left edge echo */
+    radial-gradient(ellipse 32% 1px at 10% 45%, rgba(68,140,247,0.30) 0%, transparent 100%),
+    /* Blue — right edge (primary) */
+    radial-gradient(ellipse 46% 2px at 95% 50%, rgba(68,140,247,0.88) 0%, transparent 100%),
+    radial-gradient(ellipse 38% 16px at 97% 50%, rgba(68,140,247,0.18) 0%, transparent 100%),
+    /* Blue — right edge echo */
+    radial-gradient(ellipse 28% 1px at 88% 53%, rgba(68,140,247,0.25) 0%, transparent 100%),
+    /* Purple mid line */
+    radial-gradient(ellipse 55% 1px at 40% 48%, rgba(139,92,246,0.10) 0%, transparent 100%),
+    /* Orange mid whisper */
+    radial-gradient(ellipse 40% 1px at 75% 38%, rgba(242,179,123,0.12) 0%, transparent 100%),
+    /* Blue thin mid lines */
+    radial-gradient(ellipse 82% 1px at 50% 56%, rgba(68,140,247,0.12) 0%, transparent 100%),
+    radial-gradient(ellipse 70% 1px at 50% 34%, rgba(139,92,246,0.10) 0%, transparent 100%),
+
+    /* ── Lower-mid zone ── */
+    /* Purple subtle line */
+    radial-gradient(ellipse 45% 1px at 55% 64%, rgba(139,92,246,0.12) 0%, transparent 100%),
+    /* Blue whisper */
+    radial-gradient(ellipse 35% 1px at 30% 68%, rgba(68,140,247,0.15) 0%, transparent 100%),
+    /* Orange whisper */
+    radial-gradient(ellipse 28% 1px at 80% 70%, rgba(242,179,123,0.18) 0%, transparent 100%),
+
+    /* ── Bottom area ── */
+    /* Orange — lower left (primary) */
+    radial-gradient(ellipse 42% 2px at 18% 76%, rgba(242,179,123,0.88) 0%, transparent 100%),
+    radial-gradient(ellipse 35% 14px at 16% 76%, rgba(242,179,123,0.18) 0%, transparent 100%),
+    /* Orange — lower left echo */
+    radial-gradient(ellipse 28% 1px at 25% 79%, rgba(242,179,123,0.30) 0%, transparent 100%),
+    /* Purple — lower right (primary) */
+    radial-gradient(ellipse 54% 2px at 82% 84%, rgba(139,92,246,0.90) 0%, transparent 100%),
+    radial-gradient(ellipse 44% 16px at 84% 84%, rgba(139,92,246,0.18) 0%, transparent 100%),
+    /* Purple — lower right echo */
+    radial-gradient(ellipse 30% 1px at 75% 87%, rgba(139,92,246,0.28) 0%, transparent 100%),
+    /* Blue bottom lines */
+    radial-gradient(ellipse 68% 1px at 50% 92%, rgba(68,140,247,0.22) 0%, transparent 100%),
+    radial-gradient(ellipse 50% 1px at 40% 95%, rgba(68,140,247,0.15) 0%, transparent 100%),
+    /* Orange bottom whisper */
+    radial-gradient(ellipse 22% 1px at 60% 89%, rgba(242,179,123,0.15) 0%, transparent 100%),
+    /* Purple bottom whisper */
+    radial-gradient(ellipse 25% 1px at 10% 88%, rgba(139,92,246,0.18) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Subtle scan-line texture overlay */
+.abt-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255,255,255,0.015) 2px,
+    rgba(255,255,255,0.015) 3px
+  );
+  pointer-events: none;
+}
+
+.abt-hero-inner {
+  position: relative;
+  z-index: 3;
+  max-width: 1360px;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: end;
+}
+
+.abt-hero-content {
+  padding-bottom: 80px;
+  position: relative;
+}
+
+/* Dark halo behind text — dims streaks for readability */
+.abt-hero-content::before {
+  content: '';
+  position: absolute;
+  inset: -60px -100px -60px -80px;
+  background: radial-gradient(ellipse at 35% 45%, rgba(8,10,26,0.88) 0%, rgba(8,10,26,0.5) 50%, transparent 75%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.abt-hero-eyebrow {
+  font-family: var(--font-body);
+  color: rgba(255,255,255,0.35);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.abt-hero-h {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+  font-weight: 800;
+  color: white;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  margin-bottom: 24px;
+}
+
+.abt-hero-sub {
+  font-family: var(--font-body);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+  max-width: 480px;
+}
+
+/* Photo — mix-blend-mode: lighten makes black bg transparent */
+.abt-hero-photo {
+  position: relative;
+  z-index: 3;
+  align-self: end;
+}
+
+.abt-hero-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  mix-blend-mode: lighten;
+  /* Soft fade on bottom + sides for seamless blend */
+  -webkit-mask-image:
+    linear-gradient(to bottom, black 50%, transparent 98%),
+    linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  mask-image:
+    linear-gradient(to bottom, black 50%, transparent 98%),
+    linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* Bottom gradient fade — hero into next section */
+.abt-hero-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to bottom, transparent, var(--dark));
+  z-index: 4;
+  pointer-events: none;
+}
+
+
+/* ── STORY — Founder narrative ── */
+.abt-story {
+  background: var(--dark);
+  padding: 120px 40px 140px;
+  color: white;
+}
+
+.abt-story-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.abt-story-label-col {
+  position: sticky;
+  top: 120px;
+}
+
+.abt-story-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  display: block;
+}
+
+.abt-story-h {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+  color: white;
+  margin-bottom: 40px;
+}
+
+.abt-story-body p {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 24px;
+  max-width: 68ch;
+}
+
+.abt-story-sig {
+  margin-top: 48px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.abt-story-sig img {
+  display: block;
+  width: 160px;
+  height: auto;
+  opacity: 0.75;
+  margin-bottom: 16px;
+  filter: invert(1) brightness(2);
+}
+
+.abt-story-sig-name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.01em;
+}
+
+.abt-story-sig-title {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: rgba(255,255,255,0.35);
+  margin-top: 4px;
+}
+
+
+/* ── WHY THE NAME — 4 pillars ── */
+.abt-name {
+  background: var(--dark);
+  padding: 0 40px 140px;
+  color: white;
+  position: relative;
+}
+
+/* Subtle top divider line */
+.abt-name::before {
+  content: '';
+  display: block;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 120px;
+}
+
+.abt-name-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.abt-name-header {
+  margin-bottom: 72px;
+  max-width: 640px;
+}
+
+.abt-name-eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 20px;
+}
+
+.abt-name-h {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.abt-name-sub {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.7;
+}
+
+.abt-name-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.abt-name-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 40px;
+  transition: background 300ms ease, border-color 300ms ease, transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.abt-name-card:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.10);
+  transform: translateY(-4px);
+}
+
+.abt-name-num {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--blue);
+  margin-bottom: 20px;
+}
+
+.abt-name-card-h {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: white;
+  margin-bottom: 14px;
+}
+
+.abt-name-card-p {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.48);
+}
+
+
+/* ── VALUES — What we stand for ── */
+.abt-values {
+  background: white;
+  padding: 120px 40px 140px;
+  color: var(--dark);
+}
+
+.abt-values-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.abt-values-header {
+  margin-bottom: 64px;
+}
+
+.abt-values-eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.30);
+  margin-bottom: 16px;
+}
+
+.abt-values-h {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+}
+
+.abt-values-list {
+  border-top: 1px solid rgba(0,0,0,0.07);
+}
+
+.abt-val {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 40px;
+  padding: 40px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+  align-items: start;
+  transition: background 200ms ease;
+}
+
+.abt-val:hover {
+  background: rgba(0,0,0,0.015);
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-left: -16px;
+  margin-right: -16px;
+  border-radius: 12px;
+}
+
+.abt-val-num {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--blue);
+  padding-top: 4px;
+}
+
+.abt-val-h {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+
+.abt-val-p {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.75;
+  color: rgba(0,0,0,0.50);
+  max-width: 68ch;
+}
+
+
+/* ── CTA — Drive to action ── */
+.abt-cta {
+  background: var(--dark);
+  padding: 120px 40px 140px;
+  text-align: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle ambient glow behind CTA */
+.abt-cta::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  height: 400px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse, rgba(var(--blue-rgb), 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.abt-cta-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.abt-cta-h {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+  margin-bottom: 20px;
+}
+
+.abt-cta-sub {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.72;
+  color: rgba(255,255,255,0.48);
+  max-width: 520px;
+  margin: 0 auto 48px;
+}
+
+.abt-cta-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.abt-cta-link {
+  font-family: var(--font-body);
+  color: rgba(255,255,255,0.45);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: color 200ms ease;
+}
+
+.abt-cta-link:hover {
+  color: rgba(255,255,255,0.75);
+}
+
+
+/* ── RESPONSIVE ── */
+
+@media (max-width: 1024px) {
+  .abt-hero-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .abt-hero-content {
+    padding-bottom: 40px;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .abt-hero-sub {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .abt-hero-photo {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .abt-story-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .abt-story-label-col {
+    position: static;
+  }
+  .abt-name-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .abt-hero {
+    padding: 120px 24px 0;
+    min-height: auto;
+  }
+  .abt-hero-h {
+    font-size: clamp(2rem, 7vw, 2.6rem);
+  }
+  .abt-story {
+    padding: 80px 24px 100px;
+  }
+  .abt-story-inner {
+    gap: 24px;
+  }
+  .abt-name {
+    padding: 0 24px 100px;
+  }
+  .abt-name::before {
+    padding-top: 80px;
+  }
+  .abt-name-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .abt-name-card {
+    padding: 32px;
+  }
+  .abt-values {
+    padding: 80px 24px 100px;
+  }
+  .abt-val {
+    grid-template-columns: 48px 1fr;
+    gap: 20px;
+  }
+  .abt-cta {
+    padding: 80px 24px 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .abt-hero {
+    padding: 100px 16px 0;
+  }
+  .abt-hero-content {
+    text-align: left;
+  }
+  .abt-hero-sub {
+    font-size: 15px;
+  }
+  .abt-story {
+    padding: 64px 16px 80px;
+  }
+  .abt-name {
+    padding: 0 16px 80px;
+  }
+  .abt-name::before {
+    padding-top: 64px;
+  }
+  .abt-values {
+    padding: 64px 16px 80px;
+  }
+  .abt-val {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .abt-val-num {
+    padding-top: 0;
+  }
+  .abt-cta {
+    padding: 64px 16px 80px;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .abt-name-card {
+    transition: none;
+  }
+}
