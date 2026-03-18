@@ -16,12 +16,12 @@
     /* Primary text-legibility gradient — dark left column, clear right for photo */
     linear-gradient(
       to right,
-      rgba(8, 10, 18, 0.97) 0%,
-      rgba(8, 10, 18, 0.94) 25%,
-      rgba(8, 10, 18, 0.70) 40%,
-      rgba(8, 10, 18, 0.25) 55%,
-      rgba(8, 10, 18, 0.10) 70%,
-      rgba(8, 10, 18, 0.05) 100%
+      rgba(8, 10, 18, 0.98) 0%,
+      rgba(8, 10, 18, 0.97) 35%,
+      rgba(8, 10, 18, 0.92) 50%,
+      rgba(8, 10, 18, 0.60) 62%,
+      rgba(8, 10, 18, 0.15) 74%,
+      rgba(8, 10, 18, 0.02) 100%
     ),
     /* Bottom vignette — grounds the composition */
     linear-gradient(
@@ -35,10 +35,10 @@
       rgba(8, 10, 18, 0.50) 0%,
       transparent 18%
     ),
-    /* Photo — positioned so subjects land in the right third of the viewport */
-    url('../images/Therightpartners.jpg');
+    /* Photo — pushed right so subjects clear the text column */
+    url('../images/Therightpartners2.jpg');
   background-size: cover;
-  background-position: 78% center;
+  background-position: 90% 10%;
   background-repeat: no-repeat;
 }
 
@@ -86,7 +86,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 480px;
+  max-width: 52%;
   padding: 40px 0 80px;
 }
 
