@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="/css/contact.css">
   <link rel="stylesheet" href="/css/transitions.css">
 </head>
-<body>
+<body class="contact-light">
 
 <!-- ── HEADER ── -->
 <header id="site-header">
@@ -64,43 +64,34 @@
   </div>
 </div>
 
-<!-- ── CONTACT HERO ── -->
-<section class="contact-hero" aria-labelledby="contact-heading">
-  <div class="contact-hero-inner">
-    <div class="contact-hero-text">
-      <p class="contact-eyebrow">Start the conversation</p>
-      <h1 class="contact-headline" id="contact-heading">
-        Tell us what<br>you're building.
-      </h1>
-      <p class="contact-sub">No pitch deck. No canned sales call. Just an honest look at where your business is and what it needs to grow.</p>
-    </div>
-    <div class="contact-hero-photo" aria-hidden="true">
-      <img src="/images/team.jpg" alt="The EatCrayons team" class="contact-hero-img" loading="eager" draggable="false">
-      <div class="contact-hero-photo-fade"></div>
-    </div>
-  </div>
-</section>
+<!-- ── CONTACT PAGE ── -->
+<main class="contact-page" aria-labelledby="contact-heading">
+  <div class="contact-inner">
 
-<!-- ── CONTACT BODY ── -->
-<section class="contact-body" aria-label="Contact form">
-  <div class="contact-body-inner">
+    <!-- Left: Heading + Info -->
+    <div class="contact-left">
+      <div class="contact-left-sticky">
+        <p class="contact-eyebrow">Start the conversation</p>
+        <h1 class="contact-headline" id="contact-heading">
+          Tell us what<br>you're building.
+        </h1>
+        <p class="contact-sub">No pitch deck. No canned sales call. Just an honest look at where your business is and what it needs to grow.</p>
 
-    <!-- Left: What to expect -->
-    <aside class="contact-aside" aria-label="What to expect">
-      <div class="contact-aside-sticky">
-        <span class="aside-eyebrow">What to expect</span>
-        <ul class="aside-checklist">
-          <li>A response within one business day</li>
-          <li>No sales tactics — just an honest conversation</li>
-          <li>A real read on whether we're the right fit</li>
-          <li>If we're not, we'll point you somewhere better</li>
-        </ul>
-        <blockquote class="aside-quote">
-          "We're in the room when decisions get made, helping shape the ones that actually drive business outcomes."
-        </blockquote>
-        <a href="mailto:hello@eatcrayons.com" class="aside-direct">hello@eatcrayons.com</a>
+        <div class="contact-aside-content">
+          <span class="aside-eyebrow">What to expect</span>
+          <ul class="aside-checklist">
+            <li>A response within one business day</li>
+            <li>No sales tactics — just an honest conversation</li>
+            <li>A real read on whether we're the right fit</li>
+            <li>If we're not, we'll point you somewhere better</li>
+          </ul>
+          <blockquote class="aside-quote">
+            "We're in the room when decisions get made, helping shape the ones that actually drive business outcomes."
+          </blockquote>
+          <a href="mailto:hello@eatcrayons.com" class="aside-direct">hello@eatcrayons.com</a>
+        </div>
       </div>
-    </aside>
+    </div>
 
     <!-- Right: The form -->
     <div class="contact-form-wrap">
@@ -195,7 +186,7 @@
 
     </div>
   </div>
-</section>
+</main>
 
 <!-- ── FOOTER ── -->
 <footer>
@@ -244,15 +235,7 @@
   if (prefillEmail) {
     var emailField = document.getElementById('cf-email');
     if (emailField) emailField.value = prefillEmail;
-    // Clean URL without reloading
     history.replaceState(null, '', window.location.pathname);
-    // Scroll to form section after page transition completes
-    var formSection = document.querySelector('.contact-body');
-    if (formSection) {
-      setTimeout(function () {
-        formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 900);
-    }
   }
 
   // ── Service option toggle ──
@@ -276,25 +259,18 @@
     btn.addEventListener('click', () => {
       const val = btn.dataset.val;
 
-      // Toggle the clicked value
       if (selected.has(val)) {
         selected.delete(val);
-        // If "full" was selected and user picks an individual, clear full too
         if (val !== 'full') selected.delete('full');
       } else {
         selected.add(val);
-        // Clicking "full" clears the individual three
         if (val === 'full') {
           BUNDLE.forEach(v => selected.delete(v));
         } else {
-          // Clicking an individual while "full" is active → uncheck full
-          if (selected.has('full')) {
-            selected.delete('full');
-          }
-          // If all three individuals now selected → animate upgrade to "full"
+          if (selected.has('full')) selected.delete('full');
           if (BUNDLE.every(v => selected.has(v))) {
             BUNDLE.forEach(v => selected.delete(v));
-            applySelection(selected); // deselect the 3 tiles first
+            applySelection(selected);
             setTimeout(() => {
               fgeBtn.classList.add('is-upgrading');
               setTimeout(() => {
@@ -328,7 +304,6 @@
 
     submitBtn.disabled = true;
 
-    // Fade out form, then reveal success
     setTimeout(() => {
       form.style.cssText = 'opacity:0;transform:translateY(-12px);transition:opacity 340ms ease,transform 420ms ease;pointer-events:none;';
       setTimeout(() => {
