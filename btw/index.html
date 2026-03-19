@@ -7,268 +7,391 @@
   <link rel="stylesheet" href="../css/btw.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Floating nav pill -->
-  <nav class="nav-pill">
-    <img src="../images/BTWAsset 3.svg" alt="Better This Week" class="nav-logo-img">
-    <div class="nav-links">
-      <a href="#how">How it works</a>
-      <a href="#pillars">The room</a>
-      <a href="#interest" class="nav-cta">Request an invite</a>
+  <!-- ── Nav ── -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <img src="../images/BTWAsset 3.svg" alt="Better This Week" class="nav-logo">
+      <div class="nav-links">
+        <a href="#how">Format</a>
+        <a href="#pillars">The room</a>
+        <a href="#interest" class="nav-cta">Request an invite</a>
+      </div>
     </div>
   </nav>
 
-  <!-- Hero -->
+  <!-- ── Hero ── -->
   <section class="hero">
     <div class="hero-inner">
-      <img src="../images/BTWAsset 3.svg" alt="Better This Week" class="hero-logo-img">
-      <div class="hero-badge">Invite only &middot; Weekly &middot; Free to start</div>
-      <h1>
-        <span class="hero-line">The meeting that</span>
-        <span class="hero-line"><em>earns</em> its hour.</span>
-      </h1>
-      <p class="hero-sub">
-        Better This Week is a weekly peer intelligence network for small business owners and domain experts building real companies. Not a mastermind. Not a meetup. A room where founders trade real tactics and leave sharper than they arrived.
-      </p>
-      <a href="#interest" class="btn-primary">
-        Request an invite
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
 
-    <!-- Floating shapes -->
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
-    <div class="shape shape-3"></div>
-  </section>
+      <!-- Left -->
+      <div class="hero-left">
+        <div class="hero-overline">
+          <span class="week-badge">Week <span id="week-num">--</span> &middot; 2026</span>
+          <span class="hero-invite">Invite only</span>
+        </div>
 
-  <!-- How it works -->
-  <section class="how" id="how">
-    <div class="section-inner">
-      <div class="section-label">How it works</div>
-      <h2>One hour. Every week.<br>No fluff.</h2>
-      <div class="format-grid">
-        <div class="format-card" style="--card-accent: #F59E0B;">
-          <div class="format-time">10 min</div>
-          <h3>Opening round</h3>
-          <p>Each member shares what's live for them this week. 60 seconds. No backstory. Just the current situation.</p>
-        </div>
-        <div class="format-card" style="--card-accent: #38BDF8;">
-          <div class="format-time">5 min</div>
-          <h3>Thread selection</h3>
-          <p>The room picks which threads to pull. Collaboratively, not by the host. The room owns its agenda.</p>
-        </div>
-        <div class="format-card" style="--card-accent: #34D399;">
-          <div class="format-time">35-40 min</div>
-          <h3>Deep work</h3>
-          <p>Selected threads get full attention. Not presentations — dialogue. Leave with at least one thing you didn't have before.</p>
-        </div>
-        <div class="format-card" style="--card-accent: #FB923C;">
-          <div class="format-time">5 min</div>
-          <h3>Closing round</h3>
-          <p>One sentence. What you're committing to before next week. That's the accountability loop.</p>
+        <h1 class="hero-h1">
+          The meeting<br>
+          that <em class="hero-em">earns</em><br>
+          its hour.
+        </h1>
+
+        <p class="hero-sub">
+          A weekly peer intelligence network for small business owners and domain experts.
+          Practitioners only. Present tense.
+          <strong>Leave sharper than you arrived.</strong>
+        </p>
+
+        <div class="hero-actions">
+          <a href="#interest" class="btn-primary">
+            <span>Request an invite</span>
+            <svg class="btn-icon" viewBox="0 0 20 20" fill="none">
+              <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <span class="hero-note">Founding cohort. Hand-picked.</span>
         </div>
       </div>
+
+      <!-- Right — Year visual -->
+      <div class="hero-right">
+        <div class="year-card">
+          <div class="year-card-header">
+            <span class="year-card-label">This year, week by week</span>
+            <span class="year-card-now" id="year-now">Week --</span>
+          </div>
+          <div class="year-grid" id="year-grid"></div>
+          <div class="year-card-footer">
+            <span><span id="weeks-left">--</span> weeks left in 2026</span>
+            <span class="year-dot-legend"><span class="dot-sample dot-past"></span> past &nbsp; <span class="dot-sample dot-current"></span> now</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="hero-scroll-cue" aria-hidden="true">
+      <span class="scroll-bar"></span>
     </div>
   </section>
 
-  <!-- Pillars -->
+  <!-- ── Marquee ── -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-row">
+        <span>Practitioners Only</span><span class="m-dot">&middot;</span>
+        <span>The Present Tense</span><span class="m-dot">&middot;</span>
+        <span>Compounding Trust</span><span class="m-dot">&middot;</span>
+        <span>Earned Exclusivity</span><span class="m-dot">&middot;</span>
+        <span>One Hour. Every Week.</span><span class="m-dot">&middot;</span>
+        <span>Invite Only</span><span class="m-dot">&middot;</span>
+        <span>No Recordings</span><span class="m-dot">&middot;</span>
+        <span>Leave Sharper</span><span class="m-dot">&middot;</span>
+      </div>
+      <div class="marquee-row" aria-hidden="true">
+        <span>Practitioners Only</span><span class="m-dot">&middot;</span>
+        <span>The Present Tense</span><span class="m-dot">&middot;</span>
+        <span>Compounding Trust</span><span class="m-dot">&middot;</span>
+        <span>Earned Exclusivity</span><span class="m-dot">&middot;</span>
+        <span>One Hour. Every Week.</span><span class="m-dot">&middot;</span>
+        <span>Invite Only</span><span class="m-dot">&middot;</span>
+        <span>No Recordings</span><span class="m-dot">&middot;</span>
+        <span>Leave Sharper</span><span class="m-dot">&middot;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Pillars ── -->
   <section class="pillars" id="pillars">
-    <div class="section-inner">
-      <div class="section-label">The room</div>
-      <h2>Four things we don't<br>compromise on.</h2>
+    <div class="pillars-inner">
+      <div class="pillars-head">
+        <div class="section-label">Four principles</div>
+        <h2 class="section-h2">Four things we<br>don't compromise on.</h2>
+      </div>
       <div class="pillar-list">
-        <div class="pillar">
-          <span class="pillar-num">01</span>
-          <div>
+        <div class="pillar reveal">
+          <span class="p-num">01</span>
+          <div class="p-body">
             <h3>Practitioners only</h3>
-            <p>Everyone in the room is operating something real. The currency is direct experience — what you've tried, measured, and learned.</p>
+            <p>Everyone in the room is operating something real. No consultants selling to the room, no spectators. The currency is direct experience — what you've personally tried, measured, and learned.</p>
           </div>
+          <span class="p-tag">The room</span>
         </div>
-        <div class="pillar">
-          <span class="pillar-num">02</span>
-          <div>
+        <div class="pillar reveal">
+          <span class="p-num">02</span>
+          <div class="p-body">
             <h3>The present tense</h3>
-            <p>"This week" is load-bearing language. What are you actually doing right now? Not theory. Not case studies from five years ago.</p>
+            <p>"This week" is load-bearing language. The conversation is always anchored to what's happening now — not theory, not case studies from five years ago. What are you actually doing right now?</p>
           </div>
+          <span class="p-tag">This week</span>
         </div>
-        <div class="pillar">
-          <span class="pillar-num">03</span>
-          <div>
+        <div class="pillar reveal">
+          <span class="p-num">03</span>
+          <div class="p-body">
             <h3>Compounding trust</h3>
-            <p>The value compounds over months — shared context, pattern recognition, relationships that deepen with every session. Weekly cadence is non-negotiable.</p>
+            <p>The value of any single meeting is real but bounded. The compounding value — shared context, pattern recognition that builds over months — is where Better This Week becomes irreplaceable.</p>
           </div>
+          <span class="p-tag">Every week</span>
         </div>
-        <div class="pillar">
-          <span class="pillar-num">04</span>
-          <div>
+        <div class="pillar reveal">
+          <span class="p-num">04</span>
+          <div class="p-body">
             <h3>Earned exclusivity</h3>
-            <p>The price of admission is quality — the willingness to show up, contribute, and make the room better by being in it.</p>
+            <p>Better This Week is free to start and invite-only always. The price of admission is quality — the willingness to show up, contribute, and make the room better by being in it.</p>
           </div>
+          <span class="p-tag">Invite only</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- What it's not -->
+  <!-- ── Format ── -->
+  <section class="format" id="how">
+    <div class="format-inner">
+      <div class="format-head reveal">
+        <div class="section-label">The format</div>
+        <h2 class="section-h2">One hour.<br>Structured to <em>produce</em>.</h2>
+      </div>
+      <div class="format-steps">
+
+        <div class="fstep reveal" style="--d:0ms">
+          <div class="fstep-time">
+            <span class="fstep-mins">10</span>
+            <span class="fstep-unit">min</span>
+          </div>
+          <div class="fstep-track">
+            <div class="fstep-dot"></div>
+            <div class="fstep-line"></div>
+          </div>
+          <div class="fstep-body">
+            <h3>Opening round</h3>
+            <p>Each member states what's live for them this week in 60 seconds. No backstory, no context-setting. Just the current situation. This surfaces the raw material for the session.</p>
+          </div>
+        </div>
+
+        <div class="fstep reveal" style="--d:80ms">
+          <div class="fstep-time">
+            <span class="fstep-mins">5</span>
+            <span class="fstep-unit">min</span>
+          </div>
+          <div class="fstep-track">
+            <div class="fstep-dot"></div>
+            <div class="fstep-line"></div>
+          </div>
+          <div class="fstep-body">
+            <h3>Thread selection</h3>
+            <p>The room identifies which two or three threads are most generative. Done collaboratively — not by the host. The room owns its agenda.</p>
+          </div>
+        </div>
+
+        <div class="fstep reveal" style="--d:160ms">
+          <div class="fstep-time">
+            <span class="fstep-mins">35</span>
+            <span class="fstep-unit">min</span>
+          </div>
+          <div class="fstep-track">
+            <div class="fstep-dot fstep-dot--on"></div>
+            <div class="fstep-line"></div>
+          </div>
+          <div class="fstep-body">
+            <h3>Deep work</h3>
+            <p>The selected threads get full attention. This is not a presentation format — it is a dialogue. The goal: leave the person who surfaced the problem with at least one concrete thing they didn't have before.</p>
+          </div>
+        </div>
+
+        <div class="fstep reveal" style="--d:240ms">
+          <div class="fstep-time">
+            <span class="fstep-mins">5</span>
+            <span class="fstep-unit">min</span>
+          </div>
+          <div class="fstep-track">
+            <div class="fstep-dot"></div>
+          </div>
+          <div class="fstep-body">
+            <h3>Closing round</h3>
+            <p>Each member states one thing they're committing to before next week. One sentence. This creates the accountability loop that makes the weekly cadence meaningful.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── What it's not ── -->
   <section class="not-section">
-    <div class="section-inner">
-      <div class="not-grid">
-        <div class="not-left">
-          <div class="section-label">What this isn't</div>
-          <h2>We're allergic to<br>vague promises.</h2>
-        </div>
-        <div class="not-right">
-          <div class="not-item">
-            <span class="not-x">&times;</span>
-            <div>
-              <strong>Not a mastermind.</strong>
-              <span>Too self-helpy. We trade operational intelligence, not affirmations.</span>
-            </div>
-          </div>
-          <div class="not-item">
-            <span class="not-x">&times;</span>
-            <div>
-              <strong>Not a meetup.</strong>
-              <span>Too casual, no stakes, no recurring accountability.</span>
-            </div>
-          </div>
-          <div class="not-item">
-            <span class="not-x">&times;</span>
-            <div>
-              <strong>Not a course.</strong>
-              <span>No curriculum. No graduation. This is a practice, not a program.</span>
-            </div>
-          </div>
-          <div class="not-item">
-            <span class="not-x">&times;</span>
-            <div>
-              <strong>Not a networking event.</strong>
-              <span>The point isn't who you meet. It's what you know when you leave.</span>
-            </div>
-          </div>
-        </div>
+    <div class="not-inner">
+      <div class="section-label section-label--dim">What this isn't</div>
+      <div class="not-list">
+        <div class="not-item reveal"><span class="not-word">A mastermind.</span><span class="not-why">Too self-helpy. We trade operational intelligence, not affirmations.</span></div>
+        <div class="not-item reveal"><span class="not-word">A meetup.</span><span class="not-why">Too casual. No stakes. No recurring accountability.</span></div>
+        <div class="not-item reveal"><span class="not-word">A course.</span><span class="not-why">No curriculum. No graduation. This is a practice, not a program.</span></div>
+        <div class="not-item reveal"><span class="not-word">A networking event.</span><span class="not-why">The point isn't who you meet. It's what you know when you leave.</span></div>
       </div>
     </div>
   </section>
 
-  <!-- Social proof / stats -->
-  <section class="stats">
-    <div class="section-inner">
-      <div class="stats-grid">
-        <div class="stat">
-          <span class="stat-num">60</span>
+  <!-- ── Stats ── -->
+  <section class="stats-band">
+    <div class="stats-inner">
+      <div class="stat-item reveal">
+        <span class="stat-n">60</span>
+        <div class="stat-copy">
           <span class="stat-unit">minutes</span>
-          <span class="stat-label">One hour. Every week. That's it.</span>
+          <span class="stat-desc">One hour. Every week. That's the whole commitment.</span>
         </div>
-        <div class="stat">
-          <span class="stat-num">8–12</span>
+      </div>
+      <div class="stat-rule"></div>
+      <div class="stat-item reveal">
+        <span class="stat-n">8–12</span>
+        <div class="stat-copy">
           <span class="stat-unit">members</span>
-          <span class="stat-label">Small enough to matter.</span>
+          <span class="stat-desc">Small enough for every voice to matter.</span>
         </div>
-        <div class="stat">
-          <span class="stat-num">0</span>
+      </div>
+      <div class="stat-rule"></div>
+      <div class="stat-item reveal">
+        <span class="stat-n">0</span>
+        <div class="stat-copy">
           <span class="stat-unit">recordings</span>
-          <span class="stat-label">What's said in the room stays there.</span>
+          <span class="stat-desc">What's said in the room stays there.</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Interest form -->
+  <!-- ── Interest form ── -->
   <section class="interest" id="interest">
-    <div class="section-inner">
-      <div class="interest-card">
-        <div class="interest-left">
-          <div class="section-label">Founding cohort</div>
-          <h2>Think you'd make the room better?</h2>
-          <p>We're hand-picking the founding cohort now. Every invitation is personal and specific. Tell us what you're building and we'll be in touch if it's a fit.</p>
-          <p class="interest-note">No public applications. No waitlist theater. Just a conversation.</p>
-        </div>
-        <form class="interest-form" onsubmit="handleInterest(event)">
-          <div class="form-group">
-            <label for="name">Your name</label>
-            <input type="text" id="name" name="name" placeholder="Full name" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="you@company.com" required>
-          </div>
-          <div class="form-group">
-            <label for="business">What are you building?</label>
-            <textarea id="business" name="business" placeholder="Tell us about your business in a sentence or two." rows="3" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="why">What would you bring to the room?</label>
-            <textarea id="why" name="why" placeholder="What operating experience would make the room sharper?" rows="3"></textarea>
-          </div>
-          <button type="submit" class="btn-primary btn-full">
-            Express interest
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </form>
-        <div class="interest-success hidden" id="interest-success">
-          <div class="success-icon">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#4ECDC4"/><path d="M10 16.5l4 4 8-8" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <h3>Noted.</h3>
-          <p>If you're a fit for the room, we'll reach out personally. No auto-emails.</p>
-        </div>
+    <div class="interest-inner">
+
+      <div class="interest-head reveal">
+        <div class="section-label">Founding cohort</div>
+        <h2 class="section-h2">Think you'd make<br>the room better?</h2>
+        <p>We're hand-picking the founding cohort now. Every invitation is personal and specific. Tell us what you're building and we'll reach out if it's a fit.</p>
+        <p class="i-note">No waitlist theater. No auto-emails. Just a conversation.</p>
       </div>
+
+      <form class="i-form reveal" id="i-form" onsubmit="handleForm(event)">
+        <div class="i-row">
+          <div class="i-group">
+            <label for="fn">Your name</label>
+            <input type="text" id="fn" name="name" placeholder="Full name" required autocomplete="name">
+          </div>
+          <div class="i-group">
+            <label for="em">Email</label>
+            <input type="email" id="em" name="email" placeholder="you@company.com" required autocomplete="email">
+          </div>
+        </div>
+        <div class="i-group">
+          <label for="biz">What are you building?</label>
+          <textarea id="biz" name="business" rows="3" placeholder="Describe your business in a sentence or two." required></textarea>
+        </div>
+        <div class="i-group">
+          <label for="bring">What would you bring to the room?</label>
+          <textarea id="bring" name="contribution" rows="3" placeholder="What operating experience would make the room sharper?"></textarea>
+        </div>
+        <button type="submit" class="btn-primary btn-submit">
+          <span>Express interest</span>
+          <svg class="btn-icon" viewBox="0 0 20 20" fill="none">
+            <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </form>
+
+      <div class="i-success hidden" id="i-success">
+        <div class="success-ring">
+          <svg viewBox="0 0 56 56" fill="none">
+            <circle cx="28" cy="28" r="27" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M17 28l7.5 7.5L39 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Noted.</h3>
+        <p>If you're a fit for the room, we'll be in touch personally. No automated follow-up.</p>
+      </div>
+
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- ── Footer ── -->
   <footer class="btw-footer">
-    <div class="section-inner">
-      <div class="footer-row">
-        <img src="../images/BTWAsset 3.svg" alt="Better This Week" class="footer-logo-img">
-        <span class="footer-tag">The meeting that earns its hour.</span>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <img src="../images/BTWAsset 3.svg" alt="Better This Week" class="footer-logo">
+        <em class="footer-line">The meeting that earns its hour.</em>
       </div>
-      <div class="footer-row footer-bottom">
-        <span class="footer-ec">An <a href="/">EatCrayons</a> venture</span>
-        <span class="footer-copy">&copy; 2026</span>
+      <div class="footer-bottom">
+        <span>An <a href="/" class="footer-link">EatCrayons</a> venture</span>
+        <span>&copy; 2026</span>
       </div>
     </div>
   </footer>
 
   <script>
-    /* ── Nav scroll effect ── */
-    const nav = document.querySelector('.nav-pill');
+    /* ── ISO Week number ── */
+    function getWeek(d) {
+      const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+      date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7));
+      const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+      return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+    }
+
+    const now  = new Date();
+    const week = getWeek(now);
+    const left = 52 - week;
+
+    document.getElementById('week-num').textContent  = week;
+    document.getElementById('year-now').textContent  = `Week ${week}`;
+    document.getElementById('weeks-left').textContent = left;
+
+    /* ── Year grid ── */
+    const grid = document.getElementById('year-grid');
+    for (let w = 1; w <= 52; w++) {
+      const d = document.createElement('div');
+      d.className = 'ydot';
+      if (w < week)  d.classList.add('ydot--past');
+      if (w === week) d.classList.add('ydot--now');
+      grid.appendChild(d);
+    }
+
+    /* ── Nav scroll ── */
+    const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    });
+      nav.classList.toggle('nav--solid', window.scrollY > 40);
+    }, { passive: true });
 
     /* ── Scroll reveal ── */
-    const reveals = document.querySelectorAll('.format-card, .pillar, .not-item, .stat, .interest-card');
-    const revealObs = new IntersectionObserver((entries) => {
+    const obs = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
+          const d = e.target.style.getPropertyValue('--d') || '0ms';
+          e.target.style.transitionDelay = d;
           e.target.classList.add('revealed');
-          revealObs.unobserve(e.target);
+          obs.unobserve(e.target);
         }
       });
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-    reveals.forEach(el => revealObs.observe(el));
+    }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
     /* ── Form ── */
-    function handleInterest(e) {
+    function handleForm(e) {
       e.preventDefault();
-      const form = e.target;
-      const success = document.getElementById('interest-success');
-      form.classList.add('hidden');
-      success.classList.remove('hidden');
+      const btn = e.target.querySelector('button');
+      btn.disabled = true;
+      btn.querySelector('span').textContent = 'Sending…';
+      setTimeout(() => {
+        document.getElementById('i-form').classList.add('hidden');
+        document.getElementById('i-success').classList.remove('hidden');
+      }, 700);
     }
 
     /* ── Smooth scroll ── */
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
-        e.preventDefault();
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
       });
     });
   </script>
