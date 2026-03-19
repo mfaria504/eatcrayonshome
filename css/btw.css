@@ -1,32 +1,42 @@
 /* ═══════════════════════════════════════════
    Better This Week — Design System
-   Warm, bright, friendly, human
+   Daylight. Bright future. Full energy.
    ═══════════════════════════════════════════ */
 
 /* ── Tokens ── */
 :root {
-  --bg:        #FFFBF5;
-  --bg-warm:   #FFF3E6;
+  --bg:        #F0F9FF;
+  --bg-warm:   #FFF9EB;
   --bg-card:   #FFFFFF;
-  --text:      #2D2318;
-  --text-soft: #6B5E52;
-  --text-muted:#A09488;
-  --coral:     #FF6B35;
-  --coral-soft:#FFE8DC;
-  --teal:      #4ECDC4;
-  --teal-soft: #E0F7F5;
-  --violet:    #7B68EE;
-  --violet-soft:#EDEAFD;
-  --gold:      #FFB347;
-  --gold-soft: #FFF2DC;
-  --green:     #7FB685;
+  --text:      #0F172A;
+  --text-soft: #475569;
+  --text-muted:#94A3B8;
+
+  /* Sun — primary */
+  --coral:     #F59E0B;
+  --coral-soft:#FEF3C7;
+
+  /* Sky — secondary */
+  --teal:      #38BDF8;
+  --teal-soft: #E0F2FE;
+
+  /* Lime — tertiary */
+  --violet:    #34D399;
+  --violet-soft:#D1FAE5;
+
+  /* Sunrise orange — accent */
+  --gold:      #FB923C;
+  --gold-soft: #FFEDD5;
+
+  --green:     #4ADE80;
+
   --radius:    16px;
   --radius-sm: 10px;
   --radius-lg: 24px;
   --radius-xl: 32px;
-  --shadow-sm: 0 1px 3px rgba(45,35,24,0.06);
-  --shadow-md: 0 4px 20px rgba(45,35,24,0.08);
-  --shadow-lg: 0 12px 40px rgba(45,35,24,0.10);
+  --shadow-sm: 0 1px 3px rgba(15,23,42,0.06);
+  --shadow-md: 0 4px 20px rgba(15,23,42,0.08);
+  --shadow-lg: 0 12px 40px rgba(15,23,42,0.10);
   --font:      'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-serif:'Instrument Serif', Georgia, serif;
   --ease:      cubic-bezier(0.22, 1, 0.36, 1);
@@ -92,10 +102,10 @@ button, input, textarea, select { font: inherit; }
   align-items: center;
   gap: 32px;
   padding: 12px 12px 12px 24px;
-  background: rgba(255,251,245,0.7);
+  background: rgba(240,249,255,0.7);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(45,35,24,0.06);
+  border: 1px solid rgba(15,23,42,0.06);
   border-radius: 100px;
   z-index: 1000;
   transition: all 0.4s var(--ease);
@@ -103,7 +113,7 @@ button, input, textarea, select { font: inherit; }
 .nav-pill.scrolled {
   background: rgba(255,255,255,0.92);
   box-shadow: var(--shadow-md);
-  border-color: rgba(45,35,24,0.08);
+  border-color: rgba(15,23,42,0.08);
 }
 .nav-logo {
   font-family: var(--font-serif);
@@ -133,7 +143,7 @@ button, input, textarea, select { font: inherit; }
   transition: background 0.2s, transform 0.2s !important;
 }
 .nav-cta:hover {
-  background: #e85a28 !important;
+  background: #d97706 !important;
   transform: scale(1.03);
 }
 
@@ -147,6 +157,7 @@ button, input, textarea, select { font: inherit; }
   text-align: center;
   padding: 120px 32px 80px;
   overflow: hidden;
+  background: linear-gradient(160deg, #E0F2FE 0%, #F0F9FF 40%, #FFF9EB 80%, #FEF3C7 100%);
 }
 .hero-inner {
   max-width: 760px;
@@ -209,9 +220,9 @@ button, input, textarea, select { font: inherit; }
   animation: fadeUp 0.8s var(--ease) 0.4s both;
 }
 .btn-primary:hover {
-  background: #e85a28;
+  background: #d97706;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255,107,53,0.3);
+  box-shadow: 0 8px 24px rgba(245,158,11,0.35);
 }
 .btn-primary svg {
   transition: transform 0.2s;
@@ -229,21 +240,21 @@ button, input, textarea, select { font: inherit; }
   z-index: 0;
 }
 .shape-1 {
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, var(--coral-soft) 0%, transparent 70%);
-  top: 10%; right: -5%;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(251,191,36,0.35) 0%, transparent 70%);
+  top: 5%; right: -8%;
   animation: float 8s ease-in-out infinite;
 }
 .shape-2 {
-  width: 300px; height: 300px;
-  background: radial-gradient(circle, var(--teal-soft) 0%, transparent 70%);
-  bottom: 15%; left: -3%;
+  width: 380px; height: 380px;
+  background: radial-gradient(circle, rgba(56,189,248,0.3) 0%, transparent 70%);
+  bottom: 10%; left: -5%;
   animation: float 10s ease-in-out 2s infinite;
 }
 .shape-3 {
-  width: 200px; height: 200px;
-  background: radial-gradient(circle, var(--violet-soft) 0%, transparent 70%);
-  top: 30%; left: 10%;
+  width: 260px; height: 260px;
+  background: radial-gradient(circle, rgba(52,211,153,0.3) 0%, transparent 70%);
+  top: 35%; left: 8%;
   animation: float 7s ease-in-out 4s infinite;
 }
 
@@ -327,7 +338,7 @@ button, input, textarea, select { font: inherit; }
   align-items: flex-start;
   gap: 28px;
   padding: 32px 0;
-  border-bottom: 1px solid rgba(45,35,24,0.08);
+  border-bottom: 1px solid rgba(15,23,42,0.08);
   opacity: 0;
   transform: translateY(16px);
   transition: all 0.5s var(--ease);
@@ -340,7 +351,7 @@ button, input, textarea, select { font: inherit; }
 .pillar:nth-child(2) { transition-delay: 0.08s; }
 .pillar:nth-child(3) { transition-delay: 0.16s; }
 .pillar:nth-child(4) { transition-delay: 0.24s; }
-.pillar:first-child { border-top: 1px solid rgba(45,35,24,0.08); }
+.pillar:first-child { border-top: 1px solid rgba(15,23,42,0.08); }
 
 .pillar-num {
   font-family: var(--font-serif);
@@ -387,7 +398,7 @@ button, input, textarea, select { font: inherit; }
   align-items: flex-start;
   gap: 16px;
   padding: 20px 0;
-  border-bottom: 1px solid rgba(45,35,24,0.06);
+  border-bottom: 1px solid rgba(15,23,42,0.06);
   opacity: 0;
   transform: translateX(16px);
   transition: all 0.5s var(--ease);
@@ -429,7 +440,7 @@ button, input, textarea, select { font: inherit; }
 /* ── Stats ── */
 .stats {
   padding: 80px 0;
-  background: var(--text);
+  background: linear-gradient(135deg, #0EA5E9 0%, #6366F1 60%, #8B5CF6 100%);
   color: white;
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
@@ -477,7 +488,7 @@ button, input, textarea, select { font: inherit; }
 /* ── Interest Form ── */
 .interest {
   padding: 0 0 120px;
-  background: var(--text);
+  background: linear-gradient(135deg, #0EA5E9 0%, #6366F1 60%, #8B5CF6 100%);
 }
 .interest-card {
   background: var(--bg-card);
@@ -532,7 +543,7 @@ button, input, textarea, select { font: inherit; }
 .form-group input,
 .form-group textarea {
   padding: 14px 16px;
-  border: 1.5px solid rgba(45,35,24,0.1);
+  border: 1.5px solid rgba(15,23,42,0.1);
   border-radius: var(--radius-sm);
   background: var(--bg);
   font-size: 0.92rem;
@@ -578,7 +589,7 @@ button, input, textarea, select { font: inherit; }
 /* ── Footer ── */
 .btw-footer {
   padding: 48px 0;
-  background: var(--text);
+  background: #1E1B4B;
   color: rgba(255,255,255,0.5);
   border-top: 1px solid rgba(255,255,255,0.06);
 }
