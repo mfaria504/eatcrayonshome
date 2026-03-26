@@ -153,7 +153,7 @@ const Qs = [
     text: 'Let\'s start with where you are. What\'s your annual revenue today?',
     type: 'slider', min: 0, max: 11, step: 1,
     labels: ['Pre-revenue','$500K','$1M','$2M','$3M','$5M','$8M','$10M','$15M','$20M','$30M','$50M+'],
-    reactions: ['Still building — let\'s talk timing.','Getting traction. Interesting.','Now we\'re talking.','That\'s our sweet spot.','Plenty to work with.','Serious scale.','That\'s significant.','Enterprise territory.','Large operation.','Very established.','You\'ve built something real.','At this size, the conversation shifts.'],
+    reactions: ['Still building. Let\'s talk timing.','Getting traction. Interesting.','Now we\'re talking.','That\'s our sweet spot.','Plenty to work with.','Serious scale.','That\'s significant.','Enterprise territory.','Large operation.','Very established.','You\'ve built something real.','At this size, the conversation shifts.'],
     scoreSlider: v => {
       if (v === 0) return { s: 0, flag: 'pre_revenue' };
       if (v === 1) return { s: 4 };
@@ -169,17 +169,17 @@ const Qs = [
     type: 'radio',
     opts: [
       { l: 'Other businesses (B2B)', s: 10, r: 'Right in our wheelhouse.' },
-      { l: 'A mix of businesses and consumers', s: 6, r: 'Some overlap — worth exploring.' },
+      { l: 'A mix of businesses and consumers', s: 6, r: 'Some overlap, worth exploring.' },
       { l: 'Directly to consumers (B2C)', s: 2, r: 'Honest answer, and we appreciate it.' },
       { l: 'Software or SaaS product', s: 5, r: 'Tech is interesting. Context matters.' },
     ]
   },
   {
     id: 'deal_size', section: 'Your Business',
-    text: 'When you close a deal — what does it actually look like?',
+    text: 'When you close a deal, what does it actually look like?',
     type: 'slider', min: 0, max: 5, step: 1,
     labels: ['Under $1K','$1K–$5K','$5K–$25K','$25K–$100K','$100K–$500K','$500K+'],
-    reactions: ['Transactional — volume is the game.','Decent ticket. Patterns matter here.','That\'s a real deal size.','One win pays for months of work.','High-stakes selling. We like this.','Enterprise deal size. Noted.'],
+    reactions: ['Transactional. Volume is the game.','Decent ticket. Patterns matter here.','That\'s a real deal size.','One win pays for months of work.','High-stakes selling. We like this.','Enterprise deal size. Noted.'],
     scoreSlider: v => {
       if (v <= 1) return { s: 1 };
       if (v === 2) return { s: 6 };
@@ -195,7 +195,7 @@ const Qs = [
       { l: 'A full team and system already running', s: 1, r: 'Sounds like you\'ve got it covered.' },
       { l: 'A few pieces, nothing really connected', s: 7, r: 'Scattered is actually fixable.' },
       { l: 'Almost entirely referrals and word of mouth', s: 10, r: 'That\'s the most exciting answer on this list.' },
-      { l: 'Tried agencies — been disappointed', s: 8, r: 'We hear that a lot. And we get it.' },
+      { l: 'Tried agencies, been disappointed', s: 8, r: 'We hear that a lot. And we get it.' },
       { l: 'Nothing formal exists yet', s: 10, r: 'A blank canvas. A lot of upside.' },
     ]
   },
@@ -213,13 +213,13 @@ const Qs = [
   },
   {
     id: 'patience', section: 'Working Together',
-    text: 'When you invest in something — how do you think about it?',
+    text: 'When you invest in something, how do you think about it?',
     type: 'radio',
     opts: [
       { l: 'I need to see measurable returns within 60 days', s: 0, flag: 'impatient', r: 'Noted. That\'s a real constraint to work with.' },
-      { l: 'I invest long-term — great things take time', s: 10, r: 'That\'s the mindset that makes this work.' },
+      { l: 'I invest long-term. Great things take time.', s: 10, r: 'That\'s the mindset that makes this work.' },
       { l: 'I go all-in when I believe in who I\'m working with', s: 9, r: 'Conviction-based. We like that.' },
-      { l: 'I\'ve been burned before — trust has to come first', s: 7, r: 'Fair. We\'d rather earn it than ask for it.' },
+      { l: 'I\'ve been burned before. Trust has to come first.', s: 7, r: 'Fair. We\'d rather earn it than ask for it.' },
     ]
   },
   {
@@ -239,14 +239,14 @@ const Qs = [
     type: 'radio',
     opts: [
       { l: 'I\'m a recognized name in my space', s: 10, r: 'Authority is the asset. We build the engine.' },
-      { l: 'Known in some circles — my profile is growing', s: 7, r: 'There\'s something to amplify.' },
+      { l: 'Known in some circles, my profile is growing', s: 7, r: 'There\'s something to amplify.' },
       { l: 'My company has standing, though I stay behind the scenes', s: 6, r: 'Brand authority works too.' },
       { l: 'Still building credibility in my market', s: 2, r: 'Early stage. Noted.' },
     ]
   },
   {
     id: 'buyer_type', section: 'Your Market',
-    text: 'When you close a deal — who actually said yes?',
+    text: 'When you close a deal, who actually said yes?',
     type: 'radio',
     opts: [
       { l: 'A business owner or founder', s: 10, r: 'Decision-makers who can move. Perfect.' },
@@ -261,7 +261,7 @@ const Qs = [
     text: 'Last one. What monthly investment feels right for a real engagement?',
     type: 'slider', min: 0, max: 5, step: 1,
     labels: ['Under $2K','$2K–$4K','$4K–$6K','$6K–$10K','$10K–$15K','$15K+'],
-    reactions: ['That\'s a tight budget for this kind of work.','Still tight — but let\'s keep going.','Getting into real engagement territory.','That works. Room to operate.','Serious investment. We can do serious work.','Full commitment. Let\'s talk.'],
+    reactions: ['That\'s a tight budget for this kind of work.','Still tight, but let\'s keep going.','Getting into real engagement territory.','That works. Room to operate.','Serious investment. We can do serious work.','Full commitment. Let\'s talk.'],
     scoreSlider: v => {
       if (v === 0) return { s: 0, flag: 'low_budget' };
       if (v === 1) return { s: 1, flag: 'low_budget' };
@@ -517,20 +517,20 @@ function getInsights(flags, pct) {
   const a = answers, sv = sliderVals;
   const pos = [], neg = [];
   const rev = sv[0]??5;
-  if (rev >= 2 && rev <= 7) pos.push("Your revenue range is where our model creates the most impact — proven enough to build on, with real room to grow.");
+  if (rev >= 2 && rev <= 7) pos.push("Your revenue range is where our model creates the most impact: proven enough to build on, with real room to grow.");
   if (rev === 0) neg.push("Pre-revenue is genuinely too early for what we do. There needs to be something to build from.");
   if (a[1] === 0) pos.push("B2B is where we live. Every system we build is designed for exactly this kind of business.");
   if ((sv[2]??3) >= 3) pos.push("Your deal size means a single closed opportunity more than justifies the engagement. The math works in your favor.");
   if (a[3] === 2) pos.push("A business running entirely on referrals with no designed engine is exactly where we create the most leverage.");
-  if (a[3] === 3) pos.push("Having been burned by agencies actually works in our favor — you know what bad looks like.");
-  if ((a[4]??5) >= 8) pos.push("That level of untapped potential you're sensing is usually exactly right. The ceiling is visible — we help raise it.");
+  if (a[3] === 3) pos.push("Having been burned by agencies actually works in our favor. You know what bad looks like.");
+  if ((a[4]??5) >= 8) pos.push("That level of untapped potential you're sensing is usually exactly right. The ceiling is visible, and we help raise it.");
   if (a[6] === 2) pos.push("Full delegation is rare. It's the condition that lets us actually do our best work.");
   if (flags.includes('micromanager')) neg.push("Staying closely involved in every detail is at odds with how our engagements function. That tension rarely resolves.");
   if (flags.includes('impatient')) neg.push("A 60-day ROI expectation and a compounding growth system point in opposite directions.");
   if (flags.includes('opinionated')) neg.push("Strong convictions about marketing direction tend to limit what's possible. We need room to make the calls that move the needle.");
-  if ((sv[9]??3) >= 3) pos.push("Investment alignment means we can operate without constraints — constrained engagements produce constrained results.");
+  if ((sv[9]??3) >= 3) pos.push("Investment alignment means we can operate without constraints; constrained engagements produce constrained results.");
   if (flags.includes('low_budget')) neg.push("The investment you're comfortable with won't support the depth of engagement required to make this worthwhile for either of us.");
-  if (flags.includes('enterprise_buyer')) neg.push("When procurement committees or large-corp executives hold the buying decision, sales cycles become long and political — hard to move with marketing alone.");
+  if (flags.includes('enterprise_buyer')) neg.push("When procurement committees or large-corp executives hold the buying decision, sales cycles become long and political and hard to move with marketing alone.");
   if (!flags.includes('enterprise_buyer') && a[8] !== undefined && a[8] <= 1) pos.push("Your buyers can say yes on their own authority. That's the kind of market where good marketing creates immediate momentum.");
 
   if (pct >= 70) return [...pos.slice(0,3)].slice(0,4).map(t => ({ t:'pos', txt:t }));
@@ -540,18 +540,18 @@ function getInsights(flags, pct) {
 
 // ── HEADLINE ──────────────────────────────────────────────────────────────────
 function getHeadline(pct, flags, a, sv) {
-  if (flags.includes('micromanager')) return { h:"Great chemistry,<br>wrong <em>dynamic.</em>", b:"The most impactful partnerships require both sides playing to their strengths. Our model needs room to execute. Your answers suggest that would be a persistent source of friction — and we'd rather say that clearly now." };
+  if (flags.includes('micromanager')) return { h:"Great chemistry,<br>wrong <em>dynamic.</em>", b:"The most impactful partnerships require both sides playing to their strengths. Our model needs room to execute. Your answers suggest that would be a persistent source of friction, and we'd rather say that clearly now." };
   if (flags.includes('impatient')) return { h:"The vision<br>doesn't <em>align.</em>", b:"We'd genuinely love to work with you. But you're looking for fast results, and we build systems that compound. Those two things are fundamentally incompatible right now." };
-  if (flags.includes('enterprise_buyer')) return { h:"Your market makes<br>this <em>very hard.</em>", b:"When procurement committees or large-corporation executives control the buying decision, sales cycles become long, political, and difficult to accelerate with marketing alone. Our model was built for markets where decision-makers can say yes — and act on it." };
-  if (flags.includes('pre_revenue')) return { h:"The moment<br>isn't <em>here yet.</em>", b:"The conditions that make this kind of partnership extraordinary — proven momentum and room to invest — aren't quite in place. That's not permanent. Come back when they are." };
-  if (flags.includes('low_budget')) return { h:"The spark is real,<br>the <em>investment isn't.</em>", b:"We want to work with you. But exceptional partnerships require room to do exceptional work. The investment you're comfortable with would limit what's possible — and we'd rather be direct about that now." };
-  if (pct >= 82) return { h:"We've been<br>looking for <em>exactly you.</em>", b:"Profiles like this are rare. The business, the mindset, the conditions — everything points in the same direction. We'd like to make you an offer we don't make often." };
+  if (flags.includes('enterprise_buyer')) return { h:"Your market makes<br>this <em>very hard.</em>", b:"When procurement committees or large-corporation executives control the buying decision, sales cycles become long, political, and difficult to accelerate with marketing alone. Our model was built for markets where decision-makers can say yes and act on it." };
+  if (flags.includes('pre_revenue')) return { h:"The moment<br>isn't <em>here yet.</em>", b:"The conditions that make this kind of partnership extraordinary (proven momentum and room to invest) aren't quite in place. That's not permanent. Come back when they are." };
+  if (flags.includes('low_budget')) return { h:"The spark is real,<br>the <em>investment isn't.</em>", b:"We want to work with you. But exceptional partnerships require room to do exceptional work. The investment you're comfortable with would limit what's possible, and we'd rather be direct about that now." };
+  if (pct >= 82) return { h:"We've been<br>looking for <em>exactly you.</em>", b:"Profiles like this are rare. The business, the mindset, the conditions: everything points in the same direction. We'd like to make you an offer we don't make often." };
   if (pct >= 68) {
-    if ((a[4]??5) >= 7) return { h:"You feel the ceiling —<br>we know <em>how to raise it.</em>", b:"That untapped potential you're sensing? It's usually exactly right. Strong fundamentals, real reputation, growth happening — but no designed system behind it. That gap is where we create the most value." };
-    return { h:"There's something<br><em>really interesting</em> here.", b:"Your profile has strong signals across the areas that matter most. A few things to explore together — but the chemistry is clearly there. This is worth a real conversation." };
+    if ((a[4]??5) >= 7) return { h:"You feel the ceiling,<br>and we know <em>how to raise it.</em>", b:"That untapped potential you're sensing? It's usually exactly right. Strong fundamentals, real reputation, growth happening, but no designed system behind it. That gap is where we create the most value." };
+    return { h:"There's something<br><em>really interesting</em> here.", b:"Your profile has strong signals across the areas that matter most. A few things to explore together, and the chemistry is clearly there. This is worth a real conversation." };
   }
-  if (pct >= 48) return { h:"Promising signals,<br>and some <em>friction.</em>", b:"You hit the marks in several key areas, but there are a few places where our approaches might create tension. Those aren't dealbreakers — they're worth talking about honestly." };
-  return { h:"This isn't the<br>right match <em>right now.</em>", b:"The best matchmakers know when to say not yet — and we respect you too much to pretend otherwise. The conditions for this to be extraordinary aren't quite in place. That can change." };
+  if (pct >= 48) return { h:"Promising signals,<br>and some <em>friction.</em>", b:"You hit the marks in several key areas, but there are a few places where our approaches might create tension. Those aren't dealbreakers. They're worth talking about honestly." };
+  return { h:"This isn't the<br>right match <em>right now.</em>", b:"The best matchmakers know when to say not yet, and we respect you too much to pretend otherwise. The conditions for this to be extraordinary aren't quite in place. That can change." };
 }
 
 // ── RESULTS ───────────────────────────────────────────────────────────────────
@@ -563,7 +563,7 @@ function showResults() {
   const isStrong = pct >= 78, isGood = pct >= 48 && pct < 78;
   const scoreColor = isStrong ? 'green' : isGood ? 'blue' : 'red';
   const badgeClass = isStrong ? 'green' : isGood ? 'blue' : 'dim';
-  const badgeText = isStrong ? '✦ Exceptional Match' : isGood ? '✦ Strong Potential' : 'Not the Right Fit — Yet';
+  const badgeText = isStrong ? '✦ Exceptional Match' : isGood ? '✦ Strong Potential' : 'Not the Right Fit Yet';
 
   const insightHtml = insights.map(ins =>
     `<div class="insight"><div class="i-pip ${ins.t}"></div><div>${ins.txt}</div></div>`
@@ -580,11 +580,11 @@ function showResults() {
 
   let actionHtml;
   if (pct >= 78) {
-    actionHtml = `<div class="offer-card"><div class="offer-eyebrow">✦ Your Match Offer</div><h3 class="offer-hed">You've earned a<br><em>free Growth Audit.</em></h3><p class="offer-body">Profiles like yours don't come through often. So instead of a sales call, we'll start with something real — a standalone audit of your business, your market, and where the actual leverage is. You'll leave with a document worth acting on, whether we work together or not.</p><div class="perks"><div class="perk"><span class="perk-dash">–</span>Full review of your growth model and current gaps</div><div class="perk"><span class="perk-dash">–</span>Market positioning and competitive opportunity map</div><div class="perk"><span class="perk-dash">–</span>Prioritized recommendations you can use immediately</div><div class="perk"><span class="perk-dash">–</span>Delivered in writing — yours to keep, no strings</div></div><a class="btn-offer" href="../contact/" target="_blank">Claim your audit ${arrowBtn}</a></div>`;
+    actionHtml = `<div class="offer-card"><div class="offer-eyebrow">✦ Your Match Offer</div><h3 class="offer-hed">You've earned a<br><em>free Growth Audit.</em></h3><p class="offer-body">Profiles like yours don't come through often. So instead of a sales call, we'll start with something real: a standalone audit of your business, your market, and where the actual leverage is. You'll leave with a document worth acting on, whether we work together or not.</p><div class="perks"><div class="perk"><span class="perk-dash">–</span>Full review of your growth model and current gaps</div><div class="perk"><span class="perk-dash">–</span>Market positioning and competitive opportunity map</div><div class="perk"><span class="perk-dash">–</span>Prioritized recommendations you can use immediately</div><div class="perk"><span class="perk-dash">–</span>Delivered in writing, yours to keep, no strings</div></div><a class="btn-offer" href="../contact/" target="_blank">Claim your audit ${arrowBtn}</a></div>`;
   } else if (pct >= 48) {
-    actionHtml = `<div class="offer-card"><div class="offer-eyebrow">✦ Your Next Step</div><h3 class="offer-hed">Let's have a <em>real conversation.</em></h3><p class="offer-body">Not a sales call. Think of it like a first meeting — 20 minutes where we both figure out if the chemistry is actually there. No pitch. No pressure. Just an honest exchange.</p><div class="perks"><div class="perk"><span class="perk-dash">–</span>We'll do a quick opportunity scan before we meet</div><div class="perk"><span class="perk-dash">–</span>No deck, no pitch — just candid conversation</div><div class="perk"><span class="perk-dash">–</span>You'll know exactly where you stand in 20 minutes</div></div><a class="btn-offer" href="https://eatcrayonshome.vercel.app/contact/" target="_blank">Let's meet ${arrowBtn}</a></div>`;
+    actionHtml = `<div class="offer-card"><div class="offer-eyebrow">✦ Your Next Step</div><h3 class="offer-hed">Let's have a <em>real conversation.</em></h3><p class="offer-body">Not a sales call. Think of it like a first meeting, just 20 minutes where we both figure out if the chemistry is actually there. No pitch. No pressure. Just an honest exchange.</p><div class="perks"><div class="perk"><span class="perk-dash">–</span>We'll do a quick opportunity scan before we meet</div><div class="perk"><span class="perk-dash">–</span>No deck, no pitch. Just candid conversation.</div><div class="perk"><span class="perk-dash">–</span>You'll know exactly where you stand in 20 minutes</div></div><a class="btn-offer" href="https://eatcrayonshome.vercel.app/contact/" target="_blank">Let's meet ${arrowBtn}</a></div>`;
   } else {
-    actionHtml = `<div class="no-match-card"><h3 class="no-match-hed">The best matchmakers know when to say "not yet."</h3><p class="no-match-body">The conditions that make this kind of partnership extraordinary aren't fully in place right now. That's not permanent. Come back when the timing is right — we'll be here.</p></div><div style="margin-bottom:20px;"><a class="btn-offer" href="https://eatcrayonshome.vercel.app/" target="_blank" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);">Follow our work ${arrowBtn}</a></div>`;
+    actionHtml = `<div class="no-match-card"><h3 class="no-match-hed">The best matchmakers know when to say "not yet."</h3><p class="no-match-body">The conditions that make this kind of partnership extraordinary aren't fully in place right now. That's not permanent. Come back when the timing is right. We'll be here.</p></div><div style="margin-bottom:20px;"><a class="btn-offer" href="https://eatcrayonshome.vercel.app/" target="_blank" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);">Follow our work ${arrowBtn}</a></div>`;
   }
 
   const el = document.getElementById('result');
