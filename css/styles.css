@@ -1405,7 +1405,34 @@ body {
   font-size: 14px;
   line-height: 1.75;
   color: rgba(0,0,0,0.5);
+  margin-bottom: 20px;
+}
+.pcard-tag {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  margin-bottom: 12px;
+}
+.pcard-quote {
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(0,0,0,0.6);
+  margin-bottom: 20px;
+}
+.pcard-who {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(0,0,0,0.5);
   margin-bottom: 32px;
+}
+.pcard-result {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(0,0,0,0.6);
+  margin-top: 4px;
 }
 .pcard-cta {
   display: flex;
