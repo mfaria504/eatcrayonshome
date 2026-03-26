@@ -1499,7 +1499,7 @@ body {
   text-align: center;
   border-top: 1px solid rgba(0,0,0,0.05);
 }
-.cta-inner { max-width: 760px; margin: 0 auto; }
+.cta-inner { max-width: 960px; margin: 0 auto; }
 .cta-headline {
   font-size: clamp(1.9rem, 3.8vw, 3.4rem);
   font-weight: 800;
