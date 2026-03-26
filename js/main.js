@@ -194,44 +194,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (nameSection && bento) {
     function setupScrollCards() {
-      // Measure how far the cards overflow
+      // Lead-in: header scrolls away before horizontal scroll begins
+      const headerWrap = nameSection.querySelector('.abt-name-header-wrap');
+      const headerHeight = headerWrap ? headerWrap.offsetHeight : 0;
+
       const trackWidth = bento.scrollWidth;
       const viewportWidth = scrollWrap ? scrollWrap.offsetWidth : window.innerWidth;
       const overflow = Math.max(0, trackWidth - viewportWidth);
 
-      // Set section height: viewport + overflow creates the scroll runway
-      // The sticky container pins while user scrolls through the extra height
-      const stickyHeight = window.innerHeight;
-      const totalHeight = stickyHeight + overflow;
-      nameSection.style.height = totalHeight + 'px';
+      // Total height: header lead-in + one full viewport (sticky panel) + horizontal runway
+      nameSection.style.height = (headerHeight + window.innerHeight + overflow) + 'px';
     }
 
     function onScrollCards() {
       if (!bento || !nameSection || !scrollWrap) return;
 
+      const headerWrap = nameSection.querySelector('.abt-name-header-wrap');
+      const headerHeight = headerWrap ? headerWrap.offsetHeight : 0;
+
       const rect = nameSection.getBoundingClientRect();
-      const stickyHeight = window.innerHeight;
       const trackWidth = bento.scrollWidth;
       const viewportWidth = scrollWrap.offsetWidth;
       const overflow = Math.max(0, trackWidth - viewportWidth);
 
-      // How far into the section have we scrolled?
-      // rect.top starts positive (below viewport), goes negative (scrolled past)
-      // Progress 0 = section just reached top, 1 = fully scrolled through
-      const scrolled = -rect.top;
+      // Horizontal scroll starts only after the header has scrolled off-screen.
+      // rect.top = 0 when section top hits viewport top (header visible).
+      // rect.top = -headerHeight when sticky card panel has just pinned (cards centered).
+      const scrolled = -rect.top - headerHeight;
       const progress = Math.max(0, Math.min(1, scrolled / overflow));
 
-      // Drive horizontal translation
-      const translateX = -progress * overflow;
-      bento.style.transform = 'translateX(' + translateX + 'px)';
+      bento.style.transform = 'translateX(' + (-progress * overflow) + 'px)';
 
-      // Toggle edge fades
       if (scrollWrap) {
         scrollWrap.classList.toggle('has-scrolled', progress > 0.02);
         scrollWrap.classList.toggle('at-end', progress > 0.98);
       }
 
-      // Update progress bar
       if (progressBar) {
         progressBar.style.width = (progress * 100) + '%';
       }
