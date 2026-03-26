@@ -9,6 +9,12 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Name and email are required' });
   }
 
+  const apiKey = process.env.HUBSPOT_API_KEY;
+  if (!apiKey) {
+    console.error('HUBSPOT_API_KEY is not set');
+    return res.status(500).json({ error: 'Server misconfiguration' });
+  }
+
   const nameParts = name.trim().split(' ');
   const firstname = nameParts[0];
   const lastname  = nameParts.slice(1).join(' ') || '';
@@ -33,24 +39,26 @@ export default async function handler(req, res) {
       method:  'POST',
       headers: {
         'Content-Type':  'application/json',
-        'Authorization': `Bearer ${process.env.HUBSPOT_API_KEY}`,
+        'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify(payload),
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-      const err = await response.json();
-      // 409 = contact already exists — still a success from the user's POV
+      // 409 = contact already exists — treat as success
       if (response.status === 409) {
         return res.status(200).json({ ok: true });
       }
-      console.error('HubSpot error:', err);
-      return res.status(500).json({ error: 'HubSpot submission failed' });
+      console.error('HubSpot error status:', response.status);
+      console.error('HubSpot error body:', JSON.stringify(data));
+      return res.status(500).json({ error: 'HubSpot submission failed', detail: data });
     }
 
     return res.status(200).json({ ok: true });
   } catch (err) {
-    console.error('Fetch error:', err);
+    console.error('Fetch error:', err.message);
     return res.status(500).json({ error: 'Server error' });
   }
 }
