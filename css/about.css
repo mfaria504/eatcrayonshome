@@ -520,7 +520,7 @@
   position: sticky;
   top: 0;
   overflow: hidden;
-  padding: 0 0 80px;
+  padding: 0 0 160px;
 }
 
 .abt-name-inner {
@@ -569,34 +569,7 @@
   margin: 0 -40px;
 }
 
-/* Edge fades — both sides */
-.abt-name-scroll-wrap::before,
-.abt-name-scroll-wrap::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  width: 80px;
-  height: 100%;
-  pointer-events: none;
-  z-index: 2;
-}
-.abt-name-scroll-wrap::before {
-  left: 0;
-  background: linear-gradient(to right, var(--dark), transparent);
-  opacity: 0; /* fades in once scrolled */
-  transition: opacity 300ms ease;
-}
-.abt-name-scroll-wrap.has-scrolled::before {
-  opacity: 1;
-}
-.abt-name-scroll-wrap::after {
-  right: 0;
-  background: linear-gradient(to left, var(--dark), transparent);
-  transition: opacity 300ms ease;
-}
-.abt-name-scroll-wrap.at-end::after {
-  opacity: 0;
-}
+/* Edge fades removed — clean edge-to-edge scroll */
 
 .abt-name-bento {
   display: flex;
@@ -604,20 +577,9 @@
   will-change: transform;
 }
 
-/* Smooth progress bar under the cards */
+/* Progress bar hidden */
 .abt-name-progress {
-  margin-top: 32px;
-  height: 2px;
-  background: rgba(255,255,255,0.06);
-  border-radius: 2px;
-  overflow: hidden;
-}
-.abt-name-progress-bar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(to right, var(--blue), var(--purple));
-  border-radius: 2px;
-  transition: width 60ms linear;
+  display: none;
 }
 
 .abt-name-card {
