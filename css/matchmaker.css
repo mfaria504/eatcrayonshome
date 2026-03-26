@@ -757,13 +757,13 @@ input[type=range]::-moz-range-thumb {
 .matchmaker footer .footer-copy,
 .matchmaker footer .footer-right,
 .matchmaker footer .footer-nav-links a {
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.85);
 }
 .matchmaker footer .footer-nav-links a:hover {
-  color: rgba(255,255,255,0.70);
+  color: white;
 }
 .matchmaker footer .social-icons a {
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.85);
 }
 .matchmaker footer .social-icons a:hover {
   color: white;
