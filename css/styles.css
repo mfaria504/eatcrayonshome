@@ -1783,7 +1783,7 @@ footer {
 }
 .chamber-badge { display: inline-flex; }
 .chamber-logo {
-  height: 20px;
+  height: 32px;
   width: auto;
   opacity: 0.5;
   transition: opacity 150ms;
