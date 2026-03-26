@@ -515,24 +515,28 @@
   padding-top: 120px;
 }
 
-/* Sticky container — pins to viewport while user scrolls through the tall section */
-.abt-name-sticky {
-  position: sticky;
-  top: 0;
-  overflow: hidden;
-  padding: 0 0 160px;
+/* Header wrapper — normal flow, scrolls away before cards pin */
+.abt-name-header-wrap {
+  padding: 64px 40px 72px;
 }
 
 .abt-name-inner {
   max-width: 100%;
   margin: 0 auto;
-  padding: 0 40px;
 }
 
 .abt-name-header {
-  margin-bottom: 72px;
   max-width: 640px;
-  padding-top: 64px;
+}
+
+/* Sticky container — cards only, fills viewport, vertically centered */
+.abt-name-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
 }
 
 .abt-name-eyebrow {
@@ -566,7 +570,7 @@
 .abt-name-scroll-wrap {
   position: relative;
   overflow: hidden;
-  margin: 0 -40px;
+  width: 100%;
 }
 
 /* Edge fades removed — clean edge-to-edge scroll */
@@ -890,7 +894,10 @@
     gap: 24px;
   }
   .abt-name-sticky {
-    padding: 0 24px 60px;
+    height: 100vh;
+  }
+  .abt-name-header-wrap {
+    padding: 48px 24px 56px;
   }
   .abt-name::before {
     padding-top: 80px;
