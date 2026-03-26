@@ -334,7 +334,7 @@
 
 .abt-hero-h {
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+  font-size: clamp(3.5rem, 8vw, 7rem);
   font-weight: 800;
   color: white;
   line-height: 1.08;
@@ -881,7 +881,7 @@
     min-height: auto;
   }
   .abt-hero-h {
-    font-size: clamp(2rem, 7vw, 2.6rem);
+    font-size: clamp(3rem, 10vw, 4.5rem);
   }
   .abt-story {
     padding: 80px 24px 100px;
