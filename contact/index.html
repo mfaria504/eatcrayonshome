@@ -288,7 +288,7 @@
   const successEl = document.getElementById('contact-success');
   const submitBtn = document.getElementById('cf-submit');
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const name  = document.getElementById('cf-name').value.trim();
@@ -299,18 +299,37 @@
 
     submitBtn.disabled = true;
 
+    const payload = {
+      name,
+      email,
+      company:  document.getElementById('cf-company').value.trim(),
+      services: document.getElementById('cf-services-hidden').value,
+      message:  document.getElementById('cf-message').value.trim(),
+    };
+
+    try {
+      const res = await fetch('/api/contact', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error('Server error');
+    } catch (err) {
+      console.error(err);
+      // Still show success to user — don't block on network errors
+    }
+
+    form.style.cssText = 'opacity:0;transform:translateY(-12px);transition:opacity 340ms ease,transform 420ms ease;pointer-events:none;';
     setTimeout(() => {
-      form.style.cssText = 'opacity:0;transform:translateY(-12px);transition:opacity 340ms ease,transform 420ms ease;pointer-events:none;';
-      setTimeout(() => {
-        form.hidden = true;
-        successEl.removeAttribute('hidden');
+      form.hidden = true;
+      successEl.removeAttribute('hidden');
+      requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            successEl.classList.add('visible');
-          });
+          successEl.classList.add('visible');
         });
-      }, 380);
-    }, 700);
+      });
+    }, 380);
   });
 
   // ── Field stagger entrance ──
