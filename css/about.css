@@ -311,7 +311,7 @@
   margin: 0 auto;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.6fr;
   gap: 48px;
   align-items: end;
 }
@@ -862,7 +862,7 @@
     margin: 0 auto;
   }
   .abt-hero-photo {
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
   }
   .abt-story-inner {
