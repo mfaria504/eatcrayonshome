@@ -214,8 +214,8 @@ body {
 .hero-eyebrow {
   font-family: var(--font-body);
   color: rgba(255,255,255,0.45);
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   margin-bottom: 24px;
@@ -237,7 +237,7 @@ body {
 .hero-sub {
   font-family: var(--font-body);
   color: rgba(255,255,255,0.58);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 1.7;
   max-width: 700px;
@@ -262,7 +262,7 @@ body {
 .btn-outline:hover {
   background: rgba(255,255,255,0.88);
   border-color: rgba(255,255,255,0.88);
-  transform: scale(1.02);
+  transform: scale(1.03);
 }
 .btn-outline:active {
   transform: scale(0.97);
@@ -1198,7 +1198,7 @@ body {
 .pricing-eyebrow {
   font-family: var(--font-body);
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: rgba(0,0,0,0.35);

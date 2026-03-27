@@ -850,7 +850,7 @@
 
 /* ── RESPONSIVE ── */
 
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
   .abt-hero-inner {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -879,7 +879,7 @@
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 860px) {
   .abt-hero {
     padding: 120px 24px 0;
     min-height: auto;
@@ -922,7 +922,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 560px) {
   .abt-hero {
     padding: 100px 16px 0;
   }
@@ -934,9 +934,6 @@
   }
   .abt-story {
     padding: 64px 16px 80px;
-  }
-  .abt-name-sticky {
-    padding: 0 16px 48px;
   }
   .abt-name::before {
     padding-top: 64px;
