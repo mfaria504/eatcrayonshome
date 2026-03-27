@@ -31,8 +31,8 @@ body.contact-light {
 .contact-eyebrow {
   font-family: var(--font-body);
   color: rgba(0,0,0,0.35);
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   margin-bottom: 20px;
