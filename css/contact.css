@@ -137,6 +137,27 @@ body.contact-light {
 
 .aside-direct:hover { color: var(--blue); }
 
+/* ── QUIZ CONTEXT BADGE ── */
+.cf-quiz-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0,0,0,0.04);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 50px;
+  padding: 8px 16px;
+  margin-bottom: 48px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: rgba(0,0,0,0.5);
+  line-height: 1;
+}
+
+.cf-quiz-badge-pip {
+  font-size: 10px;
+  color: rgba(0,0,0,0.3);
+}
+
 /* ── FORM FIELD ENTER ANIMATION ── */
 .cf-field-enter {
   opacity: 0;

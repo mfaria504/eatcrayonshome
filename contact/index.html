@@ -98,6 +98,12 @@
 
       <form class="contact-form" id="contact-form" novalidate>
 
+        <!-- Quiz context badge (shown if Matchmaker results found in localStorage) -->
+        <div class="cf-quiz-badge" id="cf-quiz-badge" hidden>
+          <span class="cf-quiz-badge-pip">✦</span>
+          <span class="cf-quiz-badge-text">Your Matchmaker results will be included</span>
+        </div>
+
         <!-- 01 – Name -->
         <div class="cf-field cf-field-enter" data-delay="0">
           <span class="cf-num">01</span>
@@ -216,6 +222,25 @@
 (function () {
   'use strict';
 
+  // ── Quiz result loader ──
+  function loadQuizResult() {
+    try {
+      var raw = localStorage.getItem('ec_quiz_result');
+      if (!raw) return null;
+      var d = JSON.parse(raw);
+      var AGE_MS = 30 * 24 * 60 * 60 * 1000;
+      if (!d.quiz_taken_at || Date.now() - d.quiz_taken_at > AGE_MS) {
+        localStorage.removeItem('ec_quiz_result');
+        return null;
+      }
+      return d;
+    } catch(e) { return null; }
+  }
+
+  // Show quiz badge if Matchmaker result is present
+  var quizBadge = document.getElementById('cf-quiz-badge');
+  if (loadQuizResult() && quizBadge) quizBadge.removeAttribute('hidden');
+
   // ── Autopopulate email from query param ──
   var params = new URLSearchParams(window.location.search);
   var prefillEmail = params.get('email');
@@ -297,6 +322,7 @@
       company:  document.getElementById('cf-company').value.trim(),
       services: document.getElementById('cf-services-hidden').value,
       message:  document.getElementById('cf-message').value.trim(),
+      quiz:     loadQuizResult(),
     };
 
     try {
@@ -307,6 +333,7 @@
       });
 
       if (!res.ok) throw new Error('Server error');
+      localStorage.removeItem('ec_quiz_result');
     } catch (err) {
       console.error(err);
       // Still show success to user — don't block on network errors

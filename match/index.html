@@ -554,6 +554,24 @@ function getHeadline(pct, flags, a, sv) {
   return { h:"This isn't the<br>right match <em>right now.</em>", b:"The best matchmakers know when to say not yet, and we respect you too much to pretend otherwise. The conditions for this to be extraordinary aren't quite in place. That can change." };
 }
 
+// ── PERSIST QUIZ RESULT ───────────────────────────────────────────────────────
+function persistQuizResult(pct, flags) {
+  try {
+    const tier = pct >= 78 ? 'exceptional' : pct >= 48 ? 'strong' : 'nomatch';
+    localStorage.setItem('ec_quiz_result', JSON.stringify({
+      score_pct:       pct,
+      score_tier:      tier,
+      revenue_label:   sliderVals[0] !== undefined ? Qs[0].labels[sliderVals[0]] : '',
+      business_model:  answers[1]   !== undefined ? Qs[1].opts[answers[1]].l    : '',
+      deal_size_label: sliderVals[2] !== undefined ? Qs[2].labels[sliderVals[2]] : '',
+      budget_label:    sliderVals[9] !== undefined ? Qs[9].labels[sliderVals[9]] : '',
+      flags:           flags.join(', '),
+      marketing_state: answers[3]   !== undefined ? Qs[3].opts[answers[3]].l    : '',
+      quiz_taken_at:   Date.now(),
+    }));
+  } catch(e) { /* localStorage unavailable */ }
+}
+
 // ── RESULTS ───────────────────────────────────────────────────────────────────
 function showResults() {
   const { pct, catS, catM, flags } = calcScore();
@@ -621,6 +639,7 @@ function showResults() {
     el.querySelectorAll('.bk-fill').forEach(b => { b.style.width = b.dataset.t+'%'; });
   }, 150);
 
+  persistQuizResult(pct, flags);
   scrollTo(0, 0);
 }
 </script>

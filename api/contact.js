@@ -58,19 +58,67 @@ export default async function handler(req, res) {
   const firstname = nameParts[0];
   const lastname  = nameParts.slice(1).join(' ') || '';
 
+  // Build optional quiz block from localStorage data passed by the client
+  const rawQuiz = (body.quiz && typeof body.quiz === 'object' && !Array.isArray(body.quiz)) ? body.quiz : null;
+  let quizBlock = '';
+  if (rawQuiz) {
+    const scorePct  = parseInt(rawQuiz.score_pct, 10);
+    const tier      = sanitize(String(rawQuiz.score_tier   || ''));
+    const revenue   = truncate(sanitize(String(rawQuiz.revenue_label   || '')), 100);
+    const model     = truncate(sanitize(String(rawQuiz.business_model  || '')), 100);
+    const dealSize  = truncate(sanitize(String(rawQuiz.deal_size_label || '')), 100);
+    const budget    = truncate(sanitize(String(rawQuiz.budget_label    || '')), 100);
+    const flags     = truncate(sanitize(String(rawQuiz.flags           || '')), 200);
+    const marketing = truncate(sanitize(String(rawQuiz.marketing_state || '')), 200);
+    const takenMs   = parseInt(rawQuiz.quiz_taken_at, 10);
+    const takenAt   = !isNaN(takenMs)
+      ? new Date(takenMs).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+      : '';
+    const tierLabel = tier === 'exceptional' ? 'Exceptional Match'
+                    : tier === 'strong'       ? 'Strong Potential'
+                    : tier === 'nomatch'      ? 'Not the Right Fit Yet' : '';
+    const scoreStr  = !isNaN(scorePct) ? `${scorePct}%` : '';
+
+    quizBlock = [
+      '[Growth Matchmaker]',
+      [scoreStr, tierLabel].filter(Boolean).join(' -- '),
+      revenue   ? `Revenue: ${revenue}`     : '',
+      model     ? `Model: ${model}`         : '',
+      dealSize  ? `Deal Size: ${dealSize}`  : '',
+      budget    ? `Budget: ${budget}`       : '',
+      marketing ? `Marketing: ${marketing}` : '',
+      flags     ? `Flags: ${flags}`         : 'Flags: none',
+      takenAt   ? `Taken: ${takenAt}`       : '',
+    ].filter(Boolean).join('\n');
+  }
+
   const fullMessage = [
-    services ? `Interested in: ${services}` : '',
-    message  || '',
+    services  ? `Interested in: ${services}` : '',
+    message   || '',
+    quizBlock || '',
   ].filter(Boolean).join('\n\n');
 
+  const fields = [
+    { name: 'firstname', value: firstname },
+    { name: 'lastname',  value: lastname },
+    { name: 'email',     value: email },
+    { name: 'company',   value: company },
+    { name: 'message',   value: fullMessage },
+  ];
+
+  // Optional custom HubSpot properties -- no-ops until created in HubSpot settings.
+  // Once created (matchmaker_score, matchmaker_tier, matchmaker_flags), data flows automatically.
+  if (rawQuiz) {
+    const scorePctVal = parseInt(rawQuiz.score_pct, 10);
+    const tierVal     = sanitize(String(rawQuiz.score_tier || ''));
+    const flagsVal    = truncate(sanitize(String(rawQuiz.flags || '')), 200);
+    if (!isNaN(scorePctVal)) fields.push({ name: 'matchmaker_score', value: String(scorePctVal) });
+    if (tierVal)             fields.push({ name: 'matchmaker_tier',  value: tierVal });
+    if (flagsVal)            fields.push({ name: 'matchmaker_flags', value: flagsVal });
+  }
+
   const payload = {
-    fields: [
-      { name: 'firstname', value: firstname },
-      { name: 'lastname',  value: lastname },
-      { name: 'email',     value: email },
-      { name: 'company',   value: company },
-      { name: 'message',   value: fullMessage },
-    ],
+    fields,
     context: {
       pageUri: 'https://eatcrayons.com/contact',
       pageName: 'Contact',
