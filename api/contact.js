@@ -1,3 +1,5 @@
+import { verifyTurnstile } from './_turnstile.js';
+
 const ALLOWED_ORIGINS = [
   'https://eatcrayons.com',
   'https://www.eatcrayons.com',
@@ -41,6 +43,15 @@ export default async function handler(req, res) {
   const body = req.body || {};
   if (typeof body !== 'object' || Array.isArray(body)) {
     return res.status(400).json({ error: 'Invalid request body' });
+  }
+
+  // Turnstile proof-of-human — fail-closed on the lead surface. HubSpot is
+  // expensive to clean up, so we'd rather lose one legitimate submission
+  // than accept a flood of bot leads.
+  const cfToken = typeof body.cf_token === 'string' ? body.cf_token : '';
+  const humanOk = await verifyTurnstile(cfToken, req);
+  if (!humanOk) {
+    return res.status(400).json({ error: 'Please complete the verification and try again.' });
   }
 
   // Sanitize and validate inputs

@@ -5,10 +5,16 @@
 // 204 No Content so analytics failures never block the quiz-taker.
 //
 // Events:
-//   start    -> INSERT new row (status='started', visitor env)
+//   start    -> INSERT new row (status='started', visitor env). Requires
+//               a valid Cloudflare Turnstile token. Rate-limited to 20
+//               starts/hour per IP. Fail-closed on analytics (no row) but
+//               fail-open on UX (client never sees an error).
 //   abandon  -> PATCH row by id with status='abandoned' + last_question_index
 //               (filtered on status=eq.started so a completed row is never clobbered)
-//   complete -> PATCH row by id with status='complete' + full score payload
+//   complete -> PATCH row by id with status='complete' + full score payload.
+//               Also flags bot_suspect=true if started_at → completed_at < 15s.
+
+import { verifyTurnstile } from './_turnstile.js';
 
 const ALLOWED_ORIGINS = [
   'https://eatcrayons.com',
@@ -19,6 +25,10 @@ const ALLOWED_ORIGINS = [
 const EVENT_TYPES = new Set(['start', 'abandon', 'complete']);
 const UUID_RE   = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const TIERS     = new Set(['exceptional', 'strong', 'nomatch']);
+
+// Tuning knobs for the layer-2 heuristics
+const IP_RATE_LIMIT_PER_HOUR = 20;
+const MIN_QUIZ_DURATION_MS   = 15_000; // Under 15s end-to-end → bot-suspect
 
 // Strip HTML tags and null bytes from a string
 function sanitize(str) {
@@ -99,12 +109,45 @@ export default async function handler(req, res) {
 
   try {
     if (event === 'start') {
+      // ── Gate 1: Turnstile proof-of-human ────────────────────────────────
+      // Fail-closed on analytics (skip insert) but fail-open on UX (still 204).
+      // The client keeps running the quiz; we just don't log the session.
+      const cfToken = typeof body.cf_token === 'string' ? body.cf_token : '';
+      const humanOk = await verifyTurnstile(cfToken, req);
+      if (!humanOk) {
+        return res.status(204).end();
+      }
+
       // Extract visitor environment from headers (server-side, never from client)
       const ip         = firstIp(req.headers['x-forwarded-for']);
       const userAgent  = sstr(req.headers['user-agent'], 500);
       const geoCountry = sstr(req.headers['x-vercel-ip-country'], 8);
       const geoRegion  = sstr(req.headers['x-vercel-ip-country-region'], 16);
       const geoCity    = sstr(decodeHeader(req.headers['x-vercel-ip-city']), 120);
+
+      // ── Gate 2: IP rate limit ───────────────────────────────────────────
+      // Max IP_RATE_LIMIT_PER_HOUR starts per IP per hour. Defence-in-depth
+      // against scripts that solved (or bypassed) Turnstile somehow.
+      if (ip) {
+        const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+        const rlUrl =
+          `${endpoint}?ip=eq.${encodeURIComponent(ip)}` +
+          `&started_at=gte.${encodeURIComponent(oneHourAgo)}` +
+          `&select=id&limit=${IP_RATE_LIMIT_PER_HOUR + 1}`;
+        try {
+          const rlResp = await fetch(rlUrl, { headers: baseHeaders });
+          if (rlResp.ok) {
+            const rows = await rlResp.json();
+            if (Array.isArray(rows) && rows.length >= IP_RATE_LIMIT_PER_HOUR) {
+              console.warn('quiz-event: ip rate limit hit', ip);
+              return res.status(204).end();
+            }
+          }
+          // If the rate-limit check fails, fail-open (better than blocking real users)
+        } catch (e) {
+          console.error('quiz-event: rate-limit check failed', e && e.message);
+        }
+      }
 
       const row = {
         id:            sessionId,
@@ -189,18 +232,49 @@ export default async function handler(req, res) {
       if (serialized.length <= 10_000) answers = body.answers;
     }
 
+    // ── Gate 3: timing heuristic ──────────────────────────────────────────
+    // Real humans take 60-180s to finish this quiz. A completion that
+    // arrives < MIN_QUIZ_DURATION_MS after the start is almost certainly
+    // automated. We flag these rather than drop them so they stay visible
+    // in the dashboard — useful signal, not a hard block.
+    const nowMs = Date.now();
+    let botSuspect       = false;
+    let botSuspectReason = null;
+    try {
+      const lookupUrl =
+        `${endpoint}?id=eq.${encodeURIComponent(sessionId)}&select=started_at&limit=1`;
+      const lookup = await fetch(lookupUrl, { headers: baseHeaders });
+      if (lookup.ok) {
+        const rows = await lookup.json();
+        if (Array.isArray(rows) && rows.length === 1 && rows[0].started_at) {
+          const startedMs = Date.parse(rows[0].started_at);
+          if (Number.isFinite(startedMs)) {
+            const deltaMs = nowMs - startedMs;
+            if (deltaMs >= 0 && deltaMs < MIN_QUIZ_DURATION_MS) {
+              botSuspect       = true;
+              botSuspectReason = `completed in ${Math.round(deltaMs / 1000)}s (< 15s threshold)`;
+            }
+          }
+        }
+      }
+    } catch (e) {
+      console.error('quiz-event: timing check failed', e && e.message);
+    }
+
     const patch = {
-      status:          'complete',
-      completed_at:    new Date().toISOString(),
-      score_pct:       scorePct,
-      score_tier:      scoreTier,
-      flags:           flags,
-      answers:         answers,
-      revenue_label:   sstr(body.revenue_label,   200),
-      business_model:  sstr(body.business_model,  100),
-      deal_size_label: sstr(body.deal_size_label, 200),
-      budget_label:    sstr(body.budget_label,    200),
-      marketing_state: sstr(body.marketing_state, 200),
+      status:             'complete',
+      completed_at:       new Date(nowMs).toISOString(),
+      score_pct:          scorePct,
+      score_tier:         scoreTier,
+      flags:              flags,
+      answers:            answers,
+      revenue_label:      sstr(body.revenue_label,   200),
+      business_model:     sstr(body.business_model,  100),
+      deal_size_label:    sstr(body.deal_size_label, 200),
+      budget_label:       sstr(body.budget_label,    200),
+      marketing_state:    sstr(body.marketing_state, 200),
+      bot_suspect:        botSuspect,
+      bot_suspect_reason: botSuspectReason,
     };
 
     // No status filter — complete is final and may arrive after a stale abandon
