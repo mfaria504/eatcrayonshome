@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Quiz Analytics · EatCrayons Admin</title>
+<style>
+  :root {
+    --bg:        #0e0e13;
+    --bg-2:      #14141c;
+    --card:      #1a1a24;
+    --card-hi:   #21212d;
+    --border:    rgba(255,255,255,0.09);
+    --border-hi: rgba(255,255,255,0.16);
+    --t1:        #ffffff;
+    --t2:        rgba(255,255,255,0.62);
+    --t3:        rgba(255,255,255,0.34);
+    --blue:      #448CF7;
+    --orange:    #F2B37B;
+    --purple:    #8B5CF6;
+    --green:     #34d399;
+    --red:       #f87171;
+    --radius:    14px;
+    --mono:      'SF Mono', 'Menlo', 'Consolas', ui-monospace, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--t1);
+    font: 15px/1.55 -apple-system, system-ui, 'Segoe UI', Roboto, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button { font: inherit; cursor: pointer; }
+  a      { color: var(--blue); text-decoration: none; }
+  a:hover{ text-decoration: underline; }
+
+  .app { max-width: 1240px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  /* ── HEADER ────────────────────────────────────────────── */
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 32px; gap: 16px;
+  }
+  header h1 {
+    font-size: 22px; font-weight: 600; letter-spacing: -0.01em;
+  }
+  header h1 span {
+    color: var(--t3); font-weight: 400; margin-left: 8px;
+  }
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+  .btn {
+    background: var(--card); color: var(--t1);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 14px; font-size: 13px; font-weight: 500;
+    transition: background .15s, border-color .15s;
+  }
+  .btn:hover { background: var(--card-hi); border-color: var(--border-hi); }
+  .btn-primary {
+    background: var(--blue); border-color: var(--blue); color: #fff;
+  }
+  .btn-primary:hover { background: #5a9bff; border-color: #5a9bff; }
+
+  /* ── STATE SCREENS ─────────────────────────────────────── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* Loading */
+  #screen-loading { text-align: center; padding: 80px 0; color: var(--t2); }
+  .spinner {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 3px solid var(--border); border-top-color: var(--blue);
+    animation: spin 0.8s linear infinite; margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Login */
+  #screen-login { max-width: 380px; margin: 100px auto 0; text-align: center; }
+  #screen-login .logo { font-size: 28px; margin-bottom: 6px; }
+  #screen-login p { color: var(--t2); margin-bottom: 28px; }
+  #login-form {
+    display: flex; flex-direction: column; gap: 12px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 24px;
+  }
+  #login-form input {
+    background: var(--bg-2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 14px; color: var(--t1);
+    font: inherit; outline: none; transition: border-color .15s;
+  }
+  #login-form input:focus { border-color: var(--blue); }
+  #login-error {
+    color: var(--red); font-size: 13px; min-height: 18px;
+  }
+
+  /* Error */
+  #screen-error { text-align: center; padding: 80px 24px; }
+  #screen-error h2 { color: var(--red); margin-bottom: 8px; }
+  #screen-error p  { color: var(--t2); margin-bottom: 20px; }
+
+  /* ── DASHBOARD GRID ────────────────────────────────────── */
+  .kpis {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 16px; margin-bottom: 24px;
+  }
+  .kpi {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 22px;
+  }
+  .kpi .label {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--t3); margin-bottom: 6px;
+  }
+  .kpi .value {
+    font-size: 32px; font-weight: 600; line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .kpi .sub {
+    font-size: 12px; color: var(--t2); margin-top: 4px;
+  }
+  @media (max-width: 800px) {
+    .kpis { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .grid-2 {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 800px) {
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px; margin-bottom: 16px;
+  }
+  .card h3 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--t3); margin-bottom: 16px; font-weight: 500;
+  }
+  .card .empty {
+    color: var(--t3); font-size: 13px; padding: 20px 0; text-align: center;
+  }
+
+  /* ── DAILY STACKED BAR CHART ───────────────────────────── */
+  .daily {
+    display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+    gap: 4px; align-items: end;
+    height: 180px; margin-top: 8px;
+  }
+  .daily .day {
+    display: flex; flex-direction: column-reverse; gap: 2px;
+    position: relative; min-height: 2px;
+    border-radius: 4px 4px 0 0; overflow: hidden;
+  }
+  .daily .day .seg-c { background: var(--blue);   width: 100%; }
+  .daily .day .seg-a { background: var(--orange); width: 100%; }
+  .daily .day .seg-0 { background: rgba(255,255,255,0.12); width: 100%; min-height: 2px; flex: 1; }
+  .daily .day:hover::after {
+    content: attr(data-label);
+    position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%);
+    background: #000; color: #fff; font-size: 11px; white-space: pre;
+    padding: 6px 8px; border-radius: 6px;
+    border: 1px solid var(--border-hi); pointer-events: none; z-index: 5;
+  }
+  .daily-axis {
+    display: flex; justify-content: space-between;
+    margin-top: 8px; font-size: 11px; color: var(--t3);
+  }
+  .legend {
+    display: flex; gap: 16px; margin-top: 14px; font-size: 12px; color: var(--t2);
+  }
+  .legend .dot {
+    display: inline-block; width: 10px; height: 10px; border-radius: 2px;
+    margin-right: 6px; vertical-align: middle;
+  }
+
+  /* ── HORIZONTAL BAR CHART ──────────────────────────────── */
+  .bars { display: flex; flex-direction: column; gap: 10px; }
+  .bar-row {
+    display: grid; grid-template-columns: 180px 1fr 42px;
+    align-items: center; gap: 10px;
+    font-size: 13px;
+  }
+  .bar-row .bar-label {
+    color: var(--t2); white-space: nowrap; overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .bar-row .bar-track {
+    background: rgba(255,255,255,0.06); border-radius: 4px;
+    height: 20px; position: relative; overflow: hidden;
+  }
+  .bar-row .bar-fill {
+    position: absolute; inset: 0 auto 0 0; border-radius: 4px;
+    background: var(--blue); min-width: 2px;
+    transition: width 0.4s ease;
+  }
+  .bar-row .bar-fill.orange { background: var(--orange); }
+  .bar-row .bar-fill.purple { background: var(--purple); }
+  .bar-row .bar-fill.gray   { background: rgba(255,255,255,0.28); }
+  .bar-row .bar-count {
+    color: var(--t1); font-variant-numeric: tabular-nums; text-align: right;
+    font-size: 13px;
+  }
+  @media (max-width: 540px) {
+    .bar-row { grid-template-columns: 120px 1fr 38px; }
+  }
+
+  /* ── TABLE ─────────────────────────────────────────────── */
+  .table-wrap { overflow-x: auto; margin: 0 -22px -22px; }
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px; font-variant-numeric: tabular-nums;
+  }
+  thead th {
+    text-align: left; font-weight: 500; color: var(--t3);
+    text-transform: uppercase; letter-spacing: 0.05em; font-size: 11px;
+    padding: 10px 14px; border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--card);
+    position: sticky; top: 0;
+  }
+  tbody td {
+    padding: 11px 14px; border-bottom: 1px solid var(--border);
+    color: var(--t2); vertical-align: top;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: rgba(255,255,255,0.03); }
+  tbody tr.expandable { cursor: pointer; }
+  tbody tr.expand-row td {
+    background: var(--bg-2);
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td.num  { color: var(--t1); font-weight: 500; }
+  tbody td.name { color: var(--t1); }
+  tbody td code {
+    font-family: var(--mono); font-size: 11px; color: var(--t3);
+  }
+  .chip {
+    display: inline-block; padding: 2px 8px; border-radius: 10px;
+    font-size: 11px; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .chip.complete    { background: rgba(68,140,247,0.15); color: var(--blue); }
+  .chip.abandoned   { background: rgba(242,179,123,0.15); color: var(--orange); }
+  .chip.started     { background: rgba(255,255,255,0.09); color: var(--t2); }
+  .chip.exceptional { background: rgba(52,211,153,0.15); color: var(--green); }
+  .chip.strong      { background: rgba(68,140,247,0.15); color: var(--blue); }
+  .chip.nomatch     { background: rgba(248,113,113,0.15); color: var(--red); }
+
+  .detail-grid {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 20px;
+  }
+  .detail-grid dt { color: var(--t3); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .detail-grid dd { color: var(--t1); margin-bottom: 10px; font-size: 13px; word-break: break-word; }
+  @media (max-width: 700px) {
+    .detail-grid { grid-template-columns: 1fr; }
+  }
+
+  .flags-list span {
+    display: inline-block;
+    background: rgba(242,179,123,0.12); color: var(--orange);
+    padding: 2px 8px; border-radius: 10px;
+    font-size: 11px; margin-right: 4px; margin-bottom: 2px;
+  }
+
+  .hide { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ── LOADING ───────────────────────────────────────────── -->
+  <div id="screen-loading" class="screen active">
+    <div class="spinner"></div>
+    <div>Loading dashboard…</div>
+  </div>
+
+  <!-- ── LOGIN ─────────────────────────────────────────────── -->
+  <div id="screen-login" class="screen">
+    <div class="logo">Quiz Analytics</div>
+    <p>Private dashboard. Enter the admin password to continue.</p>
+    <form id="login-form" autocomplete="off">
+      <input
+        type="password" id="login-password" name="password"
+        placeholder="Admin password" autocomplete="current-password"
+        required autofocus
+      >
+      <button type="submit" class="btn btn-primary">Sign in</button>
+      <div id="login-error" role="alert"></div>
+    </form>
+  </div>
+
+  <!-- ── ERROR ─────────────────────────────────────────────── -->
+  <div id="screen-error" class="screen">
+    <h2>Couldn't load dashboard</h2>
+    <p id="error-msg">Please try again.</p>
+    <button class="btn btn-primary" onclick="location.reload()">Retry</button>
+  </div>
+
+  <!-- ── DASHBOARD ─────────────────────────────────────────── -->
+  <div id="screen-dash" class="screen">
+    <header>
+      <h1>Quiz analytics <span id="last-updated"></span></h1>
+      <div class="header-actions">
+        <button class="btn" id="btn-refresh">Refresh</button>
+        <button class="btn" id="btn-logout">Log out</button>
+      </div>
+    </header>
+
+    <!-- KPIs -->
+    <div class="kpis">
+      <div class="kpi">
+        <div class="label">Starts · 30d</div>
+        <div class="value" id="k-starts">—</div>
+        <div class="sub" id="k-starts-sub">all time: —</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Completes · 30d</div>
+        <div class="value" id="k-completes">—</div>
+        <div class="sub" id="k-completes-sub">all time: —</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Completion rate · 30d</div>
+        <div class="value" id="k-rate">—</div>
+        <div class="sub">of sessions that started</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Avg score</div>
+        <div class="value" id="k-score">—</div>
+        <div class="sub">completed quizzes only</div>
+      </div>
+    </div>
+
+    <!-- Daily -->
+    <div class="card">
+      <h3>Daily activity · last 30 days</h3>
+      <div class="daily" id="daily-chart"></div>
+      <div class="daily-axis" id="daily-axis"></div>
+      <div class="legend">
+        <span><span class="dot" style="background:var(--blue)"></span>Completes</span>
+        <span><span class="dot" style="background:var(--orange)"></span>Abandons</span>
+        <span><span class="dot" style="background:rgba(255,255,255,0.12)"></span>Empty day</span>
+      </div>
+    </div>
+
+    <!-- Tiers + Flags -->
+    <div class="grid-2">
+      <div class="card">
+        <h3>Score tiers · completed quizzes</h3>
+        <div class="bars" id="tiers-chart"></div>
+      </div>
+      <div class="card">
+        <h3>Top flags · completed quizzes</h3>
+        <div class="bars" id="flags-chart"></div>
+      </div>
+    </div>
+
+    <!-- Dropoff + UTM -->
+    <div class="grid-2">
+      <div class="card">
+        <h3>Drop-off by question · abandoned</h3>
+        <div class="bars" id="dropoff-chart"></div>
+      </div>
+      <div class="card">
+        <h3>Traffic sources</h3>
+        <div class="bars" id="utm-chart"></div>
+      </div>
+    </div>
+
+    <!-- Recent sessions -->
+    <div class="card">
+      <h3>Recent sessions · click a row for full details</h3>
+      <div class="table-wrap">
+        <table id="recent-table">
+          <thead>
+            <tr>
+              <th>When</th>
+              <th>Status</th>
+              <th>Score</th>
+              <th>Tier</th>
+              <th>Model</th>
+              <th>Revenue</th>
+              <th>Budget</th>
+              <th>Flags</th>
+              <th>Geo</th>
+              <th>Source</th>
+            </tr>
+          </thead>
+          <tbody id="recent-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // Short labels for drop-off chart (aligned with Qs[] in /match/)
+  var QUESTION_LABELS = [
+    '0. Revenue',
+    '1. Business model',
+    '2. Deal size',
+    '3. Marketing state',
+    '4. Growth potential',
+    '5. Patience',
+    '6. Leadership style',
+    '7. Authority',
+    '8. Buyer type',
+    '9. Budget',
+  ];
+
+  // Tier color mapping (matches CSS chip variants)
+  var TIER_ORDER = ['exceptional', 'strong', 'nomatch', 'unknown'];
+  var TIER_LABEL = {
+    exceptional: 'Exceptional',
+    strong:      'Strong',
+    nomatch:     'Not a fit',
+    unknown:     'Unknown',
+  };
+  var TIER_COLOR = {
+    exceptional: '',
+    strong:      'purple',
+    nomatch:     'orange',
+    unknown:     'gray',
+  };
+
+  // ── screen management ──
+  function showScreen(id) {
+    var screens = document.querySelectorAll('.screen');
+    for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
+    document.getElementById(id).classList.add('active');
+  }
+
+  // ── helpers ──
+  function el(id) { return document.getElementById(id); }
+  function text(id, v) { el(id).textContent = v; }
+  function esc(s) {
+    if (s == null) return '';
+    return String(s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    try {
+      var d = new Date(iso);
+      return d.toLocaleDateString('en-US', { month:'short', day:'numeric' })
+        + ' ' + d.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+    } catch(e) { return iso; }
+  }
+  function fmtDateTime(iso) {
+    if (!iso) return '—';
+    try { return new Date(iso).toLocaleString(); }
+    catch(e) { return iso; }
+  }
+  function pct(num, denom) {
+    if (!denom) return '—';
+    return Math.round((num / denom) * 100) + '%';
+  }
+
+  // ── login ──
+  el('login-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var pw = el('login-password').value;
+    el('login-error').textContent = '';
+    el('login-form').querySelector('button').disabled = true;
+    fetch('/api/admin-login', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ password: pw }),
+      credentials: 'same-origin',
+    }).then(function(r) {
+      el('login-form').querySelector('button').disabled = false;
+      if (r.ok) {
+        el('login-password').value = '';
+        loadDashboard();
+      } else if (r.status === 401) {
+        el('login-error').textContent = 'Wrong password.';
+      } else {
+        el('login-error').textContent = 'Login failed (' + r.status + ').';
+      }
+    }).catch(function() {
+      el('login-form').querySelector('button').disabled = false;
+      el('login-error').textContent = 'Network error.';
+    });
+  });
+
+  // ── logout ──
+  function logout() {
+    fetch('/api/admin-logout', { method: 'POST', credentials: 'same-origin' })
+      .catch(function(){})
+      .then(function(){ showScreen('screen-login'); setTimeout(function(){ el('login-password').focus(); }, 50); });
+  }
+
+  // ── render ──
+  function render(stats) {
+    var h = stats.headline || {};
+
+    text('k-starts',    h.starts_30d || 0);
+    text('k-completes', h.completes_30d || 0);
+    text('k-rate',      pct(h.completes_30d || 0, h.starts_30d || 0));
+    text('k-score',     h.avg_score == null ? '—' : h.avg_score + '%');
+    text('k-starts-sub',    'all time: ' + (h.starts_total || 0));
+    text('k-completes-sub', 'all time: ' + (h.completes_total || 0));
+    text('last-updated', '· updated ' + new Date().toLocaleTimeString());
+
+    // Daily chart: build 30-day window left-aligned on today
+    renderDaily(stats.daily || []);
+
+    // Tier distribution
+    renderTiers(stats.tiers || {});
+
+    // Flags
+    renderBars('flags-chart', (stats.flags || []).map(function(f) {
+      return { label: f.flag, count: f.count };
+    }));
+
+    // Drop-off
+    renderBars('dropoff-chart', (stats.dropoff || []).map(function(d) {
+      return { label: QUESTION_LABELS[d.index] || ('Question ' + d.index), count: d.count, color: 'orange' };
+    }));
+
+    // UTM
+    renderBars('utm-chart', (stats.utm || []).map(function(u) {
+      return {
+        label: u.source,
+        count: u.starts,
+        detail: u.completes + ' completes',
+        color: 'purple',
+      };
+    }));
+
+    // Recent table
+    renderRecent(stats.recent || []);
+  }
+
+  function renderDaily(daily) {
+    var chart = el('daily-chart');
+    chart.innerHTML = '';
+
+    // Build a 30-day window ending today, using UTC to match Postgres date_trunc.
+    var today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    var map = {};
+    for (var i = 0; i < daily.length; i++) {
+      map[daily[i].day] = daily[i];
+    }
+
+    var days = [];
+    var max = 1;
+    for (var d = 29; d >= 0; d--) {
+      var dt = new Date(today);
+      dt.setUTCDate(today.getUTCDate() - d);
+      var key = dt.getUTCFullYear() + '-' +
+        String(dt.getUTCMonth() + 1).padStart(2, '0') + '-' +
+        String(dt.getUTCDate()).padStart(2, '0');
+      var row = map[key] || { day: key, starts: 0, completes: 0, abandons: 0 };
+      var total = (row.completes || 0) + (row.abandons || 0);
+      if (total > max) max = total;
+      days.push({ date: dt, row: row });
+    }
+
+    for (var j = 0; j < days.length; j++) {
+      var dd = days[j];
+      var r = dd.row;
+      var c = r.completes || 0;
+      var a = r.abandons  || 0;
+      var sTotal = r.starts || 0;
+      var dayEl = document.createElement('div');
+      dayEl.className = 'day';
+
+      var label = dd.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+      dayEl.setAttribute('data-label',
+        label + ' (UTC)\n' + c + ' complete · ' + a + ' abandon · ' + sTotal + ' starts');
+
+      if (c === 0 && a === 0) {
+        // Empty-day placeholder so all columns share a consistent baseline
+        var seg0 = document.createElement('div');
+        seg0.className = 'seg-0';
+        dayEl.appendChild(seg0);
+      } else {
+        // Stack: completes on bottom (blue), abandons on top (orange)
+        if (c > 0) {
+          var segC = document.createElement('div');
+          segC.className = 'seg-c';
+          segC.style.height = ((c / max) * 100) + '%';
+          dayEl.appendChild(segC);
+        }
+        if (a > 0) {
+          var segA = document.createElement('div');
+          segA.className = 'seg-a';
+          segA.style.height = ((a / max) * 100) + '%';
+          dayEl.appendChild(segA);
+        }
+      }
+
+      chart.appendChild(dayEl);
+    }
+
+    // Axis labels: first, middle, last
+    var axis = el('daily-axis');
+    axis.innerHTML = '';
+    [0, 15, 29].forEach(function(idx) {
+      var span = document.createElement('span');
+      span.textContent = days[idx].date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+      axis.appendChild(span);
+    });
+  }
+
+  function renderTiers(tiers) {
+    var total = 0;
+    for (var k in tiers) if (Object.prototype.hasOwnProperty.call(tiers, k)) total += tiers[k] || 0;
+
+    var rows = [];
+    for (var i = 0; i < TIER_ORDER.length; i++) {
+      var key = TIER_ORDER[i];
+      var count = tiers[key] || 0;
+      if (count === 0) continue;
+      rows.push({
+        label: TIER_LABEL[key] + (total ? ' · ' + Math.round((count/total)*100) + '%' : ''),
+        count: count,
+        color: TIER_COLOR[key],
+      });
+    }
+    renderBars('tiers-chart', rows);
+  }
+
+  function renderBars(targetId, rows) {
+    var wrap = el(targetId);
+    wrap.innerHTML = '';
+    if (!rows.length) {
+      wrap.innerHTML = '<div class="empty">No data yet.</div>';
+      return;
+    }
+    var max = 0;
+    for (var i = 0; i < rows.length; i++) if (rows[i].count > max) max = rows[i].count;
+    if (max === 0) max = 1;
+
+    for (var j = 0; j < rows.length; j++) {
+      var r = rows[j];
+      var pctW = Math.max(2, (r.count / max) * 100);
+      var row = document.createElement('div');
+      row.className = 'bar-row';
+      row.innerHTML =
+        '<div class="bar-label" title="' + esc(r.label) + '">' + esc(r.label) + '</div>' +
+        '<div class="bar-track"><div class="bar-fill ' + (r.color || '') + '" style="width:' + pctW + '%"></div></div>' +
+        '<div class="bar-count">' + r.count + '</div>';
+      wrap.appendChild(row);
+      if (r.detail) {
+        var sub = document.createElement('div');
+        sub.style.cssText = 'grid-column: 2 / 3; font-size: 11px; color: var(--t3); margin-top: -6px;';
+        sub.textContent = r.detail;
+        row.appendChild(sub);
+      }
+    }
+  }
+
+  function renderRecent(rows) {
+    var body = el('recent-body');
+    body.innerHTML = '';
+    if (!rows.length) {
+      body.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--t3);padding:32px 0;">No sessions yet.</td></tr>';
+      return;
+    }
+    for (var i = 0; i < rows.length; i++) {
+      var r = rows[i];
+      var tr = document.createElement('tr');
+      tr.className = 'expandable';
+      tr.innerHTML =
+        '<td>' + esc(fmtDate(r.started_at)) + '</td>' +
+        '<td><span class="chip ' + esc(r.status) + '">' + esc(r.status) + '</span></td>' +
+        '<td class="num">' + (r.score_pct != null ? r.score_pct + '%' : '—') + '</td>' +
+        '<td>' + (r.score_tier ? '<span class="chip ' + esc(r.score_tier) + '">' + esc(r.score_tier) + '</span>' : '—') + '</td>' +
+        '<td>' + esc(r.business_model || '—') + '</td>' +
+        '<td>' + esc(r.revenue_label || '—') + '</td>' +
+        '<td>' + esc(r.budget_label || '—') + '</td>' +
+        '<td>' + (r.flags && r.flags.length ? '<span class="flags-list"><span>' + r.flags.map(esc).join('</span><span>') + '</span></span>' : '—') + '</td>' +
+        '<td>' + esc([r.geo_city, r.geo_region, r.geo_country].filter(Boolean).join(', ') || '—') + '</td>' +
+        '<td>' + esc(r.utm_source || '(direct)') + '</td>';
+      body.appendChild(tr);
+
+      var expand = document.createElement('tr');
+      expand.className = 'expand-row hide';
+      expand.innerHTML = '<td colspan="10">' + buildDetail(r) + '</td>';
+      body.appendChild(expand);
+
+      (function(trRow, expandRow) {
+        trRow.addEventListener('click', function() {
+          expandRow.classList.toggle('hide');
+        });
+      })(tr, expand);
+    }
+  }
+
+  function buildDetail(r) {
+    var rows = [
+      ['Session ID',    '<code>' + esc(r.id) + '</code>'],
+      ['Started',       esc(fmtDateTime(r.started_at))],
+      ['Completed',     esc(fmtDateTime(r.completed_at))],
+      ['Abandoned at',  esc(fmtDateTime(r.abandoned_at))],
+      ['Last question', r.last_question_index != null
+        ? esc((QUESTION_LABELS[r.last_question_index] || ('Q' + r.last_question_index)))
+        : '—'],
+      ['Score',         r.score_pct != null ? r.score_pct + '% · ' + esc(r.score_tier || '') : '—'],
+      ['Business model',esc(r.business_model || '—')],
+      ['Revenue',       esc(r.revenue_label || '—')],
+      ['Deal size',     esc(r.deal_size_label || '—')],
+      ['Budget',        esc(r.budget_label || '—')],
+      ['Marketing',     esc(r.marketing_state || '—')],
+      ['Flags',         r.flags && r.flags.length ? esc(r.flags.join(', ')) : '—'],
+      ['Geo',           esc([r.geo_city, r.geo_region, r.geo_country].filter(Boolean).join(', ') || '—')],
+      ['Referrer',      esc(r.referrer || '—')],
+      ['Landing path',  esc(r.landing_path || '—')],
+      ['UTM',           esc([r.utm_source, r.utm_medium, r.utm_campaign].filter(Boolean).join(' · ') || '—')],
+    ];
+    var html = '<dl class="detail-grid">';
+    for (var i = 0; i < rows.length; i++) {
+      html += '<div><dt>' + rows[i][0] + '</dt><dd>' + rows[i][1] + '</dd></div>';
+    }
+    html += '</dl>';
+    return html;
+  }
+
+  // ── load ──
+  function loadDashboard() {
+    showScreen('screen-loading');
+    fetch('/api/admin-quiz-data', { credentials: 'same-origin' })
+      .then(function(r) {
+        if (r.status === 401) { showScreen('screen-login'); setTimeout(function(){ el('login-password').focus(); }, 50); return null; }
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function(stats) {
+        if (!stats) return;
+        render(stats);
+        showScreen('screen-dash');
+      })
+      .catch(function(err) {
+        el('error-msg').textContent = (err && err.message) || 'Please try again.';
+        showScreen('screen-error');
+      });
+  }
+
+  el('btn-refresh').addEventListener('click', loadDashboard);
+  el('btn-logout').addEventListener('click', logout);
+
+  // Kickoff
+  loadDashboard();
+})();
+</script>
+</body>
+</html>
