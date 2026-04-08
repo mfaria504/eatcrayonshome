@@ -81,34 +81,51 @@
   <p>We collect personal information that you voluntarily provide to us and certain information that is collected automatically when you visit the Website.</p>
 
   <h3>1.1 Information You Provide Directly</h3>
-  <p>When you interact with our Website through forms and surveys, we may collect the following categories of personal information:</p>
-  <p><strong>ICP Matchmaker Survey (<a href="/match/">eatcrayons.com/match</a>):</strong></p>
+  <p>We only ask for what we need to do our work. When you use our forms and tools, we collect the information you voluntarily share with us.</p>
+
+  <p><strong>ICP Matchmaker Survey (<a href="/match/">eatcrayons.com/match</a>)</strong></p>
+  <p>The Matchmaker is a ten-question diagnostic that helps us, and you, figure out whether we are the right growth partner for your business. You can take it anonymously: no name, email, or phone number is required to see your result. What we do collect are your answers, which include:</p>
   <ul>
-    <li>Company name</li>
-    <li>First and last name</li>
-    <li>Phone number</li>
-    <li>Email address</li>
-    <li>Survey responses related to your business, industry, and growth challenges</li>
+    <li>Your approximate annual revenue range</li>
+    <li>Whether you sell to businesses, consumers, or both</li>
+    <li>Your typical deal size</li>
+    <li>The current state of your marketing function</li>
+    <li>How much untapped growth potential you see ahead of you</li>
+    <li>How you think about ROI, patience, and long-term investment</li>
+    <li>Your leadership style and how involved you stay in execution</li>
+    <li>Your standing and authority in your industry</li>
+    <li>Who actually makes the buying decision in your deals</li>
+    <li>The monthly investment range that feels right for a real engagement</li>
   </ul>
-  <p><strong>Contact Form:</strong></p>
+  <p>From those answers we calculate a match score, a tier, and a short set of signals that summarize your profile. None of this information is personally identifying on its own.</p>
+
+  <p><strong>Contact Form</strong></p>
+  <p>When you reach out to start a conversation with us, we collect:</p>
   <ul>
-    <li>First and last name</li>
-    <li>Email address</li>
-    <li>Phone number</li>
-    <li>Message content</li>
+    <li>Your name</li>
+    <li>Your email address</li>
+    <li>Your business name</li>
+    <li>The services you are interested in (Strategy, Infrastructure, Delivery, or a full Growth Engine)</li>
+    <li>A short message describing your situation: what is working, what is broken, and what you are trying to build next</li>
   </ul>
+  <p>If you completed the Matchmaker before reaching the contact form, your Matchmaker results are submitted alongside your message so we can arrive at our first conversation already knowing the context.</p>
 
   <h3>1.2 Information Collected Automatically</h3>
-  <p>When you visit the Website, we automatically collect certain information through HubSpot tracking technology, which may include:</p>
+  <p>When you visit the Website, our servers and the infrastructure we rely on log standard technical information about your visit. This may include:</p>
   <ul>
-    <li>IP address and approximate geographic location</li>
-    <li>Browser type and version</li>
-    <li>Operating system</li>
-    <li>Pages visited, time spent on pages, and navigation patterns</li>
-    <li>Referring website or source</li>
-    <li>Device type and screen resolution</li>
-    <li>Cookies and similar tracking identifiers</li>
+    <li>Your IP address and the approximate geographic location (country, region, and city) derived from it</li>
+    <li>Your browser type, version, and user-agent string</li>
+    <li>Your operating system and device type</li>
+    <li>The pages you visited, the time of your visit, and how long you spent on each page</li>
+    <li>The referring website or source that brought you here, including any UTM parameters in the URL</li>
   </ul>
+  <p>We do not run Google Analytics, Meta Pixel, or similar third-party advertising trackers on this Website, and we do not set our own advertising cookies.</p>
+
+  <p><strong>Matchmaker session analytics.</strong> When you take the ICP Matchmaker, we record your survey session in Supabase, our database provider. Each session stores your answers, the technical information above, and your progress through the quiz (start time, completion time, score, and tier). At the point of collection, this record is anonymous: it is not tied to your name or email unless you later choose to submit the contact form.</p>
+
+  <p><strong>Visitor identification on the Matchmaker.</strong> As part of the Matchmaker, we use RB2B, a B2B visitor identification service, to check whether your IP address matches a known public business profile. If a match is found, RB2B returns a hashed email and a public LinkedIn profile URL associated with your business network, which we store against your anonymous Matchmaker session so that we can arrive at any follow-up conversation already in context. This only produces a match for visitors whose employers participate in RB2B's network, and it is skipped for most consumer and residential visitors.</p>
+
+  <p><strong>Bot mitigation.</strong> We use Cloudflare Turnstile, a privacy-respecting bot challenge, on our forms and on the Matchmaker to keep automated traffic out. Cloudflare may set a short-lived technical cookie (such as <code>__cf_bm</code>) to perform this check. No advertising identifiers are involved.</p>
 
   <h2>2. How We Use Your Information</h2>
   <p>We use the information we collect for the following purposes:</p>
@@ -121,20 +138,21 @@
   </ul>
 
   <h2>3. Data Storage</h2>
-  <p>Personal information collected through the ICP Matchmaker survey and the contact form is stored in Supabase, a hosted database platform. We also use HubSpot for website analytics and visitor tracking. We implement commercially reasonable technical and organizational safeguards to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or electronic storage is completely secure, and we cannot guarantee absolute security.</p>
+  <p>Matchmaker survey sessions and contact form submissions are stored in Supabase, our hosted database platform. Contact form submissions are additionally forwarded to HubSpot, our customer relationship management platform, so we can respond to you and track the conversation. We implement commercially reasonable technical and organizational safeguards to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or electronic storage is completely secure, and we cannot guarantee absolute security.</p>
 
   <h2>4. Data Sharing</h2>
   <p>We do not sell, rent, trade, or otherwise share your personal information with third parties for their marketing purposes.</p>
   <p>We may disclose your information only in the following limited circumstances:</p>
   <ul>
-    <li><strong>Service Providers:</strong> We may share information with third-party service providers (such as Supabase and HubSpot) that assist us in operating the Website and storing data, subject to their own privacy policies and contractual obligations to protect your data.</li>
+    <li><strong>Service Providers:</strong> We share information with a small set of third-party service providers that help us operate the Website and respond to inquiries. These providers are listed and described in Section 9 below, and each processes data on our behalf under its own privacy policy and contractual obligations to protect your data.</li>
     <li><strong>Legal Requirements:</strong> We may disclose information if required to do so by law, court order, or governmental regulation, or if we believe in good faith that such disclosure is necessary to protect our rights, your safety, the safety of others, or to investigate fraud.</li>
     <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, reorganization, or sale of assets, your personal information may be transferred as part of that transaction, and you will be notified via a prominent notice on our Website.</li>
   </ul>
 
-  <h2>5. Cookies and Tracking Technologies</h2>
-  <p>We use cookies and similar tracking technologies (via HubSpot) to collect and store information about your interactions with the Website. Cookies are small data files placed on your device that help us analyze web traffic and improve your experience.</p>
-  <p>You can control cookie preferences through your browser settings. Most browsers allow you to refuse cookies or alert you when cookies are being sent. Please note that disabling cookies may affect the functionality of certain features of the Website.</p>
+  <h2>5. Cookies and Similar Technologies</h2>
+  <p>We do not set our own analytics cookies, advertising cookies, or persistent tracking identifiers on this Website. The only cookies you may encounter are short-lived technical cookies set by Cloudflare (such as <code>__cf_bm</code>) to provide DDoS protection and bot mitigation on our forms. These cookies are used solely to keep automated traffic out and are not used for advertising or profiling.</p>
+  <p>We also use your browser's <em>localStorage</em>, which is not a cookie, to temporarily hold your Matchmaker result between the quiz page and the contact form. This lets your score and context travel with you if you decide to get in touch, without our servers having to remember who you are. You can clear localStorage at any time through your browser settings.</p>
+  <p>You can control cookie preferences and storage permissions through your browser. Most browsers allow you to refuse cookies or alert you when cookies are being sent. Disabling cookies may affect the functionality of our bot-protection or other security features.</p>
 
   <h2>6. Your Rights and Choices</h2>
   <p>Depending on your jurisdiction, you may have certain rights regarding your personal information, including:</p>
@@ -153,7 +171,15 @@
   <p>This Website is not directed to children and we do not knowingly collect personal information from children under the age of 13. If we become aware that we have collected personal information from a child under 13, we will take steps to delete such information promptly. If you believe we have collected information from a child under 13, please contact us at <a href="mailto:matt@eatcrayons.com">matt@eatcrayons.com</a>.</p>
 
   <h2>9. Third-Party Services</h2>
-  <p>Our Website uses third-party services including HubSpot (for analytics and tracking) and Supabase (for data storage). These services have their own privacy policies governing their collection and use of data. We encourage you to review the privacy policies of these services. We are not responsible for the privacy practices of third-party services.</p>
+  <p>Our Website relies on the following third-party service providers. Each acts as a data processor on our behalf and is bound by its own privacy policy, which we encourage you to review.</p>
+  <ul>
+    <li><strong>Vercel</strong> — our hosting and serverless runtime provider. All requests to our Website are handled by Vercel, which retains standard server logs including IP address, user-agent, and request metadata.</li>
+    <li><strong>Cloudflare</strong> — our CDN, DDoS protection, and bot-challenge provider. Traffic to our Website passes through Cloudflare, which inspects requests for security purposes and provides Cloudflare Turnstile, the bot challenge that guards our forms and the Matchmaker.</li>
+    <li><strong>Supabase</strong> — our database provider. We store Matchmaker survey sessions and contact form submissions in Supabase.</li>
+    <li><strong>HubSpot</strong> — our customer relationship management platform. When you submit the contact form, your submission is forwarded to HubSpot via their Forms API so we can respond to you and track the conversation inside our CRM. We do not run HubSpot's website tracking or analytics scripts on this Website.</li>
+    <li><strong>RB2B</strong> — a B2B visitor identification service used on the ICP Matchmaker. We send your IP address and user-agent to RB2B, and if RB2B has a match for a known business visitor, it returns a hashed email and a public LinkedIn profile URL that we store against your anonymous Matchmaker session, as described in Section 1.2.</li>
+  </ul>
+  <p>We are not responsible for the privacy practices of these providers beyond the terms of our agreements with them. If you would like more detail about how any of these providers handle your data, their respective privacy policies are publicly available on their websites.</p>
 
   <h2>10. Data Retention</h2>
   <p>We retain your personal information for as long as necessary to fulfill the purposes for which it was collected, including to respond to your inquiries, evaluate potential client relationships, and comply with our legal obligations. When your data is no longer needed, we will securely delete or anonymize it.</p>
