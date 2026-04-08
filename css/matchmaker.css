@@ -749,6 +749,17 @@ input[type=range]::-moz-range-thumb {
 /* ── UTILITY ── */
 .matchmaker .hidden { display: none !important; }
 
+/* ── FOOTER / WATERMARK STACKING ──
+   .hero-bg is position: fixed with z-index: 0, which establishes a stacking
+   context above non-positioned siblings. Lift the footer and watermark above
+   it so the site's default light footer is visible instead of being covered
+   by the dark hero background. */
+.matchmaker footer,
+.matchmaker .watermark-section {
+  position: relative;
+  z-index: 1;
+}
+
 /* ── ANIMATIONS ── */
 @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
 @keyframes popIn { from { transform:scale(0); opacity:0; } to { transform:scale(1); opacity:1; } }
