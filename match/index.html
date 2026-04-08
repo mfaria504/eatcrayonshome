@@ -276,12 +276,66 @@ const CHAPTERS = ['Your Business','Your Growth','Working Together','Your Market'
 const CATS = CHAPTERS;
 let cur = 0, answers = {}, sliderVals = {};
 
+// ── ANALYTICS SESSION ─────────────────────────────────────────────────────────
+const SESSION_ID     = (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : '';
+let analyticsStarted = false;
+let abandonSent      = false;
+let quizCompleted    = false;
+
+function parseUtms() {
+  try {
+    const p = new URLSearchParams(location.search);
+    return {
+      utm_source:   p.get('utm_source')   || null,
+      utm_medium:   p.get('utm_medium')   || null,
+      utm_campaign: p.get('utm_campaign') || null,
+      utm_term:     p.get('utm_term')     || null,
+      utm_content:  p.get('utm_content')  || null,
+    };
+  } catch(e) { return {}; }
+}
+
+function sendEvent(event, extra) {
+  if (!SESSION_ID) return;
+  const body = Object.assign({ event: event, session_id: SESSION_ID }, extra || {});
+  const json = JSON.stringify(body);
+  const url  = '/api/quiz-event';
+  try {
+    if (event === 'abandon' && navigator.sendBeacon) {
+      const blob = new Blob([json], { type: 'application/json' });
+      if (navigator.sendBeacon(url, blob)) return;
+    }
+    fetch(url, {
+      method:    'POST',
+      headers:   { 'Content-Type': 'application/json' },
+      body:      json,
+      keepalive: true,
+    }).catch(function() {});
+  } catch(e) { /* swallow — analytics must never break the quiz */ }
+}
+
 // ── START ─────────────────────────────────────────────────────────────────────
 function startSurvey() {
   document.getElementById('main-content').classList.add('hidden');
   document.getElementById('survey').classList.remove('hidden');
   document.querySelector('.hero-bg').classList.add('hidden');
   render();
+
+  if (!analyticsStarted) {
+    analyticsStarted = true;
+    sendEvent('start', Object.assign(parseUtms(), {
+      referrer:     document.referrer || null,
+      landing_path: location.pathname + location.search,
+    }));
+    const maybeAbandon = function() {
+      if (quizCompleted || abandonSent) return;
+      if (document.visibilityState !== 'hidden') return;
+      abandonSent = true;
+      sendEvent('abandon', { last_question_index: cur });
+    };
+    document.addEventListener('visibilitychange', maybeAbandon);
+    window.addEventListener('pagehide', maybeAbandon);
+  }
 }
 
 // ── CHAPTER BAR ───────────────────────────────────────────────────────────────
@@ -556,20 +610,43 @@ function getHeadline(pct, flags, a, sv) {
 
 // ── PERSIST QUIZ RESULT ───────────────────────────────────────────────────────
 function persistQuizResult(pct, flags) {
+  const tier = pct >= 78 ? 'exceptional' : pct >= 48 ? 'strong' : 'nomatch';
+  const revenueLabel  = sliderVals[0] !== undefined ? Qs[0].labels[sliderVals[0]] : '';
+  const businessModel = answers[1]    !== undefined ? Qs[1].opts[answers[1]].l    : '';
+  const dealSizeLabel = sliderVals[2] !== undefined ? Qs[2].labels[sliderVals[2]] : '';
+  const budgetLabel   = sliderVals[9] !== undefined ? Qs[9].labels[sliderVals[9]] : '';
+  const marketingState = answers[3]   !== undefined ? Qs[3].opts[answers[3]].l    : '';
+
+  // Write to localStorage for the HubSpot contact-form bridge (string flags, legacy shape)
   try {
-    const tier = pct >= 78 ? 'exceptional' : pct >= 48 ? 'strong' : 'nomatch';
     localStorage.setItem('ec_quiz_result', JSON.stringify({
       score_pct:       pct,
       score_tier:      tier,
-      revenue_label:   sliderVals[0] !== undefined ? Qs[0].labels[sliderVals[0]] : '',
-      business_model:  answers[1]   !== undefined ? Qs[1].opts[answers[1]].l    : '',
-      deal_size_label: sliderVals[2] !== undefined ? Qs[2].labels[sliderVals[2]] : '',
-      budget_label:    sliderVals[9] !== undefined ? Qs[9].labels[sliderVals[9]] : '',
+      revenue_label:   revenueLabel,
+      business_model:  businessModel,
+      deal_size_label: dealSizeLabel,
+      budget_label:    budgetLabel,
       flags:           flags.join(', '),
-      marketing_state: answers[3]   !== undefined ? Qs[3].opts[answers[3]].l    : '',
+      marketing_state: marketingState,
       quiz_taken_at:   Date.now(),
     }));
   } catch(e) { /* localStorage unavailable */ }
+
+  // Mark completion BEFORE firing the beacon so any subsequent pagehide stays silent
+  quizCompleted = true;
+
+  // Fire the private analytics completion event (Supabase via /api/quiz-event)
+  sendEvent('complete', {
+    score_pct:       pct,
+    score_tier:      tier,
+    flags:           flags,
+    answers:         { radio: Object.assign({}, answers), slider: Object.assign({}, sliderVals) },
+    revenue_label:   revenueLabel,
+    business_model:  businessModel,
+    deal_size_label: dealSizeLabel,
+    budget_label:    budgetLabel,
+    marketing_state: marketingState,
+  });
 }
 
 // ── RESULTS ───────────────────────────────────────────────────────────────────
