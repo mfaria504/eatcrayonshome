@@ -15,6 +15,7 @@
 //               Also flags bot_suspect=true if started_at → completed_at < 15s.
 
 import { verifyTurnstile } from './_turnstile.js';
+import { ipToBestHem, hemToLinkedInUrl } from './_rb2b.js';
 
 const ALLOWED_ORIGINS = [
   'https://eatcrayons.com',
@@ -29,6 +30,10 @@ const TIERS     = new Set(['exceptional', 'strong', 'nomatch']);
 // Tuning knobs for the layer-2 heuristics
 const IP_RATE_LIMIT_PER_HOUR = 20;
 const MIN_QUIZ_DURATION_MS   = 15_000; // Under 15s end-to-end → bot-suspect
+
+// RB2B enrichment: if we've already enriched this IP in the last 30 days,
+// copy the prior result instead of burning fresh credits.
+const RB2B_DEDUPE_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;
 
 // Strip HTML tags and null bytes from a string
 function sanitize(str) {
@@ -177,6 +182,21 @@ export default async function handler(req, res) {
         const text = await response.text().catch(() => '');
         console.error('quiz-event start error:', response.status, text);
       }
+
+      // ── RB2B enrichment (IP → hashed email → LinkedIn URL) ──────────────
+      // Best-effort; wrapped in its own try/catch so any failure here is
+      // invisible to the client. The row already exists, so the worst case
+      // is an un-enriched session — which we can retry manually later.
+      if (ip) {
+        await enrichSessionWithRb2b({
+          endpoint,
+          baseHeaders,
+          sessionId,
+          ip,
+          userAgent,
+        });
+      }
+
       return res.status(204).end();
     }
 
@@ -293,5 +313,85 @@ export default async function handler(req, res) {
   } catch (err) {
     console.error('quiz-event fetch error:', err && err.message ? err.message : err);
     return res.status(204).end();
+  }
+}
+
+// RB2B enrichment flow — runs after a row is inserted on a 'start' event.
+//
+// 1. Dedupe: if this IP was already enriched successfully in the last 30
+//    days, copy the prior { linkedin_url, hashed_email_md5, rb2b_score }
+//    onto this new row without calling RB2B. Saves credits on repeat visits.
+// 2. Otherwise call IP → HEM, pick the highest-confidence match, then
+//    HEM → LinkedIn URL, and PATCH the row with the result.
+// 3. On any failure, PATCH the row with rb2b_status set to a label so the
+//    dashboard can surface what happened.
+//
+// Never throws. Always writes rb2b_status + rb2b_enriched_at so we can
+// distinguish "not yet enriched" (null) from "tried and nothing back".
+async function enrichSessionWithRb2b({ endpoint, baseHeaders, sessionId, ip, userAgent }) {
+  try {
+    const nowIso = new Date().toISOString();
+    let patchBody = null;
+
+    // ── Step 1: 30-day IP dedupe lookup ───────────────────────────────────
+    const windowStart = new Date(Date.now() - RB2B_DEDUPE_WINDOW_MS).toISOString();
+    const dedupeUrl =
+      `${endpoint}?ip=eq.${encodeURIComponent(ip)}` +
+      `&linkedin_url=not.is.null` +
+      `&started_at=gte.${encodeURIComponent(windowStart)}` +
+      `&id=neq.${encodeURIComponent(sessionId)}` +
+      `&select=linkedin_url,hashed_email_md5,rb2b_score` +
+      `&order=started_at.desc&limit=1`;
+    try {
+      const dedupeResp = await fetch(dedupeUrl, { headers: baseHeaders });
+      if (dedupeResp.ok) {
+        const rows = await dedupeResp.json();
+        if (Array.isArray(rows) && rows.length === 1 && rows[0].linkedin_url) {
+          patchBody = {
+            hashed_email_md5: rows[0].hashed_email_md5,
+            linkedin_url:     rows[0].linkedin_url,
+            rb2b_score:       rows[0].rb2b_score,
+            rb2b_status:      'deduped',
+            rb2b_enriched_at: nowIso,
+          };
+        }
+      }
+    } catch (e) {
+      console.error('rb2b dedupe lookup failed:', e && e.message);
+    }
+
+    // ── Step 2: Call RB2B if no dedupe hit ────────────────────────────────
+    if (!patchBody) {
+      const hem = await ipToBestHem(ip, userAgent);
+      if (!hem) {
+        patchBody = {
+          rb2b_status:      'no_hem',
+          rb2b_enriched_at: nowIso,
+        };
+      } else {
+        const linkedinUrl = await hemToLinkedInUrl(hem.md5);
+        patchBody = {
+          hashed_email_md5: hem.md5,
+          rb2b_score:       hem.score,
+          linkedin_url:     linkedinUrl || null,
+          rb2b_status:      linkedinUrl ? 'success' : 'no_linkedin',
+          rb2b_enriched_at: nowIso,
+        };
+      }
+    }
+
+    // ── Step 3: Write enrichment back to the row ──────────────────────────
+    const patchUrl = `${endpoint}?id=eq.${encodeURIComponent(sessionId)}`;
+    const patchResp = await fetch(patchUrl, {
+      method:  'PATCH',
+      headers: baseHeaders,
+      body:    JSON.stringify(patchBody),
+    });
+    if (!patchResp.ok) {
+      const text = await patchResp.text().catch(() => '');
+      console.error('rb2b enrichment patch error:', patchResp.status, text);
+    }
+  } catch (err) {
+    console.error('rb2b enrichment error:', err && err.message ? err.message : err);
   }
 }

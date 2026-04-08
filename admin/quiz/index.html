@@ -104,10 +104,10 @@
 
   /* ── DASHBOARD GRID ────────────────────────────────────── */
   .kpis {
-    display: grid; grid-template-columns: repeat(5, 1fr);
-    gap: 16px; margin-bottom: 24px;
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    gap: 14px; margin-bottom: 24px;
   }
-  @media (max-width: 1100px) {
+  @media (max-width: 1240px) {
     .kpis { grid-template-columns: repeat(3, 1fr); }
   }
   .kpi {
@@ -257,6 +257,19 @@
   .chip.strong      { background: rgba(68,140,247,0.15); color: var(--blue); }
   .chip.nomatch     { background: rgba(248,113,113,0.15); color: var(--red); }
   .chip.bot         { background: rgba(248,113,113,0.15); color: var(--red); margin-left: 4px; }
+  .chip.linkedin    {
+    background: rgba(10,102,194,0.18); color: #7ab3ff;
+    text-transform: none; letter-spacing: 0; font-weight: 600;
+    padding: 2px 8px; margin-left: 4px;
+  }
+  .chip.linkedin:hover { background: rgba(10,102,194,0.32); text-decoration: none; }
+  .chip.linkedin::before {
+    content: 'in'; display: inline-block;
+    background: #0a66c2; color: #fff; font-weight: 700;
+    font-size: 9px; line-height: 12px; width: 12px; height: 12px;
+    border-radius: 2px; text-align: center; margin-right: 4px;
+    vertical-align: -1px;
+  }
 
   .detail-grid {
     display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -346,6 +359,11 @@
         <div class="label">Bot-suspect</div>
         <div class="value" id="k-bots">—</div>
         <div class="sub">flagged by timing heuristic</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Identified · 30d</div>
+        <div class="value" id="k-identified">—</div>
+        <div class="sub" id="k-identified-sub">LinkedIn URL via RB2B</div>
       </div>
     </div>
 
@@ -518,11 +536,13 @@
   function render(stats) {
     var h = stats.headline || {};
 
-    text('k-starts',    h.starts_30d || 0);
-    text('k-completes', h.completes_30d || 0);
-    text('k-rate',      pct(h.completes_30d || 0, h.starts_30d || 0));
-    text('k-score',     h.avg_score == null ? '—' : h.avg_score + '%');
-    text('k-bots',      h.bot_suspect_total || 0);
+    text('k-starts',     h.starts_30d || 0);
+    text('k-completes',  h.completes_30d || 0);
+    text('k-rate',       pct(h.completes_30d || 0, h.starts_30d || 0));
+    text('k-score',      h.avg_score == null ? '—' : h.avg_score + '%');
+    text('k-bots',       h.bot_suspect_total || 0);
+    text('k-identified', h.identified_30d || 0);
+    text('k-identified-sub', 'all time: ' + (h.identified_total || 0));
     text('k-starts-sub',    'all time: ' + (h.starts_total || 0));
     text('k-completes-sub', 'all time: ' + (h.completes_total || 0));
     text('last-updated', '· updated ' + new Date().toLocaleTimeString());
@@ -689,10 +709,21 @@
       var r = rows[i];
       var tr = document.createElement('tr');
       tr.className = 'expandable';
+      var liChip = '';
+      if (r.linkedin_url) {
+        var liTitle = 'LinkedIn profile via RB2B'
+          + (r.rb2b_status === 'deduped' ? ' (cached from prior visit)' : '')
+          + (r.rb2b_score != null ? ' · score ' + r.rb2b_score : '');
+        liChip = '<a class="chip linkedin" href="' + esc(r.linkedin_url) + '"'
+          + ' target="_blank" rel="noopener noreferrer"'
+          + ' title="' + esc(liTitle) + '"'
+          + ' onclick="event.stopPropagation()">profile</a>';
+      }
       tr.innerHTML =
         '<td>' + esc(fmtDate(r.started_at)) + '</td>' +
         '<td><span class="chip ' + esc(r.status) + '">' + esc(r.status) + '</span>' +
           (r.bot_suspect ? '<span class="chip bot" title="' + esc(r.bot_suspect_reason || 'bot suspect') + '">bot?</span>' : '') +
+          liChip +
         '</td>' +
         '<td class="num">' + (r.score_pct != null ? r.score_pct + '%' : '—') + '</td>' +
         '<td>' + (r.score_tier ? '<span class="chip ' + esc(r.score_tier) + '">' + esc(r.score_tier) + '</span>' : '—') + '</td>' +
@@ -718,6 +749,15 @@
   }
 
   function buildDetail(r) {
+    var liValue = '—';
+    if (r.linkedin_url) {
+      liValue = '<a href="' + esc(r.linkedin_url) + '" target="_blank" rel="noopener noreferrer">'
+        + esc(r.linkedin_url) + '</a>';
+    }
+    var rb2bStatus = r.rb2b_status
+      ? esc(r.rb2b_status) + (r.rb2b_score != null ? ' · score ' + r.rb2b_score : '')
+      : '—';
+
     var rows = [
       ['Session ID',    '<code>' + esc(r.id) + '</code>'],
       ['Started',       esc(fmtDateTime(r.started_at))],
@@ -737,6 +777,8 @@
       ['Referrer',      esc(r.referrer || '—')],
       ['Landing path',  esc(r.landing_path || '—')],
       ['UTM',           esc([r.utm_source, r.utm_medium, r.utm_campaign].filter(Boolean).join(' · ') || '—')],
+      ['LinkedIn',      liValue],
+      ['RB2B status',   rb2bStatus],
       ['Bot suspect',   r.bot_suspect ? '<span class="chip bot">yes</span> ' + esc(r.bot_suspect_reason || '') : 'no'],
     ];
     var html = '<dl class="detail-grid">';

@@ -301,6 +301,21 @@ window.onTurnstileSuccess = function(token) { _cfToken = token || ''; };
 window.onTurnstileExpired = function()      { _cfToken = ''; };
 window.onTurnstileError   = function()      { _cfToken = ''; };
 
+// Wait up to `maxWaitMs` for a Turnstile token, then invoke cb(token|'').
+// Needed because invisible Turnstile finishes its challenge a few hundred ms
+// after page load — if the visitor taps "Find my match" before the callback
+// fires, _cfToken is still empty and the server fail-closes the start event.
+function withTurnstileToken(cb, maxWaitMs) {
+  if (_cfToken) return cb(_cfToken);
+  const deadline = Date.now() + (maxWaitMs || 5000);
+  const tick = function() {
+    if (_cfToken) return cb(_cfToken);
+    if (Date.now() >= deadline) return cb('');
+    setTimeout(tick, 100);
+  };
+  tick();
+}
+
 function parseUtms() {
   try {
     const p = new URLSearchParams(location.search);
@@ -342,11 +357,15 @@ function startSurvey() {
 
   if (!analyticsStarted) {
     analyticsStarted = true;
-    sendEvent('start', Object.assign(parseUtms(), {
-      referrer:     document.referrer || null,
-      landing_path: location.pathname + location.search,
-      cf_token:     _cfToken || undefined,
-    }));
+    // Defer the start event until Turnstile has a token (or we time out).
+    // The quiz UI is already rendering — only the analytics POST waits.
+    withTurnstileToken(function(token) {
+      sendEvent('start', Object.assign(parseUtms(), {
+        referrer:     document.referrer || null,
+        landing_path: location.pathname + location.search,
+        cf_token:     token || undefined,
+      }));
+    }, 5000);
     const maybeAbandon = function() {
       if (quizCompleted || abandonSent) return;
       if (document.visibilityState !== 'hidden') return;
