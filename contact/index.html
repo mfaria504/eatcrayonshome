@@ -25,15 +25,9 @@
   <link rel="stylesheet" href="/css/contact.css">
   <link rel="stylesheet" href="/css/transitions.css">
 
-  <!-- Cloudflare Turnstile (proof-of-human) -->
+  <!-- Cloudflare Turnstile (proof-of-human) — fully invisible, auto-executes on load -->
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <style>
-    .cf-turnstile-wrap {
-      display: flex;
-      justify-content: center;
-      margin: 12px 0 20px;
-      min-height: 65px;
-    }
     .cf-turnstile-error {
       color: #b00020;
       font-size: 13px;
@@ -185,19 +179,14 @@
                     rows="4"></textarea>
         </div>
 
-        <!-- Turnstile (proof-of-human) -->
-        <div class="cf-field-enter" data-delay="5">
-          <div class="cf-turnstile-wrap">
-            <div class="cf-turnstile"
-                 data-sitekey="0x4AAAAAAC2SxWl87N40EGYq"
-                 data-callback="onTurnstileSuccess"
-                 data-expired-callback="onTurnstileExpired"
-                 data-error-callback="onTurnstileError"
-                 data-theme="light"
-                 data-size="normal"></div>
-          </div>
-          <p class="cf-turnstile-error" id="cf-turnstile-error" role="alert"></p>
-        </div>
+        <!-- Turnstile (proof-of-human) — invisible, auto-runs on page load -->
+        <div class="cf-turnstile"
+             data-sitekey="0x4AAAAAAC2SxWl87N40EGYq"
+             data-callback="onTurnstileSuccess"
+             data-expired-callback="onTurnstileExpired"
+             data-error-callback="onTurnstileError"
+             data-size="invisible"></div>
+        <p class="cf-turnstile-error" id="cf-turnstile-error" role="alert"></p>
 
         <!-- Submit -->
         <div class="cf-submit cf-field-enter" data-delay="6">
