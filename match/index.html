@@ -21,6 +21,18 @@
 <link rel="stylesheet" href="../css/styles.css">
 <link rel="stylesheet" href="../css/transitions.css">
 <link rel="stylesheet" href="../css/matchmaker.css">
+
+<!-- Cloudflare Turnstile (proof-of-human) — loads async, invisible for ~95% of real visitors -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<style>
+  .turnstile-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0 0;
+    min-height: 65px;
+  }
+  .cf-turnstile { display: inline-block; }
+</style>
 </head>
 <body class="matchmaker">
 <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -84,6 +96,15 @@
         <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
     </button>
+    <div class="turnstile-wrap">
+      <div class="cf-turnstile"
+           data-sitekey="0x4AAAAAAC2SxWl87N40EGYq"
+           data-callback="onTurnstileSuccess"
+           data-expired-callback="onTurnstileExpired"
+           data-error-callback="onTurnstileError"
+           data-theme="dark"
+           data-size="normal"></div>
+    </div>
   </div>
 
   <!-- SURVEY -->
@@ -282,6 +303,16 @@ let analyticsStarted = false;
 let abandonSent      = false;
 let quizCompleted    = false;
 
+// ── TURNSTILE TOKEN (proof-of-human for /api/quiz-event start) ───────────────
+// The widget fetches a fresh token on load and auto-refreshes on expire.
+// If the token is missing when the quiz starts, the quiz still runs — the
+// server just silently drops the analytics event (fail-open on UX,
+// fail-closed on data).
+let _cfToken = '';
+window.onTurnstileSuccess = function(token) { _cfToken = token || ''; };
+window.onTurnstileExpired = function()      { _cfToken = ''; };
+window.onTurnstileError   = function()      { _cfToken = ''; };
+
 function parseUtms() {
   try {
     const p = new URLSearchParams(location.search);
@@ -326,6 +357,7 @@ function startSurvey() {
     sendEvent('start', Object.assign(parseUtms(), {
       referrer:     document.referrer || null,
       landing_path: location.pathname + location.search,
+      cf_token:     _cfToken || undefined,
     }));
     const maybeAbandon = function() {
       if (quizCompleted || abandonSent) return;

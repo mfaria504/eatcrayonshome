@@ -24,6 +24,24 @@
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/contact.css">
   <link rel="stylesheet" href="/css/transitions.css">
+
+  <!-- Cloudflare Turnstile (proof-of-human) -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <style>
+    .cf-turnstile-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 12px 0 20px;
+      min-height: 65px;
+    }
+    .cf-turnstile-error {
+      color: #b00020;
+      font-size: 13px;
+      text-align: center;
+      margin: 6px 0 0;
+      min-height: 18px;
+    }
+  </style>
 </head>
 <body class="contact-light">
 <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -167,8 +185,22 @@
                     rows="4"></textarea>
         </div>
 
+        <!-- Turnstile (proof-of-human) -->
+        <div class="cf-field-enter" data-delay="5">
+          <div class="cf-turnstile-wrap">
+            <div class="cf-turnstile"
+                 data-sitekey="0x4AAAAAAC2SxWl87N40EGYq"
+                 data-callback="onTurnstileSuccess"
+                 data-expired-callback="onTurnstileExpired"
+                 data-error-callback="onTurnstileError"
+                 data-theme="light"
+                 data-size="normal"></div>
+          </div>
+          <p class="cf-turnstile-error" id="cf-turnstile-error" role="alert"></p>
+        </div>
+
         <!-- Submit -->
-        <div class="cf-submit cf-field-enter" data-delay="5">
+        <div class="cf-submit cf-field-enter" data-delay="6">
           <button type="submit" class="cf-btn" id="cf-submit">
             <span class="cf-btn-label">Send it</span>
             <span class="cf-btn-arrow" aria-hidden="true">→</span>
@@ -300,10 +332,21 @@
     });
   });
 
+  // ── Turnstile token (proof-of-human) ──
+  var _cfToken = '';
+  window.onTurnstileSuccess = function(token) {
+    _cfToken = token || '';
+    var err = document.getElementById('cf-turnstile-error');
+    if (err) err.textContent = '';
+  };
+  window.onTurnstileExpired = function() { _cfToken = ''; };
+  window.onTurnstileError   = function() { _cfToken = ''; };
+
   // ── Form submission ──
   const form      = document.getElementById('contact-form');
   const successEl = document.getElementById('contact-success');
   const submitBtn = document.getElementById('cf-submit');
+  const tsError   = document.getElementById('cf-turnstile-error');
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -314,7 +357,13 @@
     if (!name) { document.getElementById('cf-name').focus(); return; }
     if (!email) { document.getElementById('cf-email').focus(); return; }
 
+    if (!_cfToken) {
+      tsError.textContent = 'Please complete the "Verify you are human" check above.';
+      return;
+    }
+
     submitBtn.disabled = true;
+    tsError.textContent = '';
 
     const payload = {
       name,
@@ -323,6 +372,7 @@
       services: document.getElementById('cf-services-hidden').value,
       message:  document.getElementById('cf-message').value.trim(),
       quiz:     loadQuizResult(),
+      cf_token: _cfToken,
     };
 
     try {
@@ -332,11 +382,23 @@
         body:    JSON.stringify(payload),
       });
 
-      if (!res.ok) throw new Error('Server error');
+      if (!res.ok) {
+        // Show user-facing error and reset Turnstile so they can retry
+        var msg = 'Something went wrong. Please try again.';
+        try {
+          var data = await res.json();
+          if (data && data.error) msg = data.error;
+        } catch(_) {}
+        tsError.textContent = msg;
+        submitBtn.disabled = false;
+        if (window.turnstile && window.turnstile.reset) window.turnstile.reset();
+        _cfToken = '';
+        return;
+      }
       localStorage.removeItem('ec_quiz_result');
     } catch (err) {
       console.error(err);
-      // Still show success to user — don't block on network errors
+      // Network error — still show success so we don't block on flaky connections
     }
 
     form.style.cssText = 'opacity:0;transform:translateY(-12px);transition:opacity 340ms ease,transform 420ms ease;pointer-events:none;';
