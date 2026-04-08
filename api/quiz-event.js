@@ -62,6 +62,16 @@ function firstIp(xff) {
   return first || null;
 }
 
+// Resolve the real visitor IP. The site sits behind Cloudflare, so the
+// `x-forwarded-for` header Vercel exposes starts with a Cloudflare edge
+// server, not the end user. Cloudflare preserves the real client IP in
+// `cf-connecting-ip` — prefer it when present, fall back to x-forwarded-for.
+function visitorIp(req) {
+  const cf = req.headers['cf-connecting-ip'];
+  if (typeof cf === 'string' && cf.trim()) return cf.trim();
+  return firstIp(req.headers['x-forwarded-for']);
+}
+
 export default async function handler(req, res) {
   // CORS — only accept requests from known origins (or same-origin, which has no Origin header)
   const origin = req.headers.origin || '';
@@ -124,7 +134,7 @@ export default async function handler(req, res) {
       }
 
       // Extract visitor environment from headers (server-side, never from client)
-      const ip         = firstIp(req.headers['x-forwarded-for']);
+      const ip         = visitorIp(req);
       const userAgent  = sstr(req.headers['user-agent'], 500);
       const geoCountry = sstr(req.headers['x-vercel-ip-country'], 8);
       const geoRegion  = sstr(req.headers['x-vercel-ip-country-region'], 16);

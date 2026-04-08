@@ -18,6 +18,16 @@ function firstIp(xff) {
   return first || null;
 }
 
+// Resolve the real visitor IP. The site sits behind Cloudflare, so the
+// `x-forwarded-for` header Vercel exposes starts with a Cloudflare edge
+// server, not the end user. Cloudflare preserves the real client IP in
+// `cf-connecting-ip` — prefer it when present, fall back to x-forwarded-for.
+function visitorIp(req) {
+  const cf = req && req.headers && req.headers['cf-connecting-ip'];
+  if (typeof cf === 'string' && cf.trim()) return cf.trim();
+  return firstIp(req && req.headers && req.headers['x-forwarded-for']);
+}
+
 export async function verifyTurnstile(token, req) {
   const secret = process.env.TURNSTILE_SECRET_KEY;
   if (!secret) {
@@ -29,7 +39,7 @@ export async function verifyTurnstile(token, req) {
   }
 
   // Include remoteip as a signal — Cloudflare uses it to cross-check the token
-  const ip = firstIp(req && req.headers && req.headers['x-forwarded-for']);
+  const ip = visitorIp(req);
 
   const form = new URLSearchParams();
   form.append('secret', secret);
