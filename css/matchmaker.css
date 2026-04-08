@@ -15,6 +15,12 @@
   --spring-snappy: cubic-bezier(0.22, 1.36, 0.36, 1);
   --spring-soft: cubic-bezier(0.34, 1.2, 0.64, 1);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Force body to form its own stacking context so .hero-bg can sit at
+     z-index: -1 (below everything else) without disappearing behind the
+     html root. This keeps the hero background from bleeding over the
+     footer and watermark sections. */
+  isolation: isolate;
 }
 
 /* ── LAYOUT ── */
@@ -24,7 +30,7 @@
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
 
   background-image:
     /* Primary text-legibility gradient — dark left column, clear right for photo */
@@ -749,15 +755,13 @@ input[type=range]::-moz-range-thumb {
 /* ── UTILITY ── */
 .matchmaker .hidden { display: none !important; }
 
-/* ── FOOTER / WATERMARK STACKING ──
-   .hero-bg is position: fixed with z-index: 0, which establishes a stacking
-   context above non-positioned siblings. Lift the footer and watermark above
-   it so the site's default light footer is visible instead of being covered
-   by the dark hero background. */
-.matchmaker footer,
-.matchmaker .watermark-section {
-  position: relative;
-  z-index: 1;
+/* ── FOOTER ──
+   Force the site's default light footer on the match page. .hero-bg is
+   fixed across the viewport, so also explicitly reassert the white
+   background to guarantee it overrides any cascade the match page
+   might inherit from the dark design tokens above. */
+.matchmaker footer {
+  background: white;
 }
 
 /* ── ANIMATIONS ── */
