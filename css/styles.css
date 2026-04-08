@@ -1659,14 +1659,14 @@ footer {
   align-items: center;
   gap: 8px;
   font-size: 12px;
+  color: rgba(0,0,0,0.38);
 }
 .footer-legal a {
-  color: rgba(0,0,0,0.5);
+  color: rgba(0,0,0,0.38);
   text-decoration: none;
   transition: color 150ms;
 }
 .footer-legal a:hover { color: var(--dark); }
-.footer-legal a[aria-current="page"] { color: var(--dark); }
 .footer-legal-sep {
   color: rgba(0,0,0,0.22);
 }
