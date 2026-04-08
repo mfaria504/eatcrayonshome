@@ -16,3 +16,8 @@ desktop.ini
 # Node (if added later)
 node_modules/
 package-lock.json
+
+# Environment variables (never commit — contains Supabase service role key)
+.env
+.env.local
+.env.*.local
