@@ -95,7 +95,7 @@ export default async function handler(req, res) {
     quizBlock = [
       '[Growth Matchmaker]',
       [scoreStr, tierLabel].filter(Boolean).join(' -- '),
-      hasOffer  ? `Free Month: ${rawQuiz.offer_eligible ? 'ELIGIBLE ✦' : 'not eligible'}` : '',
+      hasOffer  ? `Fair Start: ${rawQuiz.offer_eligible ? 'QUALIFIED ✦' : 'not qualified'}` : '',
       referral  ? `Relationship: ${referral}` : '',
       revenue   ? `Revenue: ${revenue}`     : '',
       model     ? `Model: ${model}`         : '',
@@ -131,7 +131,7 @@ export default async function handler(req, res) {
     if (tierVal)             fields.push({ name: 'matchmaker_tier',  value: tierVal });
     if (flagsVal)            fields.push({ name: 'matchmaker_flags', value: flagsVal });
     if (typeof rawQuiz.offer_eligible === 'boolean') {
-      fields.push({ name: 'matchmaker_offer', value: rawQuiz.offer_eligible ? 'free_month_eligible' : 'not_eligible' });
+      fields.push({ name: 'matchmaker_offer', value: rawQuiz.offer_eligible ? 'fair_start_qualified' : 'not_qualified' });
     }
   }
 

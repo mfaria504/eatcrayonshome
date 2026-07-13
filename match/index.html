@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
-<title>EatCrayons – The Free Month</title>
-<meta name="description" content="A standing offer: if we've never met and you clear our fit threshold, your first month of a full growth engagement is free. 10 questions, 2 minutes, instant answer.">
+<title>EatCrayons – The Fair Start</title>
+<meta name="description" content="A standing offer: clear our fit threshold and your first project is guaranteed — a flat-fee growth diagnostic that's refundable, portable, and 100% credited if we continue. 10 questions, 2 minutes, instant answer.">
 <meta name="author" content="Rise Marketing Co., LLC – EatCrayons">
 
 <!-- Open Graph -->
-<meta property="og:title" content="EatCrayons – The Free Month">
-<meta property="og:description" content="One free month of growth, for the right stranger. See if you qualify in 2 minutes.">
+<meta property="og:title" content="EatCrayons – The Fair Start">
+<meta property="og:description" content="No free lunches. Just a fair start: a guaranteed, portable, credited first project. See if you qualify in 2 minutes.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://eatcrayons.com/match/">
 <meta property="og:image" content="https://eatcrayons.com/images/og-default.png">
@@ -72,35 +72,35 @@
 
   <!-- INTRO -->
   <div id="main-content" data-section="intro">
-    <div class="eyebrow">A standing offer · The Free Month</div>
-    <h1 class="hero-h">One free month.<br>For the right <em>stranger.</em></h1>
-    <p class="hero-p">Our best clients have always arrived by referral. Which means the people who already trust us find us — and the strangers we could help most never do. So this is our bet on strangers:</p>
+    <div class="eyebrow">A standing offer · The Fair Start</div>
+    <h1 class="hero-h">No free lunches.<br>Just a <em>fair start.</em></h1>
+    <p class="hero-p">We don't work for free, and you shouldn't hand a retainer to someone you just met. So we built a first project where neither side has to trust the other yet:</p>
 
     <div class="offer-steps">
       <div class="offer-step">
         <span class="step-num">01</span>
         <div class="step-body">
-          <strong>We've never met.</strong>
-          <span>No prior calls, meetings, or work together. Heard about us but never spoken? Still counts.</span>
+          <strong>A paid diagnostic sprint.</strong>
+          <span>Flat fee, fixed scope, weeks not months. We audit the business and hand you a growth roadmap.</span>
         </div>
       </div>
       <div class="offer-step">
         <span class="step-num">02</span>
         <div class="step-body">
-          <strong>You clear the bar.</strong>
-          <span>Ten questions score the fit. Above our threshold, the offer unlocks. Most profiles don't clear it.</span>
+          <strong>Yours either way.</strong>
+          <span>The roadmap is portable — execute it with us, in-house, or with someone else. Zero lock-in.</span>
         </div>
       </div>
       <div class="offer-step">
         <span class="step-num">03</span>
         <div class="step-body">
-          <strong>Month one is on us.</strong>
-          <span>A full engagement — strategy, infrastructure, delivery. $0 until month two. No contract either way.</span>
+          <strong>Guaranteed and credited.</strong>
+          <span>Not worth the fee? Say so and it's refunded. Keep going with us? 100% credits toward month one.</span>
         </div>
       </div>
     </div>
 
-    <p class="hero-p hero-p-fine">Your score shows instantly, no email required. Everything is verified on one 20-minute call before the month starts — so answer straight. A gamed score only wastes your twenty minutes.</p>
+    <p class="hero-p hero-p-fine">Here's the catch: we only guarantee work for businesses we're confident we can move. That's what these ten questions decide. Your score shows instantly, no email required — clear the threshold and the guaranteed start is yours.</p>
 
     <div class="meta">
       <span>10 Questions</span>
@@ -126,7 +126,7 @@
   <div id="survey" class="hidden">
     <div class="chapter-bar">
       <div class="chapter-top">
-        <span class="chapter-section" id="ch-section">The Ground Rule</span>
+        <span class="chapter-section" id="ch-section">How You Found Us</span>
         <span class="chapter-frac" id="ch-frac">1 / 10</span>
       </div>
       <div class="chapter-segments" id="ch-segs"></div>
@@ -187,16 +187,20 @@
 
 <script>
 // ══════════════════════════════════════════════════════════════════════════════
-// THE FREE MONTH — one offer, one condition.
+// THE FAIR START — a guaranteed first project, for profiles that clear the bar.
 //
-// Offer: a free first month of a full engagement, for people who (a) have no
-// prior relationship with EatCrayons and (b) clear the ICP fit threshold.
-// Eligibility = score >= OFFER_THRESHOLD and no 'knows_us' flag. Disqualifying
-// flags (micromanager, impatient, low_budget, pre_revenue, enterprise_buyer,
-// opinionated) cap the score below the threshold, so they can never qualify.
+// Offer: a flat-fee, fixed-scope diagnostic sprint (audit + growth roadmap)
+// that is (a) portable — the client owns the roadmap outright, zero lock-in;
+// (b) refundable — self-declared, if it wasn't worth the fee; (c) credited —
+// 100% of the fee applies to month one if the engagement continues. Nobody
+// works free, nobody pays for nothing.
+// Eligibility = score >= OFFER_THRESHOLD. The guarantee is only extended to
+// profiles we're confident in; disqualifying flags (micromanager, impatient,
+// low_budget, pre_revenue, enterprise_buyer, opinionated) cap the score below
+// the threshold, so they can never qualify. The relationship question is
+// attribution data only — it no longer gates anything.
 // Reactions deliberately acknowledge the *fact*, never the *score* — with a
 // real offer on the table, score-telegraphing reactions coach people to lie.
-// Everything is re-verified on a 20-minute call before the month starts.
 // ══════════════════════════════════════════════════════════════════════════════
 
 const OFFER_THRESHOLD = 78; // aligned with the 'exceptional' tier the backend expects
@@ -204,14 +208,14 @@ const OFFER_THRESHOLD = 78; // aligned with the 'exceptional' tier the backend e
 // ── QUESTIONS ─────────────────────────────────────────────────────────────────
 const Qs = [
   {
-    id: 'relationship', section: 'The Ground Rule',
-    text: 'First, the condition that makes this offer work. Do we already know each other?',
+    id: 'relationship', section: 'How You Found Us',
+    text: 'First, some context. How did you get here?',
     type: 'radio', unscored: true,
     opts: [
-      { l: 'Total stranger — found you through search, LinkedIn, or your content', s: 0, r: 'Perfect. This offer exists for exactly you.' },
-      { l: 'Someone recommended you, but we\'ve never actually spoken', s: 0, r: 'A warm stranger. Still counts.' },
-      { l: 'We\'ve met or talked before', s: 0, flag: 'knows_us', r: 'Good to see you again. This changes one thing — keep going.' },
-      { l: 'We\'ve worked together before', s: 0, flag: 'knows_us', r: 'Then you already know how this goes. Keep going anyway.' },
+      { l: 'Found you cold — search, LinkedIn, or your content', s: 0, r: 'A genuine stranger. Welcome.' },
+      { l: 'Someone recommended you, but we\'ve never actually spoken', s: 0, r: 'A warm introduction. Noted.' },
+      { l: 'We\'ve met or talked before', s: 0, flag: 'knows_us', r: 'Good to see you again.' },
+      { l: 'We\'ve worked together before', s: 0, flag: 'knows_us', r: 'Then you know how we operate.' },
     ]
   },
   {
@@ -278,11 +282,11 @@ const Qs = [
   },
   {
     id: 'patience', section: 'Working Together',
-    text: 'Say the free month goes well. How do you think about what comes after?',
+    text: 'Say the first project goes well. How do you think about what comes after?',
     type: 'radio',
     opts: [
       { l: 'I\'d still need measurable ROI within 60 days to continue', s: 0, flag: 'impatient', r: 'Direct. Noted.' },
-      { l: 'A strong first month earns a long runway from me', s: 10, r: 'Runway. Got it.' },
+      { l: 'A strong start earns a long runway from me', s: 10, r: 'Runway. Got it.' },
       { l: 'I go all-in once I believe in the people', s: 9, r: 'Conviction buyer.' },
       { l: 'I\'ve been burned before — trust builds slowly with me', s: 7, r: 'Fair enough.' },
     ]
@@ -312,7 +316,7 @@ const Qs = [
   },
   {
     id: 'budget', section: 'The Investment',
-    text: 'Last one. If month one earns it, what monthly investment is sustainable from month two?',
+    text: 'Last one. If the roadmap proves itself, what monthly investment is sustainable for the engagement that follows?',
     type: 'slider', min: 0, max: 5, step: 1,
     labels: ['Under $2K','$2K–$4K','$4K–$6K','$6K–$10K','$10K–$15K','$15K+'],
     reactions: ['Lean. Noted.','Modest range.','Entry engagement range.','A real engagement range.','Serious range.','Full-commitment range.'],
@@ -326,9 +330,9 @@ const Qs = [
   }
 ];
 
-const CHAPTERS = ['The Ground Rule','Your Business','Your Growth','Working Together','Your Market','The Investment'];
-// The ground rule is an eligibility gate, not a fit signal — keep it out of the breakdown
-const CATS = CHAPTERS.filter(c => c !== 'The Ground Rule');
+const CHAPTERS = ['How You Found Us','Your Business','Your Growth','Working Together','Your Market','The Investment'];
+// The attribution question is context, not a fit signal — keep it out of the breakdown
+const CATS = CHAPTERS.filter(c => c !== 'How You Found Us');
 let cur = 0, answers = {}, sliderVals = {};
 
 // Question index by id — scoring, insights, and persistence never rely on order
@@ -661,7 +665,7 @@ function showLoading() {
   const lEl = document.getElementById('loading');
   lEl.classList.remove('hidden');
 
-  const steps = ['Confirming you\'re new to us','Checking business fit','Reading your market','Weighing working styles','Scoring against the threshold'];
+  const steps = ['Checking business fit','Reading your market','Weighing working styles','Testing investment alignment','Scoring against the threshold'];
   const stEl = document.getElementById('lsteps');
   stEl.innerHTML = steps.map((s,i) =>
     `<div class="loading-step" id="ls${i}"><div class="step-pip" id="lp${i}"></div><div class="step-label">${s}</div></div>`
@@ -716,58 +720,49 @@ function calcScore() {
     catM[q.section] = (catM[q.section]||0) + mx;
   });
   let pct = Math.round((total / max) * 100);
-  // 'knows_us' never caps the score — it gates the offer, not the fit
+  // 'knows_us' is attribution data — it never affects score or eligibility
   if (flags.some(f => ['micromanager','impatient','low_budget','pre_revenue'].includes(f))) pct = Math.min(pct, 36);
   else if (flags.some(f => ['opinionated','enterprise_buyer'].includes(f))) pct = Math.min(pct, 54);
-  const knowsUs = flags.includes('knows_us');
-  const offerEligible = pct >= OFFER_THRESHOLD && !knowsUs;
-  return { pct, catS, catM, flags, knowsUs, offerEligible };
+  const offerEligible = pct >= OFFER_THRESHOLD;
+  return { pct, catS, catM, flags, offerEligible };
 }
 
 // ── INSIGHTS ──────────────────────────────────────────────────────────────────
-function getInsights(flags, pct, knowsUs) {
+function getInsights(flags, pct) {
   const pos = [], neg = [];
   const rev = svOf('revenue') ?? 5;
   if (rev >= 2 && rev <= 7) pos.push("Your revenue range is where our model creates the most impact: proven enough to build on, with real room to grow.");
-  if (rev === 0) neg.push("Pre-revenue is genuinely too early for what we do — free month included. There needs to be something to build from.");
+  if (rev === 0) neg.push("Pre-revenue is genuinely too early for what we do — even a diagnostic needs something to diagnose.");
   if (ansOf('model') === 0) pos.push("B2B is where we live. Every system we build is designed for exactly this kind of business.");
-  if ((svOf('deal_size') ?? 3) >= 3) pos.push("At your deal size, a single closed opportunity pays for months of engagement. The math behind the free month works because of profiles like this.");
+  if ((svOf('deal_size') ?? 3) >= 3) pos.push("At your deal size, a single closed opportunity pays for months of engagement. A roadmap that finds even one is already worth the fee.");
   if (ansOf('marketing') === 2) pos.push("A business running entirely on referrals with no designed engine is exactly where we create the most leverage.");
-  if (ansOf('marketing') === 3) pos.push("Having been burned by agencies actually works in our favor. You know what bad looks like — a free first month means you're not gambling on us being different.");
+  if (ansOf('marketing') === 3) pos.push("Having been burned by agencies actually works in our favor. You know what bad looks like — a refundable first project means you're not gambling on us being different.");
   if ((ansOf('growth_feel') ?? 5) >= 8) pos.push("That level of untapped potential you're sensing is usually exactly right. The ceiling is visible, and we help raise it.");
-  if (ansOf('style') === 2) pos.push("Full delegation is rare. It's the condition that lets a free month actually prove something.");
-  if (flags.includes('micromanager')) neg.push("Staying closely involved in every detail is at odds with how our engagements function — a free month wouldn't change that tension.");
-  if (flags.includes('impatient')) neg.push("A 60-day ROI expectation and a compounding growth system point in opposite directions, even with month one free.");
+  if (ansOf('style') === 2) pos.push("Full delegation is rare. It's the condition that lets a first project actually prove something.");
+  if (flags.includes('micromanager')) neg.push("Staying closely involved in every detail is at odds with how our engagements function — a guarantee wouldn't change that tension.");
+  if (flags.includes('impatient')) neg.push("A 60-day ROI expectation and a compounding growth system point in opposite directions. A refund clause doesn't fix a timeline mismatch.");
   if (flags.includes('opinionated')) neg.push("Strong convictions about marketing direction tend to limit what's possible. We need room to make the calls that move the needle.");
-  if ((svOf('budget') ?? 3) >= 3) pos.push("Your month-two number means the engagement can operate without constraints; constrained engagements produce constrained results.");
-  if (flags.includes('low_budget')) neg.push("The free month is month one of a real engagement. The investment you're comfortable with from month two wouldn't support the depth of work that makes it worthwhile.");
+  if ((svOf('budget') ?? 3) >= 3) pos.push("Your number for the engagement that follows means we can operate without constraints; constrained engagements produce constrained results.");
+  if (flags.includes('low_budget')) neg.push("The diagnostic is the start of a real engagement. The investment you're comfortable with afterward wouldn't support the depth of work that makes it worthwhile.");
   if (flags.includes('enterprise_buyer')) neg.push("When procurement committees or large-corp executives hold the buying decision, sales cycles become long and political and hard to move with marketing alone.");
   if (!flags.includes('enterprise_buyer') && ansOf('buyer_type') !== undefined && ansOf('buyer_type') <= 1) pos.push("Your buyers can say yes on their own authority. That's the kind of market where good marketing creates immediate momentum.");
 
-  let list;
-  if (pct >= 70) list = pos.slice(0, 3).map(t => ({ t:'pos', txt:t }));
-  else if (pct >= 48) list = [...pos.slice(0,2).map(t=>({t:'pos',txt:t})), ...neg.slice(0,1).map(t=>({t:'neg',txt:t}))].slice(0,4);
-  else list = [...neg.slice(0,3).map(t=>({t:'neg',txt:t})), ...pos.slice(0,1).map(t=>({t:'pos',txt:t}))].slice(0,4);
-
-  if (knowsUs && pct >= 48) {
-    list.unshift({ t:'neu', txt:"We already know each other, so the free month doesn't apply — the fit math below still does." });
-    list = list.slice(0, 4);
-  }
-  return list;
+  if (pct >= 70) return pos.slice(0, 3).map(t => ({ t:'pos', txt:t }));
+  if (pct >= 48) return [...pos.slice(0,2).map(t=>({t:'pos',txt:t})), ...neg.slice(0,1).map(t=>({t:'neg',txt:t}))].slice(0,4);
+  return [...neg.slice(0,3).map(t=>({t:'neg',txt:t})), ...pos.slice(0,1).map(t=>({t:'pos',txt:t}))].slice(0,4);
 }
 
 // ── HEADLINE ──────────────────────────────────────────────────────────────────
-function getHeadline(pct, flags, knowsUs, offerEligible) {
-  if (flags.includes('micromanager')) return { h:"Great chemistry,<br>wrong <em>dynamic.</em>", b:"The most impactful partnerships require both sides playing to their strengths. Our model needs room to execute. Your answers suggest that would be a persistent source of friction, and we'd rather say that clearly now — before either of us spends a free month finding out." };
-  if (flags.includes('impatient')) return { h:"The vision<br>doesn't <em>align.</em>", b:"We'd genuinely love to work with you. But you're looking for fast, measurable returns, and we build systems that compound. A free month doesn't fix a timeline mismatch — it just delays the same conversation by thirty days." };
+function getHeadline(pct, flags, offerEligible) {
+  if (flags.includes('micromanager')) return { h:"Great chemistry,<br>wrong <em>dynamic.</em>", b:"The most impactful partnerships require both sides playing to their strengths. Our model needs room to execute. Your answers suggest that would be a persistent source of friction, and we'd rather say that clearly now — no guarantee fixes a working-style mismatch." };
+  if (flags.includes('impatient')) return { h:"The vision<br>doesn't <em>align.</em>", b:"We'd genuinely love to work with you. But you're looking for fast, measurable returns, and we build systems that compound. A refund clause doesn't fix a timeline mismatch — it just delays the same conversation by a few weeks." };
   if (flags.includes('enterprise_buyer')) return { h:"Your market makes<br>this <em>very hard.</em>", b:"When procurement committees or large-corporation executives control the buying decision, sales cycles become long, political, and difficult to accelerate with marketing alone. Our model was built for markets where decision-makers can say yes and act on it." };
   if (flags.includes('pre_revenue')) return { h:"The moment<br>isn't <em>here yet.</em>", b:"The conditions that make this kind of partnership extraordinary (proven momentum and room to invest) aren't quite in place. That's not permanent. The offer will still be here when they are." };
-  if (flags.includes('low_budget')) return { h:"The spark is real,<br>the <em>runway isn't.</em>", b:"We want to work with you, and month one would be free. But months two and onward are the point — and the investment you're comfortable with would limit what's possible. We'd rather be direct about that now." };
-  if (offerEligible) return { h:"You're exactly the stranger<br>we <em>had in mind.</em>", b:"You've never worked with us, and your profile clears the bar most don't. This is precisely who the free month exists for — so it's yours to claim. One short call to confirm what you told the quiz, and we start." };
-  if (knowsUs && pct >= OFFER_THRESHOLD) return { h:"Great fit.<br>Wrong <em>loophole.</em>", b:"Your profile clears the bar — but the free month is how we meet strangers, and you're not one. The good news: you already know exactly who to call, and this score says the call is worth making." };
+  if (flags.includes('low_budget')) return { h:"The spark is real,<br>the <em>runway isn't.</em>", b:"We want to work with you, and the first project would be protected. But what comes after is the point — and the investment you're comfortable with would limit what's possible. We'd rather be direct about that now." };
+  if (offerEligible) return { h:"We'd stake our own fee<br>on <em>this profile.</em>", b:"Your answers clear a bar most don't — the kind of business we're confident enough to guarantee. That unlocks the Fair Start: a first project that's paid, protected, and credited. If we're as good as this score suggests, you'll know within weeks." };
   if (pct >= 68) {
-    if ((ansOf('growth_feel') ?? 5) >= 7) return { h:"You feel the ceiling,<br>and we know <em>how to raise it.</em>", b:"That untapped potential you're sensing? It's usually exactly right. Strong fundamentals, real momentum, but no designed system behind it. You landed just under the free-month threshold — close enough that a conversation is worth both our time." };
-    return { h:"There's something<br><em>really interesting</em> here.", b:"Your profile has strong signals across the areas that matter most. You landed just under the free-month threshold, but the chemistry is clearly there. This is worth a real conversation." };
+    if ((ansOf('growth_feel') ?? 5) >= 7) return { h:"You feel the ceiling,<br>and we know <em>how to raise it.</em>", b:"That untapped potential you're sensing? It's usually exactly right. Strong fundamentals, real momentum, but no designed system behind it. You landed just under our guarantee threshold — close enough that a conversation is worth both our time." };
+    return { h:"There's something<br><em>really interesting</em> here.", b:"Your profile has strong signals across the areas that matter most. You landed just under our guarantee threshold, but the chemistry is clearly there. This is worth a real conversation." };
   }
   if (pct >= 48) return { h:"Promising signals,<br>and some <em>friction.</em>", b:"You hit the marks in several key areas, but there are a few places where our approaches might create tension. Those aren't dealbreakers. They're worth talking about honestly." };
   return { h:"This isn't the<br>right match <em>right now.</em>", b:"The best offers know when to say not yet, and we respect you too much to pretend otherwise. The conditions for this to be extraordinary aren't quite in place. That can change — and the offer isn't going anywhere." };
@@ -826,15 +821,14 @@ function persistQuizResult(pct, flags, offerEligible) {
 
 // ── RESULTS ───────────────────────────────────────────────────────────────────
 function showResults() {
-  const { pct, catS, catM, flags, knowsUs, offerEligible } = calcScore();
-  const insights = getInsights(flags, pct, knowsUs);
-  const { h, b } = getHeadline(pct, flags, knowsUs, offerEligible);
+  const { pct, catS, catM, flags, offerEligible } = calcScore();
+  const insights = getInsights(flags, pct);
+  const { h, b } = getHeadline(pct, flags, offerEligible);
 
   const isStrong = pct >= 78, isGood = pct >= 48 && pct < 78;
   const scoreColor = isStrong ? 'green' : isGood ? 'blue' : 'red';
   const badgeClass = isStrong ? 'green' : isGood ? 'blue' : 'dim';
-  const badgeText = offerEligible ? '✦ Qualified — Free Month'
-    : isStrong ? '✦ Exceptional Match'
+  const badgeText = offerEligible ? '✦ Qualified — Fair Start'
     : isGood ? '✦ Strong Potential' : 'Not the Right Fit Yet';
 
   const insightHtml = insights.map(ins =>
@@ -853,36 +847,24 @@ function showResults() {
   let actionHtml;
   if (offerEligible) {
     actionHtml = `<div class="offer-card offer-free">
-      <div class="offer-ticket-top"><span class="offer-tag">Month 01</span><span class="offer-zero">$0</span></div>
+      <div class="offer-ticket-top"><span class="offer-tag">First Project · Flat Fee</span><span class="offer-zero">Guaranteed</span></div>
       <div class="offer-eyebrow offer-eyebrow-green">✦ You qualified</div>
-      <h3 class="offer-hed">Your first month<br>is <em>free.</em></h3>
-      <p class="offer-body">One 20-minute call to confirm what you told the quiz, then we start a full engagement. Month one costs nothing. From month two, you decide whether we've earned the seat.</p>
+      <h3 class="offer-hed">Your first project<br>is <em>protected.</em></h3>
+      <p class="offer-body">A short diagnostic sprint — flat fee, fixed scope, weeks not months. We audit the business, map where the leverage is, and hand you a growth roadmap you own outright. If it wasn't worth the fee, we refund it. If we keep working together, every dollar credits toward month one.</p>
       <div class="perks">
-        <div class="perk"><span class="perk-dash">–</span>A full working month: strategy, infrastructure, and delivery</div>
-        <div class="perk"><span class="perk-dash">–</span>No contract, no card, no strings — walk away at day 30</div>
-        <div class="perk"><span class="perk-dash">–</span>One 20-minute verification call before we begin</div>
-        <div class="perk"><span class="perk-dash">–</span>Limited seats — we only run a couple of these at a time</div>
+        <div class="perk"><span class="perk-dash">–</span>A complete growth roadmap: strategy, stack, and delivery priorities</div>
+        <div class="perk"><span class="perk-dash">–</span>Portable by design — execute it with us, in-house, or with anyone</div>
+        <div class="perk"><span class="perk-dash">–</span>Not worth the fee? Say so and it's refunded. No forms, no friction.</div>
+        <div class="perk"><span class="perk-dash">–</span>Continue with us and 100% of the fee credits toward month one</div>
       </div>
-      <a class="btn-offer" href="../contact/">Claim your free month ${arrowBtn}</a>
-      <p class="offer-terms">New relationships only, confirmed on the call. One free month per company, applied to the first month of a standard engagement. No obligation to continue.</p>
-    </div>`;
-  } else if (knowsUs && pct >= OFFER_THRESHOLD) {
-    actionHtml = `<div class="offer-card">
-      <div class="offer-eyebrow">✦ The one catch</div>
-      <h3 class="offer-hed">The score counts.<br>The <em>offer doesn't.</em></h3>
-      <p class="offer-body">The free month is reserved for people we've never met — it's how we buy introductions we'd never get otherwise. You don't need the introduction. But a profile this strong deserves the conversation either way.</p>
-      <div class="perks">
-        <div class="perk"><span class="perk-dash">–</span>You already know how we work — skip straight to specifics</div>
-        <div class="perk"><span class="perk-dash">–</span>We'll do a quick opportunity scan before we meet</div>
-        <div class="perk"><span class="perk-dash">–</span>No deck, no pitch. Just where the leverage is.</div>
-      </div>
-      <a class="btn-offer" href="../contact/">Let's talk anyway ${arrowBtn}</a>
+      <a class="btn-offer" href="../contact/">Claim the Fair Start ${arrowBtn}</a>
+      <p class="offer-terms">Extended to qualifying profiles only — we guarantee work we're confident in. Flat fee quoted before anything starts; no hourly meters. The refund is self-declared: you say the roadmap missed, we return the fee. Credit applies to the first month of a standard engagement.</p>
     </div>`;
   } else if (pct >= 48) {
     actionHtml = `<div class="offer-card">
       <div class="offer-eyebrow">✦ Your Next Step</div>
       <h3 class="offer-hed">Close to the <em>threshold.</em></h3>
-      <p class="offer-body">The free month is reserved for profiles that clear our fit bar from a standing start. Yours lands just under it — which usually means the fit is real but a couple of conditions need a closer look. That's a conversation, not a form.</p>
+      <p class="offer-body">The guaranteed start is reserved for profiles that clear our fit bar — we only stake our fee on work we're confident in. Yours lands just under it, which usually means the fit is real but a couple of conditions need a closer look. That's a conversation, not a form.</p>
       <div class="perks">
         <div class="perk"><span class="perk-dash">–</span>We'll do a quick opportunity scan before we meet</div>
         <div class="perk"><span class="perk-dash">–</span>No deck, no pitch. Just candid conversation.</div>
@@ -891,7 +873,7 @@ function showResults() {
       <a class="btn-offer" href="../contact/">Book the conversation ${arrowBtn}</a>
     </div>`;
   } else {
-    actionHtml = `<div class="no-match-card"><h3 class="no-match-hed">The best offers know when to say "not yet."</h3><p class="no-match-body">The conditions that make this kind of partnership extraordinary aren't fully in place right now. That's not permanent — and the free month is a standing offer, not a countdown. Come back when the timing is right. We'll be here.</p></div><div style="margin-bottom:20px;"><a class="btn-offer" href="../" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);">Follow our work ${arrowBtn}</a></div>`;
+    actionHtml = `<div class="no-match-card"><h3 class="no-match-hed">The best offers know when to say "not yet."</h3><p class="no-match-body">The conditions that make this kind of partnership extraordinary aren't fully in place right now. That's not permanent — and the Fair Start is a standing offer, not a countdown. Come back when the timing is right. We'll be here.</p></div><div style="margin-bottom:20px;"><a class="btn-offer" href="../" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);">Follow our work ${arrowBtn}</a></div>`;
   }
 
   const el = document.getElementById('result');
