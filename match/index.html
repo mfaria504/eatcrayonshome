@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
-<title>EatCrayons – Growth Matchmaker</title>
-<meta name="description" content="See if we're a fit in 3 minutes or less. Answer a few questions and we'll tell you whether EatCrayons is the right growth partner for your business.">
+<title>EatCrayons – The Fair Start</title>
+<meta name="description" content="A standing offer: clear our fit threshold and your first project is guaranteed — a flat-fee growth diagnostic that's refundable, portable, and 100% credited if we continue. 10 questions, 2 minutes, instant answer.">
 <meta name="author" content="Rise Marketing Co., LLC – EatCrayons">
 
 <!-- Open Graph -->
-<meta property="og:title" content="EatCrayons – Growth Matchmaker">
-<meta property="og:description" content="See if we're a fit in 3 minutes or less. Answer a few questions and find out.">
+<meta property="og:title" content="EatCrayons – The Fair Start">
+<meta property="og:description" content="No free lunches. Just a fair start: a guaranteed, portable, credited first project. See if you qualify in 2 minutes.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://eatcrayons.com/match/">
 <meta property="og:image" content="https://eatcrayons.com/images/og-default.png">
@@ -72,18 +72,44 @@
 
   <!-- INTRO -->
   <div id="main-content" data-section="intro">
-    <div class="eyebrow">Executive Matchmaker</div>
-    <h1 class="hero-h">The right partner<br>changes <em>everything.</em></h1>
-    <p class="hero-p">Don't waste six months on the wrong agency. We've spent five years learning exactly what makes a partnership thrive, and what makes it fail.</p>
-    <p class="hero-p">This isn't a rigged marketing trap. We'll tell you if we're a bad fit just as fast as we'll tell you if we're a match. No email required to see your score, and no "sales-y" follow-up if it's a "no."</p>
-    <p class="hero-p">Find out if we're your unfair advantage in 180 seconds.</p>
+    <div class="eyebrow">A standing offer · The Fair Start</div>
+    <h1 class="hero-h">No free lunches.<br>Just a <em>fair start.</em></h1>
+    <p class="hero-p">We don't work for free, and you shouldn't hand a retainer to someone you just met. So we built a first project where neither side has to trust the other yet:</p>
+
+    <div class="offer-steps">
+      <div class="offer-step">
+        <span class="step-num">01</span>
+        <div class="step-body">
+          <strong>A paid diagnostic sprint.</strong>
+          <span>Flat fee, fixed scope, weeks not months. We audit the business and hand you a growth roadmap.</span>
+        </div>
+      </div>
+      <div class="offer-step">
+        <span class="step-num">02</span>
+        <div class="step-body">
+          <strong>Yours either way.</strong>
+          <span>The roadmap is portable — execute it with us, in-house, or with someone else. Zero lock-in.</span>
+        </div>
+      </div>
+      <div class="offer-step">
+        <span class="step-num">03</span>
+        <div class="step-body">
+          <strong>Guaranteed and credited.</strong>
+          <span>Not worth the fee? Say so and it's refunded. Keep going with us? 100% credits toward month one.</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="hero-p hero-p-fine">Here's the catch: we only guarantee work for businesses we're confident we can move. That's what these ten questions decide. Your score shows instantly, no email required — clear the threshold and the guaranteed start is yours.</p>
+
     <div class="meta">
       <span>10 Questions</span>
-      <span>Instant Result</span>
+      <span>~2 Minutes</span>
+      <span>Instant Score</span>
       <span>No Email Gating</span>
     </div>
     <button class="btn-start" onclick="startSurvey()">
-      Find my match
+      See if I qualify
       <div class="btn-arrow">
         <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
@@ -100,7 +126,7 @@
   <div id="survey" class="hidden">
     <div class="chapter-bar">
       <div class="chapter-top">
-        <span class="chapter-section" id="ch-section">Your Business</span>
+        <span class="chapter-section" id="ch-section">How You Found Us</span>
         <span class="chapter-frac" id="ch-frac">1 / 10</span>
       </div>
       <div class="chapter-segments" id="ch-segs"></div>
@@ -123,7 +149,7 @@
   <!-- LOADING -->
   <div id="loading" class="hidden">
     <div class="loading-inner">
-      <div class="loading-title">Reading your<br>profile…</div>
+      <div class="loading-title">Scoring your<br>profile…</div>
       <div class="loading-steps" id="lsteps"></div>
       <div class="loading-line"><div class="loading-line-fill" id="lbar"></div></div>
     </div>
@@ -160,40 +186,69 @@
 </div>
 
 <script>
+// ══════════════════════════════════════════════════════════════════════════════
+// THE FAIR START — a guaranteed first project, for profiles that clear the bar.
+//
+// Offer: a flat-fee, fixed-scope diagnostic sprint (audit + growth roadmap)
+// that is (a) portable — the client owns the roadmap outright, zero lock-in;
+// (b) refundable — self-declared, if it wasn't worth the fee; (c) credited —
+// 100% of the fee applies to month one if the engagement continues. Nobody
+// works free, nobody pays for nothing.
+// Eligibility = score >= OFFER_THRESHOLD. The guarantee is only extended to
+// profiles we're confident in; disqualifying flags (micromanager, impatient,
+// low_budget, pre_revenue, enterprise_buyer, opinionated) cap the score below
+// the threshold, so they can never qualify. The relationship question is
+// attribution data only — it no longer gates anything.
+// Reactions deliberately acknowledge the *fact*, never the *score* — with a
+// real offer on the table, score-telegraphing reactions coach people to lie.
+// ══════════════════════════════════════════════════════════════════════════════
+
+const OFFER_THRESHOLD = 78; // aligned with the 'exceptional' tier the backend expects
+
 // ── QUESTIONS ─────────────────────────────────────────────────────────────────
 const Qs = [
   {
-    id: 'revenue', section: 'Your Business',
-    text: 'Let\'s start with where you are. What\'s your annual revenue today?',
-    type: 'slider', min: 0, max: 11, step: 1,
-    labels: ['Pre-revenue','$500K','$1M','$2M','$3M','$5M','$8M','$10M','$15M','$20M','$30M','$50M+'],
-    reactions: ['Still building. Let\'s talk timing.','Getting traction. Interesting.','Now we\'re talking.','That\'s our sweet spot.','Plenty to work with.','Serious scale.','That\'s significant.','Enterprise territory.','Large operation.','Very established.','You\'ve built something real.','At this size, the conversation shifts.'],
-    scoreSlider: v => {
-      if (v === 0) return { s: 0, flag: 'pre_revenue' };
-      if (v === 1) return { s: 4 };
-      if (v <= 4) return { s: 10 };
-      if (v <= 7) return { s: 10 };
-      if (v <= 9) return { s: 8 };
-      return { s: 5 };
-    }
+    id: 'relationship', section: 'How You Found Us',
+    text: 'First, some context. How did you get here?',
+    type: 'radio', unscored: true,
+    opts: [
+      { l: 'Found you cold — search, LinkedIn, or your content', s: 0, r: 'A genuine stranger. Welcome.' },
+      { l: 'Someone recommended you, but we\'ve never actually spoken', s: 0, r: 'A warm introduction. Noted.' },
+      { l: 'We\'ve met or talked before', s: 0, flag: 'knows_us', r: 'Good to see you again.' },
+      { l: 'We\'ve worked together before', s: 0, flag: 'knows_us', r: 'Then you know how we operate.' },
+    ]
   },
   {
     id: 'model', section: 'Your Business',
     text: 'Who do you sell to?',
     type: 'radio',
     opts: [
-      { l: 'Other businesses (B2B)', s: 10, r: 'Right in our wheelhouse.' },
-      { l: 'A mix of businesses and consumers', s: 6, r: 'Some overlap, worth exploring.' },
-      { l: 'Directly to consumers (B2C)', s: 2, r: 'Honest answer, and we appreciate it.' },
-      { l: 'Software or SaaS product', s: 5, r: 'Tech is interesting. Context matters.' },
+      { l: 'Other businesses (B2B)', s: 10, r: 'B2B. Got it.' },
+      { l: 'A mix of businesses and consumers', s: 6, r: 'A foot in both worlds.' },
+      { l: 'Directly to consumers (B2C)', s: 2, r: 'Consumer side. Noted.' },
+      { l: 'Software or SaaS product', s: 5, r: 'Product-led. Context matters.' },
     ]
+  },
+  {
+    id: 'revenue', section: 'Your Business',
+    text: 'Where is the business today — annual revenue?',
+    type: 'slider', min: 0, max: 11, step: 1,
+    labels: ['Pre-revenue','$500K','$1M','$2M','$3M','$5M','$8M','$10M','$15M','$20M','$30M','$50M+'],
+    reactions: ['Pre-revenue. Noted.','Under a million.','Crossing seven figures.','Established.','Growing operation.','Mid-market.','Serious scale.','Eight figures.','Well past eight figures.','Large operation.','Very large operation.','Enterprise scale.'],
+    scoreSlider: v => {
+      if (v === 0) return { s: 0, flag: 'pre_revenue' };
+      if (v === 1) return { s: 4 };
+      if (v <= 7) return { s: 10 };
+      if (v <= 9) return { s: 8 };
+      return { s: 5 };
+    }
   },
   {
     id: 'deal_size', section: 'Your Business',
     text: 'When you close a deal, what does it actually look like?',
     type: 'slider', min: 0, max: 5, step: 1,
     labels: ['Under $1K','$1K–$5K','$5K–$25K','$25K–$100K','$100K–$500K','$500K+'],
-    reactions: ['Transactional. Volume is the game.','Decent ticket. Patterns matter here.','That\'s a real deal size.','One win pays for months of work.','High-stakes selling. We like this.','Enterprise deal size. Noted.'],
+    reactions: ['High volume, small tickets.','Steady ticket size.','Mid-market deals.','Substantial contracts.','Big-ticket sales.','Enterprise-size deals.'],
     scoreSlider: v => {
       if (v <= 1) return { s: 1 };
       if (v === 2) return { s: 6 };
@@ -203,14 +258,14 @@ const Qs = [
   },
   {
     id: 'marketing', section: 'Your Growth',
-    text: 'What does your marketing look like right now? Be honest.',
+    text: 'What does your marketing look like right now? Straight answers — we verify.',
     type: 'radio',
     opts: [
-      { l: 'A full team and system already running', s: 1, r: 'Sounds like you\'ve got it covered.' },
-      { l: 'A few pieces, nothing really connected', s: 7, r: 'Scattered is actually fixable.' },
-      { l: 'Almost entirely referrals and word of mouth', s: 10, r: 'That\'s the most exciting answer on this list.' },
-      { l: 'Tried agencies, been disappointed', s: 8, r: 'We hear that a lot. And we get it.' },
-      { l: 'Nothing formal exists yet', s: 10, r: 'A blank canvas. A lot of upside.' },
+      { l: 'A full team and system already running', s: 1, r: 'A running system. Noted.' },
+      { l: 'A few pieces, nothing really connected', s: 7, r: 'Scattered pieces. Common.' },
+      { l: 'Almost entirely referrals and word of mouth', s: 10, r: 'Referral-built. We know the feeling.' },
+      { l: 'Tried agencies, been disappointed', s: 8, r: 'Heard. More often than you\'d think.' },
+      { l: 'Nothing formal exists yet', s: 10, r: 'A blank page.' },
     ]
   },
   {
@@ -218,7 +273,7 @@ const Qs = [
     text: 'How much untapped potential does your business have right now?',
     type: 'scale',
     scaleEnds: ['Very little', 'Enormous'],
-    reactions: ['Very little room to move.','Modest room to grow.','Some runway ahead.','There\'s something there.','A solid gap to close.','Meaningful potential.','You feel the ceiling.','Getting interesting.','That\'s a lot of upside.','That\'s the answer we look for.'],
+    reactions: ['Near the ceiling, in your view.','Modest headroom.','Some runway.','A visible gap.','Real headroom.','Meaningful upside.','A ceiling you can feel.','Substantial upside.','A lot of open road.','Near-vertical, in your view.'],
     scoreScale: v => {
       if (v >= 7) return { s: 10 };
       if (v >= 4) return { s: 7 };
@@ -227,13 +282,13 @@ const Qs = [
   },
   {
     id: 'patience', section: 'Working Together',
-    text: 'When you invest in something, how do you think about it?',
+    text: 'Say the first project goes well. How do you think about what comes after?',
     type: 'radio',
     opts: [
-      { l: 'I need to see measurable returns within 60 days', s: 0, flag: 'impatient', r: 'Noted. That\'s a real constraint to work with.' },
-      { l: 'I invest long-term. Great things take time.', s: 10, r: 'That\'s the mindset that makes this work.' },
-      { l: 'I go all-in when I believe in who I\'m working with', s: 9, r: 'Conviction-based. We like that.' },
-      { l: 'I\'ve been burned before. Trust has to come first.', s: 7, r: 'Fair. We\'d rather earn it than ask for it.' },
+      { l: 'I\'d still need measurable ROI within 60 days to continue', s: 0, flag: 'impatient', r: 'Direct. Noted.' },
+      { l: 'A strong start earns a long runway from me', s: 10, r: 'Runway. Got it.' },
+      { l: 'I go all-in once I believe in the people', s: 9, r: 'Conviction buyer.' },
+      { l: 'I\'ve been burned before — trust builds slowly with me', s: 7, r: 'Fair enough.' },
     ]
   },
   {
@@ -241,21 +296,10 @@ const Qs = [
     text: 'How do you actually lead?',
     type: 'radio',
     opts: [
-      { l: 'I like to stay closely involved and approve the details', s: 0, flag: 'micromanager', r: 'Appreciated for the honesty.' },
-      { l: 'I stay informed but let my partners run', s: 9, r: 'That\'s a functional partnership.' },
-      { l: 'I hire people I trust completely and get out of the way', s: 10, r: 'That\'s the answer.' },
+      { l: 'I like to stay closely involved and approve the details', s: 0, flag: 'micromanager', r: 'Hands-on. Noted.' },
+      { l: 'I stay informed but let my partners run', s: 9, r: 'Informed, not involved.' },
+      { l: 'I hire people I trust completely and get out of the way', s: 10, r: 'Full delegation. Noted.' },
       { l: 'I have strong opinions on marketing specifically', s: 1, flag: 'opinionated', r: 'Good to know early.' },
-    ]
-  },
-  {
-    id: 'authority', section: 'Working Together',
-    text: 'What\'s your standing in your industry?',
-    type: 'radio',
-    opts: [
-      { l: 'I\'m a recognized name in my space', s: 10, r: 'Authority is the asset. We build the engine.' },
-      { l: 'Known in some circles, my profile is growing', s: 7, r: 'There\'s something to amplify.' },
-      { l: 'My company has standing, though I stay behind the scenes', s: 6, r: 'Brand authority works too.' },
-      { l: 'Still building credibility in my market', s: 2, r: 'Early stage. Noted.' },
     ]
   },
   {
@@ -263,19 +307,19 @@ const Qs = [
     text: 'When you close a deal, who actually said yes?',
     type: 'radio',
     opts: [
-      { l: 'A business owner or founder', s: 10, r: 'Decision-makers who can move. Perfect.' },
-      { l: 'A department head or operations leader', s: 9, r: 'Authority with context. Good signal.' },
-      { l: 'A mid-level manager or team lead', s: 6, r: 'Depends on how much autonomy they have.' },
-      { l: 'A procurement committee or buying group', s: 1, flag: 'enterprise_buyer', r: 'Long cycles, lots of politics. That\'s a hard game.' },
-      { l: 'A C-suite exec at a large corporation', s: 2, flag: 'enterprise_buyer', r: 'Enterprise selling is a different discipline entirely.' },
+      { l: 'A business owner or founder', s: 10, r: 'Founders buying from founders.' },
+      { l: 'A department head or operations leader', s: 9, r: 'Authority with context.' },
+      { l: 'A mid-level manager or team lead', s: 6, r: 'Depends on their autonomy.' },
+      { l: 'A procurement committee or buying group', s: 1, flag: 'enterprise_buyer', r: 'Committee-driven. Noted.' },
+      { l: 'A C-suite exec at a large corporation', s: 2, flag: 'enterprise_buyer', r: 'Enterprise motion. Noted.' },
     ]
   },
   {
     id: 'budget', section: 'The Investment',
-    text: 'Last one. What monthly investment feels right for a real engagement?',
+    text: 'Last one. If the roadmap proves itself, what monthly investment is sustainable for the engagement that follows?',
     type: 'slider', min: 0, max: 5, step: 1,
     labels: ['Under $2K','$2K–$4K','$4K–$6K','$6K–$10K','$10K–$15K','$15K+'],
-    reactions: ['That\'s a tight budget for this kind of work.','Still tight, but let\'s keep going.','Getting into real engagement territory.','That works. Room to operate.','Serious investment. We can do serious work.','Full commitment. Let\'s talk.'],
+    reactions: ['Lean. Noted.','Modest range.','Entry engagement range.','A real engagement range.','Serious range.','Full-commitment range.'],
     scoreSlider: v => {
       if (v === 0) return { s: 0, flag: 'low_budget' };
       if (v === 1) return { s: 1, flag: 'low_budget' };
@@ -286,9 +330,16 @@ const Qs = [
   }
 ];
 
-const CHAPTERS = ['Your Business','Your Growth','Working Together','Your Market','The Investment'];
-const CATS = CHAPTERS;
+const CHAPTERS = ['How You Found Us','Your Business','Your Growth','Working Together','Your Market','The Investment'];
+// The attribution question is context, not a fit signal — keep it out of the breakdown
+const CATS = CHAPTERS.filter(c => c !== 'How You Found Us');
 let cur = 0, answers = {}, sliderVals = {};
+
+// Question index by id — scoring, insights, and persistence never rely on order
+const QI = {};
+Qs.forEach((q, i) => { QI[q.id] = i; });
+const ansOf = id => answers[QI[id]];
+const svOf  = id => sliderVals[QI[id]];
 
 // ── ANALYTICS SESSION ─────────────────────────────────────────────────────────
 const SESSION_ID     = (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : '';
@@ -308,7 +359,7 @@ window.onTurnstileError   = function()      { _cfToken = ''; };
 
 // Wait up to `maxWaitMs` for a Turnstile token, then invoke cb(token|'').
 // Needed because invisible Turnstile finishes its challenge a few hundred ms
-// after page load — if the visitor taps "Find my match" before the callback
+// after page load — if the visitor taps the start button before the callback
 // fires, _cfToken is still empty and the server fail-closes the start event.
 function withTurnstileToken(cb, maxWaitMs) {
   if (_cfToken) return cb(_cfToken);
@@ -386,7 +437,10 @@ function startSurvey() {
 function renderChapterBar() {
   const q = Qs[cur];
   document.getElementById('ch-section').textContent = q.section;
-  document.getElementById('ch-frac').textContent = `${cur + 1} / ${Qs.length}`;
+
+  const secsLeft = (Qs.length - cur) * 8;
+  const timeTxt  = secsLeft > 60 ? `~${Math.ceil(secsLeft / 60)} min left` : `~${secsLeft}s left`;
+  document.getElementById('ch-frac').textContent = `${cur + 1} / ${Qs.length} · ${timeTxt}`;
 
   const segsEl = document.getElementById('ch-segs');
   segsEl.innerHTML = Qs.map((q2, i) => {
@@ -395,8 +449,23 @@ function renderChapterBar() {
   }).join('');
 }
 
+// ── AUTO-ADVANCE ──────────────────────────────────────────────────────────────
+// Radio and scale answers advance on their own after a short beat — one less
+// tap per question. Sliders keep an explicit Continue (dragging IS the answer,
+// there's no single "done" moment). Back always cancels and returns.
+let advTimer = null;
+function clearAdv() {
+  if (advTimer) { clearTimeout(advTimer); advTimer = null; }
+}
+function scheduleAdvance() {
+  clearAdv();
+  if (cur >= Qs.length - 1) return; // last question stays explicit
+  advTimer = setTimeout(() => { advTimer = null; goNext(); }, 1100);
+}
+
 // ── RENDER ────────────────────────────────────────────────────────────────────
 function render() {
+  clearAdv();
   renderChapterBar();
   const q = Qs[cur];
   const mount = document.getElementById('q-mount');
@@ -459,13 +528,14 @@ function buildRadio(q) {
   q.opts.forEach((o, i) => {
     const card = document.createElement('button');
     card.className = 'r-card' + (answers[cur] === i ? ' sel' : '');
-    card.innerHTML = `<div class="r-pip"></div><div class="r-label">${o.l}</div>`;
+    card.innerHTML = `<div class="r-pip"></div><div class="r-label">${o.l}</div><span class="r-key" aria-hidden="true">${i + 1}</span>`;
     card.onclick = () => {
       document.querySelectorAll('.r-card').forEach(c => c.classList.remove('sel'));
       card.classList.add('sel');
       answers[cur] = i;
       document.getElementById('btn-next').disabled = false;
       showReaction(o.r || '');
+      scheduleAdvance();
     };
     grid.appendChild(card);
   });
@@ -475,15 +545,21 @@ function buildRadio(q) {
 function buildSlider(q) {
   const wrap = document.createElement('div');
   wrap.className = 'slider-wrap';
-  const init = sliderVals[cur] !== undefined ? sliderVals[cur] : Math.round((q.min + q.max) / 2);
-  if (sliderVals[cur] === undefined) sliderVals[cur] = init;
+  const touched = sliderVals[cur] !== undefined;
+  const init = touched ? sliderVals[cur] : Math.round((q.min + q.max) / 2);
 
   const display = document.createElement('div');
   display.className = 'slider-display';
-  display.innerHTML = `<span class="val">${q.labels[init]}</span>`;
+  display.innerHTML = `<span class="val${touched ? '' : ' val-unset'}">${q.labels[init]}</span>`;
 
   const input = document.createElement('input');
   input.type = 'range'; input.min = q.min; input.max = q.max; input.step = q.step; input.value = init;
+  input.setAttribute('aria-label', q.text);
+
+  const hint = document.createElement('div');
+  hint.className = 'slider-hint';
+  hint.textContent = 'Drag the slider to answer';
+  if (touched) hint.classList.add('hidden');
 
   function updateFill() {
     const p = ((input.value - q.min) / (q.max - q.min)) * 100;
@@ -495,6 +571,7 @@ function buildSlider(q) {
   input.oninput = () => {
     const v = parseInt(input.value);
     sliderVals[cur] = v;
+    hint.classList.add('hidden');
     display.innerHTML = `<span class="val">${q.labels[v]}</span>`;
     display.classList.remove('val-change');
     void display.offsetWidth;
@@ -512,6 +589,7 @@ function buildSlider(q) {
   wrap.appendChild(display);
   wrap.appendChild(input);
   wrap.appendChild(labels);
+  wrap.appendChild(hint);
   return wrap;
 }
 
@@ -529,6 +607,7 @@ function buildScale(q) {
       answers[cur] = i;
       document.getElementById('btn-next').disabled = false;
       showReaction(q.reactions?.[i - 1] || '');
+      scheduleAdvance();
     };
     row.appendChild(btn);
   }
@@ -539,12 +618,44 @@ function buildScale(q) {
   return wrap;
 }
 
+// ── KEYBOARD ──────────────────────────────────────────────────────────────────
+// 1-9 (and 0 = 10 on the scale) select an option; Enter continues.
+document.addEventListener('keydown', function(e) {
+  const survey = document.getElementById('survey');
+  if (!survey || survey.classList.contains('hidden')) return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const tag = e.target && e.target.tagName;
+  if ((tag === 'INPUT' && e.target.type !== 'range') || tag === 'TEXTAREA') return;
+
+  if (e.key === 'Enter') {
+    const nb = document.getElementById('btn-next');
+    if (!nb.disabled) { e.preventDefault(); clearAdv(); goNext(); }
+    return;
+  }
+  const q = Qs[cur];
+  if (q.type === 'radio') {
+    const n = parseInt(e.key, 10);
+    if (n >= 1 && n <= q.opts.length) {
+      const card = document.querySelectorAll('.r-card')[n - 1];
+      if (card) card.click();
+    }
+  } else if (q.type === 'scale') {
+    const n = e.key === '0' ? 10 : parseInt(e.key, 10);
+    if (n >= 1 && n <= 10) {
+      const btn = document.querySelectorAll('.scale-btn')[n - 1];
+      if (btn) btn.click();
+    }
+  }
+});
+
 // ── NAV ───────────────────────────────────────────────────────────────────────
 function goNext() {
+  clearAdv();
   if (cur < Qs.length - 1) { cur++; render(); scrollTo(0, 0); }
   else showLoading();
 }
 function goBack() {
+  clearAdv();
   if (cur > 0) { cur--; render(); scrollTo(0, 0); }
 }
 
@@ -554,7 +665,7 @@ function showLoading() {
   const lEl = document.getElementById('loading');
   lEl.classList.remove('hidden');
 
-  const steps = ['Checking business fit','Reviewing your market','Assessing working style','Evaluating investment alignment','Building your match profile'];
+  const steps = ['Checking business fit','Reading your market','Weighing working styles','Testing investment alignment','Scoring against the threshold'];
   const stEl = document.getElementById('lsteps');
   stEl.innerHTML = steps.map((s,i) =>
     `<div class="loading-step" id="ls${i}"><div class="step-pip" id="lp${i}"></div><div class="step-label">${s}</div></div>`
@@ -589,8 +700,12 @@ function calcScore() {
   Qs.forEach((q, i) => {
     let s = 0, mx = 0, flag = null;
     if (q.type === 'radio') {
-      mx = Math.max(...q.opts.map(o => o.s));
-      if (answers[i] !== undefined) { const o = q.opts[answers[i]]; s = o.s; if (o.flag) flag = o.flag; }
+      mx = q.unscored ? 0 : Math.max(...q.opts.map(o => o.s));
+      if (answers[i] !== undefined) {
+        const o = q.opts[answers[i]];
+        if (!q.unscored) s = o.s;
+        if (o.flag) flag = o.flag;
+      }
     } else if (q.type === 'slider') {
       mx = 10;
       const v = sliderVals[i] !== undefined ? sliderVals[i] : Math.round((q.min+q.max)/2);
@@ -605,61 +720,68 @@ function calcScore() {
     catM[q.section] = (catM[q.section]||0) + mx;
   });
   let pct = Math.round((total / max) * 100);
+  // 'knows_us' is attribution data — it never affects score or eligibility
   if (flags.some(f => ['micromanager','impatient','low_budget','pre_revenue'].includes(f))) pct = Math.min(pct, 36);
   else if (flags.some(f => ['opinionated','enterprise_buyer'].includes(f))) pct = Math.min(pct, 54);
-  return { pct, catS, catM, flags };
+  const offerEligible = pct >= OFFER_THRESHOLD;
+  return { pct, catS, catM, flags, offerEligible };
 }
 
 // ── INSIGHTS ──────────────────────────────────────────────────────────────────
 function getInsights(flags, pct) {
-  const a = answers, sv = sliderVals;
   const pos = [], neg = [];
-  const rev = sv[0]??5;
+  const rev = svOf('revenue') ?? 5;
   if (rev >= 2 && rev <= 7) pos.push("Your revenue range is where our model creates the most impact: proven enough to build on, with real room to grow.");
-  if (rev === 0) neg.push("Pre-revenue is genuinely too early for what we do. There needs to be something to build from.");
-  if (a[1] === 0) pos.push("B2B is where we live. Every system we build is designed for exactly this kind of business.");
-  if ((sv[2]??3) >= 3) pos.push("Your deal size means a single closed opportunity more than justifies the engagement. The math works in your favor.");
-  if (a[3] === 2) pos.push("A business running entirely on referrals with no designed engine is exactly where we create the most leverage.");
-  if (a[3] === 3) pos.push("Having been burned by agencies actually works in our favor. You know what bad looks like.");
-  if ((a[4]??5) >= 8) pos.push("That level of untapped potential you're sensing is usually exactly right. The ceiling is visible, and we help raise it.");
-  if (a[6] === 2) pos.push("Full delegation is rare. It's the condition that lets us actually do our best work.");
-  if (flags.includes('micromanager')) neg.push("Staying closely involved in every detail is at odds with how our engagements function. That tension rarely resolves.");
-  if (flags.includes('impatient')) neg.push("A 60-day ROI expectation and a compounding growth system point in opposite directions.");
+  if (rev === 0) neg.push("Pre-revenue is genuinely too early for what we do — even a diagnostic needs something to diagnose.");
+  if (ansOf('model') === 0) pos.push("B2B is where we live. Every system we build is designed for exactly this kind of business.");
+  if ((svOf('deal_size') ?? 3) >= 3) pos.push("At your deal size, a single closed opportunity pays for months of engagement. A roadmap that finds even one is already worth the fee.");
+  if (ansOf('marketing') === 2) pos.push("A business running entirely on referrals with no designed engine is exactly where we create the most leverage.");
+  if (ansOf('marketing') === 3) pos.push("Having been burned by agencies actually works in our favor. You know what bad looks like — a refundable first project means you're not gambling on us being different.");
+  if ((ansOf('growth_feel') ?? 5) >= 8) pos.push("That level of untapped potential you're sensing is usually exactly right. The ceiling is visible, and we help raise it.");
+  if (ansOf('style') === 2) pos.push("Full delegation is rare. It's the condition that lets a first project actually prove something.");
+  if (flags.includes('micromanager')) neg.push("Staying closely involved in every detail is at odds with how our engagements function — a guarantee wouldn't change that tension.");
+  if (flags.includes('impatient')) neg.push("A 60-day ROI expectation and a compounding growth system point in opposite directions. A refund clause doesn't fix a timeline mismatch.");
   if (flags.includes('opinionated')) neg.push("Strong convictions about marketing direction tend to limit what's possible. We need room to make the calls that move the needle.");
-  if ((sv[9]??3) >= 3) pos.push("Investment alignment means we can operate without constraints; constrained engagements produce constrained results.");
-  if (flags.includes('low_budget')) neg.push("The investment you're comfortable with won't support the depth of engagement required to make this worthwhile for either of us.");
+  if ((svOf('budget') ?? 3) >= 3) pos.push("Your number for the engagement that follows means we can operate without constraints; constrained engagements produce constrained results.");
+  if (flags.includes('low_budget')) neg.push("The diagnostic is the start of a real engagement. The investment you're comfortable with afterward wouldn't support the depth of work that makes it worthwhile.");
   if (flags.includes('enterprise_buyer')) neg.push("When procurement committees or large-corp executives hold the buying decision, sales cycles become long and political and hard to move with marketing alone.");
-  if (!flags.includes('enterprise_buyer') && a[8] !== undefined && a[8] <= 1) pos.push("Your buyers can say yes on their own authority. That's the kind of market where good marketing creates immediate momentum.");
+  if (!flags.includes('enterprise_buyer') && ansOf('buyer_type') !== undefined && ansOf('buyer_type') <= 1) pos.push("Your buyers can say yes on their own authority. That's the kind of market where good marketing creates immediate momentum.");
 
-  if (pct >= 70) return [...pos.slice(0,3)].slice(0,4).map(t => ({ t:'pos', txt:t }));
+  if (pct >= 70) return pos.slice(0, 3).map(t => ({ t:'pos', txt:t }));
   if (pct >= 48) return [...pos.slice(0,2).map(t=>({t:'pos',txt:t})), ...neg.slice(0,1).map(t=>({t:'neg',txt:t}))].slice(0,4);
   return [...neg.slice(0,3).map(t=>({t:'neg',txt:t})), ...pos.slice(0,1).map(t=>({t:'pos',txt:t}))].slice(0,4);
 }
 
 // ── HEADLINE ──────────────────────────────────────────────────────────────────
-function getHeadline(pct, flags, a, sv) {
-  if (flags.includes('micromanager')) return { h:"Great chemistry,<br>wrong <em>dynamic.</em>", b:"The most impactful partnerships require both sides playing to their strengths. Our model needs room to execute. Your answers suggest that would be a persistent source of friction, and we'd rather say that clearly now." };
-  if (flags.includes('impatient')) return { h:"The vision<br>doesn't <em>align.</em>", b:"We'd genuinely love to work with you. But you're looking for fast results, and we build systems that compound. Those two things are fundamentally incompatible right now." };
+function getHeadline(pct, flags, offerEligible) {
+  if (flags.includes('micromanager')) return { h:"Great chemistry,<br>wrong <em>dynamic.</em>", b:"The most impactful partnerships require both sides playing to their strengths. Our model needs room to execute. Your answers suggest that would be a persistent source of friction, and we'd rather say that clearly now — no guarantee fixes a working-style mismatch." };
+  if (flags.includes('impatient')) return { h:"The vision<br>doesn't <em>align.</em>", b:"We'd genuinely love to work with you. But you're looking for fast, measurable returns, and we build systems that compound. A refund clause doesn't fix a timeline mismatch — it just delays the same conversation by a few weeks." };
   if (flags.includes('enterprise_buyer')) return { h:"Your market makes<br>this <em>very hard.</em>", b:"When procurement committees or large-corporation executives control the buying decision, sales cycles become long, political, and difficult to accelerate with marketing alone. Our model was built for markets where decision-makers can say yes and act on it." };
-  if (flags.includes('pre_revenue')) return { h:"The moment<br>isn't <em>here yet.</em>", b:"The conditions that make this kind of partnership extraordinary (proven momentum and room to invest) aren't quite in place. That's not permanent. Come back when they are." };
-  if (flags.includes('low_budget')) return { h:"The spark is real,<br>the <em>investment isn't.</em>", b:"We want to work with you. But exceptional partnerships require room to do exceptional work. The investment you're comfortable with would limit what's possible, and we'd rather be direct about that now." };
-  if (pct >= 82) return { h:"We've been<br>looking for <em>exactly you.</em>", b:"Profiles like this are rare. The business, the mindset, the conditions: everything points in the same direction. We'd like to make you an offer we don't make often." };
+  if (flags.includes('pre_revenue')) return { h:"The moment<br>isn't <em>here yet.</em>", b:"The conditions that make this kind of partnership extraordinary (proven momentum and room to invest) aren't quite in place. That's not permanent. The offer will still be here when they are." };
+  if (flags.includes('low_budget')) return { h:"The spark is real,<br>the <em>runway isn't.</em>", b:"We want to work with you, and the first project would be protected. But what comes after is the point — and the investment you're comfortable with would limit what's possible. We'd rather be direct about that now." };
+  if (offerEligible) return { h:"We'd stake our own fee<br>on <em>this profile.</em>", b:"Your answers clear a bar most don't — the kind of business we're confident enough to guarantee. That unlocks the Fair Start: a first project that's paid, protected, and credited. If we're as good as this score suggests, you'll know within weeks." };
   if (pct >= 68) {
-    if ((a[4]??5) >= 7) return { h:"You feel the ceiling,<br>and we know <em>how to raise it.</em>", b:"That untapped potential you're sensing? It's usually exactly right. Strong fundamentals, real reputation, growth happening, but no designed system behind it. That gap is where we create the most value." };
-    return { h:"There's something<br><em>really interesting</em> here.", b:"Your profile has strong signals across the areas that matter most. A few things to explore together, and the chemistry is clearly there. This is worth a real conversation." };
+    if ((ansOf('growth_feel') ?? 5) >= 7) return { h:"You feel the ceiling,<br>and we know <em>how to raise it.</em>", b:"That untapped potential you're sensing? It's usually exactly right. Strong fundamentals, real momentum, but no designed system behind it. You landed just under our guarantee threshold — close enough that a conversation is worth both our time." };
+    return { h:"There's something<br><em>really interesting</em> here.", b:"Your profile has strong signals across the areas that matter most. You landed just under our guarantee threshold, but the chemistry is clearly there. This is worth a real conversation." };
   }
   if (pct >= 48) return { h:"Promising signals,<br>and some <em>friction.</em>", b:"You hit the marks in several key areas, but there are a few places where our approaches might create tension. Those aren't dealbreakers. They're worth talking about honestly." };
-  return { h:"This isn't the<br>right match <em>right now.</em>", b:"The best matchmakers know when to say not yet, and we respect you too much to pretend otherwise. The conditions for this to be extraordinary aren't quite in place. That can change." };
+  return { h:"This isn't the<br>right match <em>right now.</em>", b:"The best offers know when to say not yet, and we respect you too much to pretend otherwise. The conditions for this to be extraordinary aren't quite in place. That can change — and the offer isn't going anywhere." };
 }
 
 // ── PERSIST QUIZ RESULT ───────────────────────────────────────────────────────
-function persistQuizResult(pct, flags) {
+function persistQuizResult(pct, flags, offerEligible) {
   const tier = pct >= 78 ? 'exceptional' : pct >= 48 ? 'strong' : 'nomatch';
-  const revenueLabel  = sliderVals[0] !== undefined ? Qs[0].labels[sliderVals[0]] : '';
-  const businessModel = answers[1]    !== undefined ? Qs[1].opts[answers[1]].l    : '';
-  const dealSizeLabel = sliderVals[2] !== undefined ? Qs[2].labels[sliderVals[2]] : '';
-  const budgetLabel   = sliderVals[9] !== undefined ? Qs[9].labels[sliderVals[9]] : '';
-  const marketingState = answers[3]   !== undefined ? Qs[3].opts[answers[3]].l    : '';
+  const lbl = (id) => {
+    const q = Qs[QI[id]];
+    if (q.type === 'slider') return svOf(id) !== undefined ? q.labels[svOf(id)] : '';
+    return ansOf(id) !== undefined ? q.opts[ansOf(id)].l : '';
+  };
+  const revenueLabel   = lbl('revenue');
+  const businessModel  = lbl('model');
+  const dealSizeLabel  = lbl('deal_size');
+  const budgetLabel    = lbl('budget');
+  const marketingState = lbl('marketing');
+  const referralSource = lbl('relationship');
 
   // Write to localStorage for the HubSpot contact-form bridge (string flags, legacy shape)
   try {
@@ -672,6 +794,8 @@ function persistQuizResult(pct, flags) {
       budget_label:    budgetLabel,
       flags:           flags.join(', '),
       marketing_state: marketingState,
+      referral_source: referralSource,
+      offer_eligible:  offerEligible,
       quiz_taken_at:   Date.now(),
     }));
   } catch(e) { /* localStorage unavailable */ }
@@ -679,12 +803,14 @@ function persistQuizResult(pct, flags) {
   // Mark completion BEFORE firing the beacon so any subsequent pagehide stays silent
   quizCompleted = true;
 
-  // Fire the private analytics completion event (Supabase via /api/quiz-event)
+  // Fire the private analytics completion event (Supabase via /api/quiz-event).
+  // The relationship answer and offer eligibility ride inside the answers blob
+  // (v2) — no schema change needed; 'knows_us' also surfaces in flags.
   sendEvent('complete', {
     score_pct:       pct,
     score_tier:      tier,
     flags:           flags,
-    answers:         { radio: Object.assign({}, answers), slider: Object.assign({}, sliderVals) },
+    answers:         { v: 2, offer_eligible: offerEligible, radio: Object.assign({}, answers), slider: Object.assign({}, sliderVals) },
     revenue_label:   revenueLabel,
     business_model:  businessModel,
     deal_size_label: dealSizeLabel,
@@ -695,14 +821,15 @@ function persistQuizResult(pct, flags) {
 
 // ── RESULTS ───────────────────────────────────────────────────────────────────
 function showResults() {
-  const { pct, catS, catM, flags } = calcScore();
+  const { pct, catS, catM, flags, offerEligible } = calcScore();
   const insights = getInsights(flags, pct);
-  const { h, b } = getHeadline(pct, flags, answers, sliderVals);
+  const { h, b } = getHeadline(pct, flags, offerEligible);
 
   const isStrong = pct >= 78, isGood = pct >= 48 && pct < 78;
   const scoreColor = isStrong ? 'green' : isGood ? 'blue' : 'red';
   const badgeClass = isStrong ? 'green' : isGood ? 'blue' : 'dim';
-  const badgeText = isStrong ? '✦ Exceptional Match' : isGood ? '✦ Strong Potential' : 'Not the Right Fit Yet';
+  const badgeText = offerEligible ? '✦ Qualified — Fair Start'
+    : isGood ? '✦ Strong Potential' : 'Not the Right Fit Yet';
 
   const insightHtml = insights.map(ins =>
     `<div class="insight"><div class="i-pip ${ins.t}"></div><div>${ins.txt}</div></div>`
@@ -718,12 +845,35 @@ function showResults() {
   const arrowBtn = `<div class="btn-offer-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
 
   let actionHtml;
-  if (pct >= 78) {
-    actionHtml = `<div class="offer-card"><div class="offer-eyebrow">✦ Your Match Offer</div><h3 class="offer-hed">You've earned a<br><em>free Growth Audit.</em></h3><p class="offer-body">Profiles like yours don't come through often. So instead of a sales call, we'll start with something real: a standalone audit of your business, your market, and where the actual leverage is. You'll leave with a document worth acting on, whether we work together or not.</p><div class="perks"><div class="perk"><span class="perk-dash">–</span>Full review of your growth model and current gaps</div><div class="perk"><span class="perk-dash">–</span>Market positioning and competitive opportunity map</div><div class="perk"><span class="perk-dash">–</span>Prioritized recommendations you can use immediately</div><div class="perk"><span class="perk-dash">–</span>Delivered in writing, yours to keep, no strings</div></div><a class="btn-offer" href="../contact/" target="_blank">Claim your audit ${arrowBtn}</a></div>`;
+  if (offerEligible) {
+    actionHtml = `<div class="offer-card offer-free">
+      <div class="offer-ticket-top"><span class="offer-tag">First Project · Flat Fee</span><span class="offer-zero">Guaranteed</span></div>
+      <div class="offer-eyebrow offer-eyebrow-green">✦ You qualified</div>
+      <h3 class="offer-hed">Your first project<br>is <em>protected.</em></h3>
+      <p class="offer-body">A short diagnostic sprint — flat fee, fixed scope, weeks not months. We audit the business, map where the leverage is, and hand you a growth roadmap you own outright. If it wasn't worth the fee, we refund it. If we keep working together, every dollar credits toward month one.</p>
+      <div class="perks">
+        <div class="perk"><span class="perk-dash">–</span>A complete growth roadmap: strategy, stack, and delivery priorities</div>
+        <div class="perk"><span class="perk-dash">–</span>Portable by design — execute it with us, in-house, or with anyone</div>
+        <div class="perk"><span class="perk-dash">–</span>Not worth the fee? Say so and it's refunded. No forms, no friction.</div>
+        <div class="perk"><span class="perk-dash">–</span>Continue with us and 100% of the fee credits toward month one</div>
+      </div>
+      <a class="btn-offer" href="../contact/">Claim the Fair Start ${arrowBtn}</a>
+      <p class="offer-terms">Extended to qualifying profiles only — we guarantee work we're confident in. Flat fee quoted before anything starts; no hourly meters. The refund is self-declared: you say the roadmap missed, we return the fee. Credit applies to the first month of a standard engagement.</p>
+    </div>`;
   } else if (pct >= 48) {
-    actionHtml = `<div class="offer-card"><div class="offer-eyebrow">✦ Your Next Step</div><h3 class="offer-hed">Let's have a <em>real conversation.</em></h3><p class="offer-body">Not a sales call. Think of it like a first meeting, just 20 minutes where we both figure out if the chemistry is actually there. No pitch. No pressure. Just an honest exchange.</p><div class="perks"><div class="perk"><span class="perk-dash">–</span>We'll do a quick opportunity scan before we meet</div><div class="perk"><span class="perk-dash">–</span>No deck, no pitch. Just candid conversation.</div><div class="perk"><span class="perk-dash">–</span>You'll know exactly where you stand in 20 minutes</div></div><a class="btn-offer" href="https://eatcrayonshome.vercel.app/contact/" target="_blank">Let's meet ${arrowBtn}</a></div>`;
+    actionHtml = `<div class="offer-card">
+      <div class="offer-eyebrow">✦ Your Next Step</div>
+      <h3 class="offer-hed">Close to the <em>threshold.</em></h3>
+      <p class="offer-body">The guaranteed start is reserved for profiles that clear our fit bar — we only stake our fee on work we're confident in. Yours lands just under it, which usually means the fit is real but a couple of conditions need a closer look. That's a conversation, not a form.</p>
+      <div class="perks">
+        <div class="perk"><span class="perk-dash">–</span>We'll do a quick opportunity scan before we meet</div>
+        <div class="perk"><span class="perk-dash">–</span>No deck, no pitch. Just candid conversation.</div>
+        <div class="perk"><span class="perk-dash">–</span>You'll know exactly where you stand in 20 minutes</div>
+      </div>
+      <a class="btn-offer" href="../contact/">Book the conversation ${arrowBtn}</a>
+    </div>`;
   } else {
-    actionHtml = `<div class="no-match-card"><h3 class="no-match-hed">The best matchmakers know when to say "not yet."</h3><p class="no-match-body">The conditions that make this kind of partnership extraordinary aren't fully in place right now. That's not permanent. Come back when the timing is right. We'll be here.</p></div><div style="margin-bottom:20px;"><a class="btn-offer" href="https://eatcrayonshome.vercel.app/" target="_blank" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);">Follow our work ${arrowBtn}</a></div>`;
+    actionHtml = `<div class="no-match-card"><h3 class="no-match-hed">The best offers know when to say "not yet."</h3><p class="no-match-body">The conditions that make this kind of partnership extraordinary aren't fully in place right now. That's not permanent — and the Fair Start is a standing offer, not a countdown. Come back when the timing is right. We'll be here.</p></div><div style="margin-bottom:20px;"><a class="btn-offer" href="../" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);">Follow our work ${arrowBtn}</a></div>`;
   }
 
   const el = document.getElementById('result');
@@ -732,7 +882,7 @@ function showResults() {
       <div class="score-block">
         <div class="score-num ${scoreColor}" id="snum">0%</div>
         <div class="score-meta">
-          <div class="score-label">Match Score</div>
+          <div class="score-label">Fit Score · Threshold ${OFFER_THRESHOLD}</div>
           <div class="score-badge ${badgeClass}">${badgeClass!=='dim'?'<span class="badge-pip"></span>':''}${badgeText}</div>
         </div>
       </div>
@@ -760,7 +910,7 @@ function showResults() {
     el.querySelectorAll('.bk-fill').forEach(b => { b.style.width = b.dataset.t+'%'; });
   }, 150);
 
-  persistQuizResult(pct, flags);
+  persistQuizResult(pct, flags, offerEligible);
   scrollTo(0, 0);
 }
 </script>
@@ -768,4 +918,3 @@ function showResults() {
 <script src="../js/main.js"></script>
 </body>
 </html>
-

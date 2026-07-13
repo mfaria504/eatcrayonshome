@@ -114,7 +114,7 @@
         <!-- Quiz context badge (shown if Matchmaker results found in localStorage) -->
         <div class="cf-quiz-badge" id="cf-quiz-badge" hidden>
           <span class="cf-quiz-badge-pip">✦</span>
-          <span class="cf-quiz-badge-text">Your Matchmaker results will be included</span>
+          <span class="cf-quiz-badge-text" id="cf-quiz-badge-text">Your Matchmaker results will be included</span>
         </div>
 
         <!-- 01 – Name -->
@@ -265,7 +265,14 @@
 
   // Show quiz badge if Matchmaker result is present
   var quizBadge = document.getElementById('cf-quiz-badge');
-  if (loadQuizResult() && quizBadge) quizBadge.removeAttribute('hidden');
+  var quizData  = loadQuizResult();
+  if (quizData && quizBadge) {
+    if (quizData.offer_eligible === true) {
+      var badgeText = document.getElementById('cf-quiz-badge-text');
+      if (badgeText) badgeText.textContent = 'Fair Start qualification attached — we\'ll scope your diagnostic on the call';
+    }
+    quizBadge.removeAttribute('hidden');
+  }
 
   // ── Autopopulate email from query param ──
   var params = new URLSearchParams(window.location.search);

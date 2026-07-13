@@ -81,6 +81,8 @@ export default async function handler(req, res) {
     const budget    = truncate(sanitize(String(rawQuiz.budget_label    || '')), 100);
     const flags     = truncate(sanitize(String(rawQuiz.flags           || '')), 200);
     const marketing = truncate(sanitize(String(rawQuiz.marketing_state || '')), 200);
+    const referral  = truncate(sanitize(String(rawQuiz.referral_source || '')), 200);
+    const hasOffer  = typeof rawQuiz.offer_eligible === 'boolean';
     const takenMs   = parseInt(rawQuiz.quiz_taken_at, 10);
     const takenAt   = !isNaN(takenMs)
       ? new Date(takenMs).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
@@ -93,6 +95,8 @@ export default async function handler(req, res) {
     quizBlock = [
       '[Growth Matchmaker]',
       [scoreStr, tierLabel].filter(Boolean).join(' -- '),
+      hasOffer  ? `Fair Start: ${rawQuiz.offer_eligible ? 'QUALIFIED ✦' : 'not qualified'}` : '',
+      referral  ? `Relationship: ${referral}` : '',
       revenue   ? `Revenue: ${revenue}`     : '',
       model     ? `Model: ${model}`         : '',
       dealSize  ? `Deal Size: ${dealSize}`  : '',
@@ -118,7 +122,7 @@ export default async function handler(req, res) {
   ];
 
   // Optional custom HubSpot properties -- no-ops until created in HubSpot settings.
-  // Once created (matchmaker_score, matchmaker_tier, matchmaker_flags), data flows automatically.
+  // Once created (matchmaker_score, matchmaker_tier, matchmaker_flags, matchmaker_offer), data flows automatically.
   if (rawQuiz) {
     const scorePctVal = parseInt(rawQuiz.score_pct, 10);
     const tierVal     = sanitize(String(rawQuiz.score_tier || ''));
@@ -126,6 +130,9 @@ export default async function handler(req, res) {
     if (!isNaN(scorePctVal)) fields.push({ name: 'matchmaker_score', value: String(scorePctVal) });
     if (tierVal)             fields.push({ name: 'matchmaker_tier',  value: tierVal });
     if (flagsVal)            fields.push({ name: 'matchmaker_flags', value: flagsVal });
+    if (typeof rawQuiz.offer_eligible === 'boolean') {
+      fields.push({ name: 'matchmaker_offer', value: rawQuiz.offer_eligible ? 'fair_start_qualified' : 'not_qualified' });
+    }
   }
 
   const payload = {
